@@ -1,6 +1,5 @@
 local mason = require 'mason'
 local mason_lspconfig = require 'mason-lspconfig'
-local mason_tool_installer = require 'mason-tool-installer'
 
 mason.setup {
   ui = {
@@ -14,30 +13,18 @@ mason.setup {
 
 mason_lspconfig.setup {
   ensure_installed = {
-    'lua-language-server',
-    'stylua',
+    'lua_ls',
 
-    'css-lsp',
-    'html-lsp',
+    'cssls',
+    'html',
 
-    'deno',
-    'prettier',
-    'emmet-ls',
-    'json-lsp',
+    'emmet_language_server',
+    'jsonls',
+    'eslint',
 
     'unocss',
 
     'bashls',
   },
   automatic_installation = true,
-}
-
-mason_tool_installer.setup {
-  ensure_installed = {
-    'prettier',
-    'stylua',
-    'eslint_d',
-    'shfmt',
-    'shellcheck',
-  },
 }

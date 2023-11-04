@@ -1,6 +1,13 @@
 local overrides = require 'custom.configs.overrides'
 
 local plugins = {
+  {
+    'Aasim-A/scrollEOF.nvim',
+    event = 'BufRead',
+    config = function()
+      require('scrollEOF').setup {}
+    end,
+  },
 
   {
     'simrat39/rust-tools.nvim',
@@ -134,7 +141,9 @@ local plugins = {
     'karb94/neoscroll.nvim',
     keys = { '<C-d>', '<C-u>' },
     config = function()
-      require('neoscroll').setup()
+      require('neoscroll').setup {
+        hide_cursor = false,
+      }
     end,
   },
 

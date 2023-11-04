@@ -39,7 +39,7 @@ local on_attach = function(_, bufnr)
   end, 'Open floating diagnostic message')
 
   nmap('<Leader>lh', function()
-    vim.lsp.inlay_hint(bufnr, nil)
+    vim.lsp.inlay_hint(bufnr)
   end, 'Toggle Inlay Hints')
 
   nmap('<leader>lr', function()

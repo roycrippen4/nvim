@@ -12,7 +12,6 @@ local function autosave()
       if #vim.api.nvim_buf_get_name(0) ~= 0 and vim.bo.buflisted and vim.g.autosave then
         vim.cmd 'silent w'
 
-        -- print nice colored msg
         vim.api.nvim_echo(
           { { '󰄳', 'LazyProgressDone' }, { ' file autosaved at ' .. os.date '%I:%M:%S %p' } },
           false,

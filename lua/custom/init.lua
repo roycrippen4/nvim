@@ -2,7 +2,6 @@ local opt = vim.o
 
 opt.relativenumber = true
 opt.scrolloff = 12
-opt.spell = true
 
 vim.g.markdown_fenced_languages = {
   'ts=typescript',

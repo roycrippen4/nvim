@@ -52,6 +52,7 @@ M.general = {
 
   t = {
     ['<C-x>'] = { vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, true, true), 'Escape terminal mode' },
+    ['<C-k>'] = { '<C-x><C-k>', 'Escape terminal to the window above' },
   },
 
   v = {

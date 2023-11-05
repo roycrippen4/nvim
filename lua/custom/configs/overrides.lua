@@ -34,6 +34,9 @@ M.whichkey = {
 }
 
 M.treesitter = {
+  dependencies = {
+    'JoosepAlviste/nvim-ts-context-commentstring',
+  },
   ensure_installed = {
     'bash',
     'vim',

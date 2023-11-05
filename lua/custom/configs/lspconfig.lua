@@ -1,4 +1,4 @@
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
@@ -49,6 +49,15 @@ local on_attach = function(_, bufnr)
   nmap('<leader>la', function()
     vim.lsp.buf.code_action()
   end, 'Code Action')
+
+  vim.api.nvim_create_autocmd('BufReadPost', {
+    callback = function()
+      if client.name == 'typescript-tools' then
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+      end
+    end,
+  })
 
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
@@ -142,14 +151,7 @@ lspconfig['svelte'].setup {
 }
 
 require('typescript-tools').setup {
-  on_attach = function(client, bufnr)
-    client.server_capabilities.documentFormattingProvider = false
-    client.server_capabilities.documentRangeFormattingProvider = false
-
-    if vim.lsp.inlay_hint then
-      vim.lsp.inlay_hint(bufnr, true)
-    end
-  end,
+  on_attach = on_attach,
   settings = {
     tsserver_file_preferences = {
       -- Inlay Hints

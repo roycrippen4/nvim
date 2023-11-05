@@ -54,3 +54,6 @@ autocmd('CursorMoved', {
     vim.on_key(manage_hlsearch, hl_ns)
   end,
 })
+
+autocmd({ 'InsertLeave', 'WinEnter' }, { command = 'set cursorline', group = group })
+autocmd({ 'InsertEnter', 'WinLeave' }, { command = 'set nocursorline', group = group })

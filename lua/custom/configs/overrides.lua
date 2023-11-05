@@ -34,8 +34,9 @@ M.whichkey = {
 }
 
 M.treesitter = {
-  dependencies = {
-    'JoosepAlviste/nvim-ts-context-commentstring',
+  context_commentstring = {
+    enable = true,
+    enable_autocmd = false,
   },
   ensure_installed = {
     'bash',
@@ -52,11 +53,18 @@ M.treesitter = {
     'markdown',
     'markdown_inline',
   },
+  autopairs = {
+    enable = true,
+  },
+  autotag = {
+    enable = true,
+    filetypes = { 'html', 'xml', 'svelte', 'react', 'vue' },
+  },
   indent = {
     enable = true,
-    -- disable = {
-    --   "python"
-    -- },
+    disable = {
+      'yaml',
+    },
   },
 }
 

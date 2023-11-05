@@ -10,6 +10,15 @@ local plugins = {
   },
 
   {
+    'numToStr/Comment.nvim',
+    event = 'VimEnter',
+    config = function()
+      ---@diagnostic disable-next-line
+      require('Comment').setup {}
+    end,
+  },
+
+  {
     'simrat39/rust-tools.nvim',
     event = 'VimEnter',
     config = function()
@@ -153,11 +162,13 @@ local plugins = {
     config = function(_, opts)
       dofile(vim.g.base46_cache .. 'syntax')
       require('nvim-treesitter.configs').setup(opts)
-
       vim.filetype.add {
         extension = { mdx = 'mdx' },
       }
     end,
+    dependencies = {
+      'JoosepAlviste/nvim-ts-context-commentstring',
+    },
   },
 
   {

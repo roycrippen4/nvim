@@ -21,9 +21,6 @@ M.general = {
     ['<Leader>dz'] = { ':ZenMode<CR>', 'Zen', opts = { nowait = true } },
     ['<leader>so'] = { ':source<CR>', 'Source Config', opts = {} },
   },
-  v = {
-    ['<Leader>r'] = { ':s/', 'Substitute' },
-  },
 }
 
 return M

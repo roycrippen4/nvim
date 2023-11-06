@@ -11,10 +11,14 @@ local plugins = {
 
   {
     'numToStr/Comment.nvim',
-    event = 'VimEnter',
+    keys = {
+      { 'gc', mode = { 'n', 'v' }, 'gcc' },
+    },
     config = function()
       ---@diagnostic disable-next-line
-      require('Comment').setup {}
+      require('Comment').setup {
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      }
     end,
   },
 

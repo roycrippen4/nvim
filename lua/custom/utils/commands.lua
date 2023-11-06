@@ -39,3 +39,6 @@ create_cmd('AsToggle', function()
 
   clear_cmdarea()
 end, {})
+vim.keymap.set('n', '<leader>as', function()
+  autosave()
+end, { desc = 'Toggle Autosave' })

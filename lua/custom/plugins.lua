@@ -1,6 +1,16 @@
 local overrides = require 'custom.configs.overrides'
 
 local plugins = {
+
+  {
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    ft = { 'markdown' },
+    build = function()
+      vim.fn['mkdp#util#install']()
+    end,
+  },
+
   {
     'Aasim-A/scrollEOF.nvim',
     event = 'BufRead',

@@ -150,6 +150,9 @@ lspconfig['svelte'].setup {
 require('typescript-tools').setup {
   on_attach = on_attach,
   settings = {
+    tsserver_plugins = {
+      '@styled/typescript-styled-plugin',
+    },
     tsserver_file_preferences = {
       -- Inlay Hints
       includeInlayParameterNameHints = 'all',

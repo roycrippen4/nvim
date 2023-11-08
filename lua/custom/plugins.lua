@@ -12,6 +12,15 @@ local plugins = {
   },
 
   {
+    'folke/trouble.nvim',
+    keys = {
+      { '<leader>tf', mode = { 'n' } },
+      { '<leader>tt', mode = { 'n' } },
+    },
+    opts = {},
+  },
+
+  {
     'Aasim-A/scrollEOF.nvim',
     event = 'BufRead',
     config = function()

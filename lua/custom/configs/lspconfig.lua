@@ -64,16 +64,13 @@ local on_attach = function(client, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
-vim.keymap.set('n', '<leader><leader>l', '<cmd>:Format<CR>', { desc = 'Format with LSP' })
-vim.keymap.set('n', '<leader><leader>c', function()
-  require('conform').format()
-end, { desc = 'Format with Conform' })
-
 require('which-key').register {
   ['<leader>l'] = { name = 'LSP', _ = 'which_key_ignore' },
   ['<leader><leader>'] = { name = 'Format', _ = 'which_key_ignore' },
   ['<leader>f'] = { name = 'Find', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = 'Lookup Keymaps', _ = 'which_key_ignore' },
+  ['<leader>t'] = { name = 'Trouble', _ = 'which_key_ignore' },
+  ['<leader>z'] = { name = 'Zen', _ = 'which_key_ignore' },
 }
 
 require('mason').setup()
@@ -163,6 +160,7 @@ require('typescript-tools').setup {
       includeInlayPropertyDeclarationTypeHints = true,
       includeInlayFunctionLikeReturnTypeHints = true,
       includeInlayEnumMemberValueHints = true,
+      jsxAttributeCompletionStyle = 'auto',
     },
   },
 }

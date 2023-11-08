@@ -13,6 +13,54 @@ local default_plugins = {
   },
 
   {
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    opts = {},
+    keys = {
+      {
+        's',
+        mode = { 'n', 'x', 'o' },
+        function()
+          require('flash').jump()
+        end,
+        desc = 'Flash',
+      },
+      {
+        'S',
+        mode = { 'n', 'x', 'o' },
+        function()
+          require('flash').treesitter()
+        end,
+        desc = 'Flash Treesitter',
+      },
+      {
+        'r',
+        mode = 'o',
+        function()
+          require('flash').remote()
+        end,
+        desc = 'Remote Flash',
+      },
+      {
+        'R',
+        mode = { 'o', 'x' },
+        function()
+          require('flash').treesitter_search()
+        end,
+        desc = 'Treesitter Search',
+      },
+      {
+        '<c-s>',
+        mode = { 'c' },
+        function()
+          require('flash').toggle()
+        end,
+        desc = 'Toggle Flash Search',
+      },
+    },
+  },
+
+  {
     'NvChad/ui',
     branch = 'v2.0',
     lazy = false,
@@ -23,9 +71,30 @@ local default_plugins = {
     init = function()
       require('core.utils').load_mappings 'nvterm'
     end,
-    config = function(_, opts)
+    config = function()
       require 'base46.term'
-      require('nvterm').setup(opts)
+      require('nvterm').setup {
+        terminals = {
+          type_opts = {
+            float = {
+              relative = 'editor',
+              width = 0.8,
+              height = 0.7,
+              border = 'double',
+            },
+            horizontal = {
+              location = 'rightbelow',
+              split_ratio = 0.5,
+            },
+          },
+        },
+        behavior = {
+          autoclose_on_quit = {
+            enabled = false,
+            confirm = true,
+          },
+        },
+      }
     end,
   },
 
@@ -267,7 +336,10 @@ local default_plugins = {
 
   {
     'nvim-telescope/telescope.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' } },
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    },
     cmd = 'Telescope',
     init = function()
       require('core.utils').load_mappings 'telescope'

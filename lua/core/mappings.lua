@@ -140,6 +140,12 @@ M.nvterm = {
       end,
       'Toggle horizontal term',
     },
+    ['<A-f>'] = {
+      function()
+        require('nvterm.terminal').toggle 'float'
+      end,
+      'Toggle floating term',
+    },
   },
   n = {
     ['<A-h>'] = {
@@ -147,6 +153,12 @@ M.nvterm = {
         require('nvterm.terminal').toggle 'horizontal'
       end,
       'Toggle horizontal term',
+    },
+    ['<A-f>'] = {
+      function()
+        require('nvterm.terminal').toggle 'float'
+      end,
+      'Toggle floating term',
     },
   },
 }

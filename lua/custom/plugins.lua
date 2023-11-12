@@ -188,6 +188,7 @@ local plugins = {
       vim.filetype.add {
         extension = { mdx = 'mdx' },
       }
+      vim.treesitter.language.register('mdx', 'markdown')
     end,
     dependencies = {
       'JoosepAlviste/nvim-ts-context-commentstring',

@@ -8,6 +8,7 @@ vim.filetype.add {
     es6 = 'javascript',
     mts = 'typescript',
     cts = 'typescript',
+    mdx = 'mdx',
   },
   filename = {
     ['.eslintrc'] = 'json',

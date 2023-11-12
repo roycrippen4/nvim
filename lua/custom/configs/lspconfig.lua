@@ -30,9 +30,22 @@ local on_attach = function(client, bufnr)
     vim.diagnostic.goto_next()
   end, 'Go to next diagnostic message')
 
-  nmap('<leader>lD', function()
+  nmap('<leader>ld', function()
     vim.diagnostic.setloclist()
   end, 'Open diagnostic message')
+
+  local diagnostic_status = true
+  local toggle_diagnostics = function()
+    diagnostic_status = not diagnostic_status
+    if diagnostic_status then
+      vim.api.nvim_echo({ { 'Show diagnostics' } }, false, {})
+      vim.diagnostic.enable()
+    else
+      vim.api.nvim_echo({ { 'Hide diagnostics' } }, false, {})
+      vim.diagnostic.disable()
+    end
+  end
+  nmap('<leader>lD', toggle_diagnostics, 'Open diagnostic message')
 
   nmap('<leader>lf', function()
     vim.diagnostic.open_float()

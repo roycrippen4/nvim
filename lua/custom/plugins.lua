@@ -12,6 +12,35 @@ local plugins = {
   },
 
   {
+    'rcarriga/nvim-dap-ui',
+    keys = {
+      { '<leader>dt', mode = { 'n' } },
+    },
+    dependencies = {
+      'mfussenegger/nvim-dap',
+    },
+    config = function()
+      ---@diagnostic disable-next-line
+      require('dapui').setup {}
+      local dap, dapui = require 'dap', require 'dapui'
+
+      vim.keymap.set('n', '<Leader>dt', function()
+        dapui.toggle()
+      end, { desc = 'Toggle Debug UI' })
+
+      dap.listeners.after.event_initialized['dapui_config'] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated['dapui_config'] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited['dapui_config'] = function()
+        dapui.close()
+      end
+    end,
+  },
+
+  {
     'folke/trouble.nvim',
     keys = {
       { '<leader>tf', mode = { 'n' } },
@@ -100,6 +129,8 @@ local plugins = {
       {
         'williamboman/mason.nvim',
         dependencies = {
+          'mfussenegger/nvim-dap',
+          'jay-babu/mason-nvim-dap.nvim',
           'williamboman/mason-lspconfig.nvim',
           'WhoIsSethDaniel/mason-tool-installer.nvim',
         },
@@ -220,6 +251,80 @@ local plugins = {
   {
     'mbbill/undotree',
     cmd = 'UndotreeToggle',
+  },
+
+  {
+    'mfussenegger/nvim-dap',
+    keys = {
+      { '<leader>dc', mode = { 'n' } },
+      { '<leader>dsv', mode = { 'n' } },
+      { '<leader>dsi', mode = { 'n' } },
+      { '<leader>dso', mode = { 'n' } },
+      { '<leader>db', mode = { 'n' } },
+      { '<leader>dB', mode = { 'n' } },
+      { '<leader>dr', mode = { 'n' } },
+      { '<leader>dl', mode = { 'n' } },
+      { '<leader>dh', mode = { 'n' } },
+      { '<leader>dp', mode = { 'n' } },
+      { '<leader>df', mode = { 'n' } },
+      { '<leader>ds', mode = { 'n' } },
+    },
+    config = function()
+      require 'dap'
+      vim.keymap.set('n', '<Leader>dc', function()
+        require('dap').continue()
+      end, { desc = 'Continue' })
+
+      vim.keymap.set('n', '<Leader>dsv', function()
+        require('dap').step_over()
+      end, { desc = 'Step into' })
+
+      vim.keymap.set('n', '<Leader>dsi', function()
+        require('dap').step_into()
+      end, { desc = 'Step into' })
+
+      vim.keymap.set('n', '<Leader>dso', function()
+        require('dap').step_out()
+      end, { desc = 'Step out' })
+
+      vim.keymap.set('n', '<Leader>db', function()
+        require('dap').toggle_breakpoint()
+      end, { desc = 'Toggle breakpoint' })
+
+      vim.keymap.set('n', '<Leader>dB', function()
+        require('dap').set_breakpoint()
+      end, { desc = 'Set breakpoint' })
+
+      -- vim.keymap.set('n', '<Leader>lp', function()
+      --   require('dap').set_breakpoint(nil, nil, vim.fn.input 'Log point message: ')
+      -- end)
+
+      vim.keymap.set('n', '<Leader>dr', function()
+        require('dap').repl.open()
+      end, { desc = 'Repl open' })
+
+      vim.keymap.set('n', '<Leader>dl', function()
+        require('dap').run_last()
+      end, { desc = 'Run Last' })
+
+      vim.keymap.set({ 'n', 'v' }, '<Leader>dh', function()
+        require('dap.ui.widgets').hover()
+      end, { desc = 'Hover' })
+
+      vim.keymap.set({ 'n', 'v' }, '<Leader>dp', function()
+        require('dap.ui.widgets').preview()
+      end, { desc = 'Preview' })
+
+      vim.keymap.set('n', '<Leader>df', function()
+        local widgets = require 'dap.ui.widgets'
+        widgets.centered_float(widgets.frames)
+      end, { desc = 'Show frames' })
+
+      vim.keymap.set('n', '<Leader>ds', function()
+        local widgets = require 'dap.ui.widgets'
+        widgets.centered_float(widgets.scopes)
+      end, { desc = 'Show scopes' })
+    end,
   },
 }
 

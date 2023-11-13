@@ -78,6 +78,9 @@ local on_attach = function(client, bufnr)
 end
 
 require('which-key').register {
+  ['<leader>a'] = { name = 'Autosave', _ = 'which_key_ignore' },
+  ['<leader>d'] = { name = 'Debug', _ = 'which_key_ignore' },
+  ['<leader>ds'] = { name = 'Step', _ = 'which_key_ignore' },
   ['<leader>l'] = { name = 'LSP', _ = 'which_key_ignore' },
   ['<leader><leader>'] = { name = 'Format', _ = 'which_key_ignore' },
   ['<leader>f'] = { name = 'Find', _ = 'which_key_ignore' },

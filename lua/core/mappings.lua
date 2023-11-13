@@ -39,8 +39,8 @@ M.general = {
     ['<Down>'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
 
     -- new buffer
-    ['<leader>b'] = { '<cmd> enew <CR>', 'New buffer' },
-    ['<leader>ch'] = { '<cmd> NvCheatsheet <CR>', 'Mapping cheatsheet' },
+    -- ['<leader>b'] = { '<cmd> enew <CR>', 'New buffer' },
+    -- ['<leader>ch'] = { '<cmd> NvCheatsheet <CR>', 'Mapping cheatsheet' },
 
     ['<leader>fm'] = {
       function()
@@ -184,25 +184,25 @@ M.whichkey = {
 }
 
 M.blankline = {
-  plugin = true,
-
-  n = {
-    ['<leader>cc'] = {
-      function()
-        local ok, start = require('indent_blankline.utils').get_current_context(
-          vim.g.indent_blankline_context_patterns,
-          vim.g.indent_blankline_use_treesitter_scope
-        )
-
-        if ok then
-          vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
-          vim.cmd [[normal! _]]
-        end
-      end,
-
-      'Jump to current context',
-    },
-  },
+  -- plugin = true,
+  --
+  -- n = {
+  --   ['<leader>cc'] = {
+  --     function()
+  --       local ok, start = require('indent_blankline.utils').get_current_context(
+  --         vim.g.indent_blankline_context_patterns,
+  --         vim.g.indent_blankline_use_treesitter_scope
+  --       )
+  --
+  --       if ok then
+  --         vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
+  --         vim.cmd [[normal! _]]
+  --       end
+  --     end,
+  --
+  --     'Jump to current context',
+  --   },
+  -- },
 }
 
 M.gitsigns = {
@@ -239,12 +239,12 @@ M.gitsigns = {
     },
 
     -- Actions
-    ['<leader>rh'] = {
-      function()
-        require('gitsigns').reset_hunk()
-      end,
-      'Reset hunk',
-    },
+    -- ['<leader>rh'] = {
+    --   function()
+    --     require('gitsigns').reset_hunk()
+    --   end,
+    --   'Reset hunk',
+    -- },
 
     ['<leader>ph'] = {
       function()
@@ -253,12 +253,12 @@ M.gitsigns = {
       'Preview hunk',
     },
 
-    ['<leader>gb'] = {
-      function()
-        package.loaded.gitsigns.blame_line()
-      end,
-      'Blame line',
-    },
+    -- ['<leader>gb'] = {
+    --   function()
+    --     package.loaded.gitsigns.blame_line()
+    --   end,
+    --   'Blame line',
+    -- },
 
     ['<leader>td'] = {
       function()

@@ -28,3 +28,25 @@ mason_lspconfig.setup {
   },
   automatic_installation = true,
 }
+
+require('mason-nvim-dap').setup {
+  handlers = {
+    function(config)
+      require('mason-nvim-dap').default_setup(config)
+    end,
+    chrome = function(config)
+      local dap = require 'dap'
+      dap.configurations = {
+        {
+          name = 'Debug with Chrome',
+          type = 'chrome',
+          requres = 'launch',
+          reAttach = true,
+          url = 'http://localhost:8080',
+          webRoot = '${workspaceFolder}',
+        },
+      }
+      require('mason-nvim-dap').default_setup(config)
+    end,
+  },
+}

@@ -10,7 +10,7 @@ local on_attach = function(client, bufnr)
     require('telescope.builtin').lsp_references()
   end, 'Goto References')
 
-  nmap('gI', function()
+  nmap('gi', function()
     require('telescope.builtin').lsp_implementations()
   end, 'Goto Implementation')
 
@@ -127,6 +127,21 @@ lspconfig['jsonls'].setup {
 lspconfig['eslint'].setup {
   capabilities = capabilities,
   on_attach = on_attach,
+  settings = {
+    workingDirectory = {
+      mode = 'auto',
+    },
+    rulesCustomizations = {
+      {
+        rule = 'no-unused-vars',
+        severity = 'off',
+      },
+      {
+        rule = '@typescript-eslint/no-unused-vars',
+        severity = 'off',
+      },
+    },
+  },
 }
 
 lspconfig['lua_ls'].setup {

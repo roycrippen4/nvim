@@ -1,5 +1,5 @@
 local M = {}
-
+-- 󰱺
 M.cmp = {
   sources = {
     { name = 'nvim_lsp', trigger_characters = { '-' } },
@@ -11,26 +11,6 @@ M.cmp = {
   experimental = {
     ghost_text = true,
   },
-}
-
-M.whichkey = {
-  plugin = true,
-  disable = false,
-  config = function()
-    require 'plugins.configs.which-key'
-    local ok, wk = pcall(require, 'which-key')
-    if not ok then
-      return
-    end
-    wk.register {
-      ['<leader'] = {
-        f = { name = 'find' },
-      },
-    }
-  end,
-  setup = function()
-    require('core.utils').load_mappings 'whichkey'
-  end,
 }
 
 M.treesitter = {
@@ -56,10 +36,6 @@ M.treesitter = {
   autopairs = {
     enable = true,
   },
-  autotag = {
-    enable = true,
-    filetypes = { 'html', 'xml', 'svelte', 'react', 'vue' },
-  },
   indent = {
     enable = true,
     disable = {
@@ -72,7 +48,6 @@ M.nvimtree = {
   git = {
     enable = true,
   },
-
   renderer = {
     highlight_git = true,
     icons = {

@@ -81,11 +81,16 @@ require('which-key').register {
   ['<leader>a'] = { name = 'Autosave', _ = 'which_key_ignore' },
   ['<leader>d'] = { name = 'Debug', _ = 'which_key_ignore' },
   ['<leader>ds'] = { name = 'Step', _ = 'which_key_ignore' },
-  ['<leader>l'] = { name = 'LSP', _ = 'which_key_ignore' },
-  ['<leader><leader>'] = { name = 'Format', _ = 'which_key_ignore' },
   ['<leader>f'] = { name = 'Find', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = 'Lookup Keymaps', _ = 'which_key_ignore' },
+  ['<leader>l'] = { name = 'LSP', _ = 'which_key_ignore' },
+  -- markdown preview
+  ['<leader>m'] = { name = 'Markdown Preview', _ = 'which_key_ignore' },
+  ['<leader>mt'] = { name = 'Toggle Markdown Preview', _ = 'which_key_ignore' },
+  ['<leader>mp'] = { name = 'Start Markdown Preview', _ = 'which_key_ignore' },
+  ['<leader>ms'] = { name = 'Stop Markdown Preview', _ = 'which_key_ignore' },
+
   ['<leader>t'] = { name = 'Trouble', _ = 'which_key_ignore' },
+  ['<leader>w'] = { name = 'Lookup Keymaps', _ = 'which_key_ignore' },
   ['<leader>z'] = { name = 'Zen', _ = 'which_key_ignore' },
 }
 

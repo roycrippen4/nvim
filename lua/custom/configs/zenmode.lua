@@ -1,4 +1,4 @@
-require('zen-mode').setup {
+return {
   window = {
     backdrop = 0.93,
     width = 140,
@@ -6,13 +6,13 @@ require('zen-mode').setup {
   },
   plugins = {
     options = {
-      showcmd = false,
+      showcmd = true,
       enabled = true,
       laststatus = 0,
     },
     kitty = {
       enabled = true,
-      font = '+3',
+      font = '0',
     },
     twilight = { enabled = false }, -- enable to start Twilight when zen mode opens
     gitsigns = { enabled = true }, -- disables git signs

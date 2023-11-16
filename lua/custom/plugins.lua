@@ -5,9 +5,19 @@ local plugins = {
   {
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    keys = {
+      { '<leader>mt', mode = { 'n' } },
+      { '<leader>mp', mode = { 'n' } },
+      { '<leader>ms', mode = { 'n' } },
+    },
     ft = { 'markdown' },
     build = function()
       vim.fn['mkdp#util#install']()
+    end,
+    config = function()
+      vim.keymap.set('n', '<leader>mt', '<cmd> MarkdownPreviewToggle <CR>', { desc = 'Toggle Markdown Preview' })
+      vim.keymap.set('n', '<leader>mp', '<cmd> MarkdownPreview <CR>', { desc = 'Preview Markdown' })
+      vim.keymap.set('n', '<leader>ms', '<cmd> MarkdownPreviewStop <CR>', { desc = 'Stop Markdown Preview' })
     end,
   },
 
@@ -146,9 +156,33 @@ local plugins = {
 
   {
     'stevearc/conform.nvim',
-    event = 'VimEnter',
+    event = 'LspAttach',
     config = function()
-      require 'custom.configs.conform'
+      local opts = require 'custom.configs.conform'
+      local conform = require 'conform'
+      conform.setup(opts)
+
+      require('conform.formatters.prettier').args = function(ctx)
+        local args = { '--stdin-filepath', '$FILENAME' }
+
+        local localPrettierConfig = vim.fs.find('.prettierrc.json', {
+          upward = true,
+          path = ctx.dirname,
+          type = 'file',
+        })[1]
+
+        local globalPrettierConfig = vim.fs.find('.prettierrc.json', {
+          path = vim.fn.expand '~/.config/nvim',
+          type = 'file',
+        })[1]
+
+        if localPrettierConfig then
+          vim.list_extend(args, { '--config', localPrettierConfig })
+        elseif globalPrettierConfig then
+          vim.list_extend(args, { '--config', globalPrettierConfig })
+        end
+        return args
+      end
     end,
   },
 
@@ -156,7 +190,7 @@ local plugins = {
     'windwp/nvim-ts-autotag',
     event = 'InsertEnter',
     config = function()
-      require('nvim-ts-autotag').setup()
+      require('nvim-ts-autotag').setup {}
     end,
   },
 
@@ -216,13 +250,10 @@ local plugins = {
     config = function(_, opts)
       dofile(vim.g.base46_cache .. 'syntax')
       require('nvim-treesitter.configs').setup(opts)
-      vim.filetype.add {
-        extension = { mdx = 'mdx' },
-      }
-      vim.treesitter.language.register('mdx', 'markdown')
     end,
     dependencies = {
       'JoosepAlviste/nvim-ts-context-commentstring',
+      { 'windwp/nvim-ts-autotag', opts = {} },
     },
   },
 
@@ -243,9 +274,7 @@ local plugins = {
   {
     'folke/zen-mode.nvim',
     cmd = 'ZenMode',
-    config = function()
-      require 'custom.configs.zenmode'
-    end,
+    opts = require 'custom.configs.zenmode',
   },
 
   {

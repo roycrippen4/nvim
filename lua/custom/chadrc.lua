@@ -1,8 +1,6 @@
 local M = {}
 
-M.ui = {
-  theme = 'nightfox',
-}
+M.overrides = require 'custom.configs.overrides'
 
 M.plugins = 'custom.plugins'
 

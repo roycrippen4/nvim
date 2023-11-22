@@ -1,6 +1,64 @@
 local overrides = require 'custom.configs.overrides'
+local colors = require('base46').get_theme_tb 'base_30'
+-- local base = require('base46').get_theme_tb 'base_16'
 
 local plugins = {
+
+  {
+    'folke/todo-comments.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    event = 'BufReadPre',
+    opts = {},
+  },
+
+  {
+    'utilyre/barbecue.nvim',
+    event = 'BufReadPre',
+    dependencies = {
+      'SmiteshP/nvim-navic',
+      'nvim-tree/nvim-web-devicons', -- optional dependency
+    },
+    config = function()
+      require('barbecue').setup {
+        attach_navic = false,
+        symbols = {
+          separator = '',
+        },
+        context_follow_icon_color = true,
+        theme = {
+          normal = {},
+          dirname = { fg = colors.light_grey },
+          basename = { bold = true },
+
+          separator = { fg = colors.red },
+          ellipses = { fg = colors.red },
+          modified = { fg = colors.red },
+
+          context_constructor = { fg = colors.yellow },
+          context_function = { fg = colors.sun },
+          context_method = { fg = colors.sun },
+
+          context_class = { fg = colors.purple },
+          context_struct = { fg = colors.purple },
+
+          context_interface = { fg = colors.teal },
+          context_type_parameter = { fg = colors.teal },
+          context_enum = { fg = colors.teal },
+          context_enum_member = { fg = colors.nord_blue },
+
+          context_array = { fg = colors.baby_pink },
+          context_object = { fg = colors.pink },
+          context_field = { fg = colors.baby_pink },
+          context_key = { fg = colors.baby_pink },
+
+          --primatives
+          context_string = { fg = colors.green },
+          context_number = { fg = colors.white },
+          context_boolean = { fg = colors.sun },
+        },
+      }
+    end,
+  },
 
   {
     'iamcco/markdown-preview.nvim',
@@ -68,6 +126,15 @@ local plugins = {
   },
 
   {
+    'JoosepAlviste/nvim-ts-context-commentstring',
+    event = 'VimEnter',
+    config = function()
+      ---@diagnostic disable-next-line
+      require('ts_context_commentstring').setup {}
+    end,
+  },
+
+  {
     'numToStr/Comment.nvim',
     keys = {
       { 'gc', mode = { 'n', 'v' }, 'gcc' },
@@ -75,14 +142,16 @@ local plugins = {
     config = function()
       ---@diagnostic disable-next-line
       require('Comment').setup {
-        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+        pre_hook = function()
+          return vim.bo.commentstring
+        end,
       }
     end,
   },
 
   {
     'simrat39/rust-tools.nvim',
-    event = 'VimEnter',
+    ft = 'rust',
     config = function()
       local rt = require 'rust-tools'
       rt.setup {
@@ -101,7 +170,8 @@ local plugins = {
 
   {
     'kylechui/nvim-surround',
-    event = 'InsertEnter',
+    keys = { 'cs', 'S', 'ysiw' },
+    -- event = 'InsertEnter',
     config = function()
       require('nvim-surround').setup()
     end,
@@ -129,25 +199,57 @@ local plugins = {
   },
 
   {
+    'williamboman/mason.nvim',
+    cmd = 'Mason',
+  },
+
+  {
+    'williamboman/mason-lspconfig.nvim',
+  },
+
+  {
+    'pmizio/typescript-tools.nvim',
+    ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' },
+    config = function()
+      local M = require 'custom.configs.lspconfig'
+      require('typescript-tools').setup {
+        on_attach = M.on_attach,
+        settings = {
+          tsserver_plugins = {
+            '@styled/typescript-styled-plugin',
+          },
+          tsserver_file_preferences = {
+            -- Inlay Hints
+            includeInlayParameterNameHints = 'all',
+            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayVariableTypeHints = true,
+            includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayEnumMemberValueHints = true,
+            jsxAttributeCompletionStyle = 'auto',
+          },
+        },
+        vim.keymap.set('n', 'fi', '<cmd> TSToolsOrganizeImports<CR>', { desc = 'Organize imports' }),
+      }
+    end,
+  },
+
+  {
     'neovim/nvim-lspconfig',
     event = 'VimEnter',
     dependencies = {
-      'simrat39/rust-tools.nvim',
-      'pmizio/typescript-tools.nvim',
       'folke/neodev.nvim',
       { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
-      {
-        'williamboman/mason.nvim',
-        dependencies = {
-          'mfussenegger/nvim-dap',
-          'jay-babu/mason-nvim-dap.nvim',
-          'williamboman/mason-lspconfig.nvim',
-          'WhoIsSethDaniel/mason-tool-installer.nvim',
-        },
-        config = function()
-          require 'custom.configs.mason'
-        end,
-      },
+      -- {
+      --   'williamboman/mason.nvim',
+      --   dependencies = {
+      --     'mfussenegger/nvim-dap',
+      --     'jay-babu/mason-nvim-dap.nvim',
+      --     'WhoIsSethDaniel/mason-tool-installer.nvim',
+      --   },
+      -- },
     },
     config = function()
       require 'custom.configs.lspconfig'
@@ -156,39 +258,36 @@ local plugins = {
 
   {
     'stevearc/conform.nvim',
-    event = 'LspAttach',
+    lazy = true,
+    event = { 'BufReadPre', 'BufNewFile' },
     config = function()
-      local opts = require 'custom.configs.conform'
-      local conform = require 'conform'
-      conform.setup(opts)
-
-      require('conform.formatters.prettier').args = function(ctx)
-        local args = { '--stdin-filepath', '$FILENAME' }
-
-        local localPrettierConfig = vim.fs.find('.prettierrc.json', {
-          upward = true,
-          path = ctx.dirname,
-          type = 'file',
-        })[1]
-
-        local globalPrettierConfig = vim.fs.find('.prettierrc.json', {
-          path = vim.fn.expand '~/.config/nvim',
-          type = 'file',
-        })[1]
-
-        if localPrettierConfig then
-          vim.list_extend(args, { '--config', localPrettierConfig })
-        elseif globalPrettierConfig then
-          vim.list_extend(args, { '--config', globalPrettierConfig })
-        end
-        return args
-      end
+      require('conform').setup {
+        quiet = true,
+        formatters_by_ft = {
+          lua = { 'stylua' },
+          typescript = { 'prettier' },
+          typescriptreact = { 'prettier' },
+          javascript = { 'prettier' },
+          javascriptreact = { 'prettier' },
+          json = { 'pretter' },
+          html = { 'prettier' },
+          css = { 'prettier' },
+          markdown = { 'prettier' },
+          yaml = { 'prettier' },
+          sh = { 'shfmt' },
+        },
+        format_on_save = {
+          timeout_ms = 500,
+          async = false,
+          lsp_fallback = true,
+        },
+      }
     end,
   },
 
   {
     'windwp/nvim-ts-autotag',
-    event = 'InsertEnter',
+    lazy = true,
     config = function()
       require('nvim-ts-autotag').setup {}
     end,
@@ -235,14 +334,29 @@ local plugins = {
   },
 
   {
-    'karb94/neoscroll.nvim',
-    keys = { '<C-d>', '<C-u>' },
-    config = function()
-      require('neoscroll').setup {
-        hide_cursor = false,
-      }
-    end,
+    'declancm/cinnamon.nvim',
+    event = 'VimEnter',
+    opts = {
+      extra_keymaps = true,
+      max_length = 100,
+    },
   },
+
+  -- {
+  --   'karb94/neoscroll.nvim',
+  --   keys = { '<C-d>', '<C-u>' },
+  --   config = function()
+  --     require('neoscroll').setup {
+  --       hide_cursor = false,
+  --     }
+  --     local t = {}
+  --     -- Syntax: t[keys] = {function, {function arguments}}
+  --     t['<C-u>'] = { 'scroll', { '-vim.wo.scroll', 'true', '100' } }
+  --     t['<C-d>'] = { 'scroll', { 'vim.wo.scroll', 'true', '100' } }
+  --
+  --     require('neoscroll.config').set_mappings(t)
+  --   end,
+  -- },
 
   {
     'nvim-treesitter/nvim-treesitter',
@@ -252,8 +366,7 @@ local plugins = {
       require('nvim-treesitter.configs').setup(opts)
     end,
     dependencies = {
-      'JoosepAlviste/nvim-ts-context-commentstring',
-      { 'windwp/nvim-ts-autotag', opts = {} },
+      { 'windwp/nvim-ts-autotag' },
     },
   },
 
@@ -284,6 +397,7 @@ local plugins = {
 
   {
     'mfussenegger/nvim-dap',
+    lazy = true,
     keys = {
       { '<leader>dc', mode = { 'n' } },
       { '<leader>dsv', mode = { 'n' } },

@@ -66,9 +66,9 @@ _G.add_new_line = function()
   end
 end
 
-vim.cmd [[
-  augroup AddNewlineOnSave
-    autocmd!
-    autocmd BufWritePre * lua _G.add_new_line()
-  augroup END
-]]
+-- vim.cmd [[
+--   augroup AddNewlineOnSave
+--     autocmd!
+--     autocmd BufWritePost * lua _G.add_new_line()
+--   augroup END
+-- ]]

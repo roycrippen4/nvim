@@ -1,4 +1,5 @@
 local M = {}
+
 -- 󰱺
 M.cmp = {
   sources = {
@@ -14,10 +15,10 @@ M.cmp = {
 }
 
 M.treesitter = {
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  },
+  -- context_commentstring = {
+  --   enable = true,
+  --   enable_autocmd = false,
+  -- },
   ensure_installed = {
     'bash',
     'vim',
@@ -34,6 +35,9 @@ M.treesitter = {
     'markdown_inline',
   },
   autopairs = {
+    enable = true,
+  },
+  autotag = {
     enable = true,
   },
   indent = {

@@ -1,8 +1,9 @@
 local opt = vim.o
 
 opt.relativenumber = true
-opt.scrolloff = 12
+opt.scrolloff = 10
 
+vim.g.skip_ts_context_commentstring_module = true
 vim.g.markdown_fenced_languages = {
   'ts=typescript',
 }

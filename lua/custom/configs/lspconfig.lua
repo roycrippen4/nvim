@@ -1,4 +1,5 @@
-local on_attach = function(client, bufnr)
+local M = {}
+M.on_attach = function(client, bufnr)
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
@@ -18,7 +19,7 @@ local on_attach = function(client, bufnr)
     require('telescope.builtin').lsp_definitions()
   end, 'Goto Definition')
 
-  nmap('<C-k>', function()
+  nmap('<C-S-K>', function()
     vim.lsp.buf.signature_help()
   end, 'Signature Documentation')
 
@@ -63,18 +64,11 @@ local on_attach = function(client, bufnr)
     vim.lsp.buf.code_action()
   end, 'Code Action')
 
-  vim.api.nvim_create_autocmd('BufReadPost', {
-    callback = function()
-      if client.name == 'typescript-tools' then
-        client.server_capabilities.documentFormattingProvider = false
-        client.server_capabilities.documentRangeFormattingProvider = false
-      end
-    end,
-  })
-
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
+  if client.server_capabilities['documentSymbolProvider'] then
+    require('nvim-navic').attach(client, bufnr)
+  else
+    return
+  end
 end
 
 require('which-key').register {
@@ -105,33 +99,33 @@ local lspconfig = require 'lspconfig'
 
 lspconfig['html'].setup {
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = M.on_attach,
 }
 
 lspconfig['htmx'].setup {
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = M.on_attach,
 }
 
 lspconfig['emmet_language_server'].setup {
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = M.on_attach,
   filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'svelte' },
 }
 
 lspconfig['cssls'].setup {
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = M.on_attach,
 }
 
 lspconfig['jsonls'].setup {
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = M.on_attach,
 }
 
 lspconfig['eslint'].setup {
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = M.on_attach,
   settings = {
     workingDirectory = {
       mode = 'auto',
@@ -151,7 +145,7 @@ lspconfig['eslint'].setup {
 
 lspconfig['lua_ls'].setup {
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = M.on_attach,
   settings = {
     Lua = {
       diagnostics = {
@@ -183,23 +177,25 @@ lspconfig['svelte'].setup {
   end,
 }
 
-require('typescript-tools').setup {
-  on_attach = on_attach,
-  settings = {
-    tsserver_plugins = {
-      '@styled/typescript-styled-plugin',
-    },
-    tsserver_file_preferences = {
-      -- Inlay Hints
-      includeInlayParameterNameHints = 'all',
-      includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-      includeInlayFunctionParameterTypeHints = true,
-      includeInlayVariableTypeHints = true,
-      includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-      includeInlayPropertyDeclarationTypeHints = true,
-      includeInlayFunctionLikeReturnTypeHints = true,
-      includeInlayEnumMemberValueHints = true,
-      jsxAttributeCompletionStyle = 'auto',
-    },
-  },
-}
+-- require('typescript-tools').setup {
+--   on_attach = on_attach,
+--   settings = {
+--     tsserver_plugins = {
+--       '@styled/typescript-styled-plugin',
+--     },
+--     tsserver_file_preferences = {
+--       -- Inlay Hints
+--       includeInlayParameterNameHints = 'all',
+--       includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+--       includeInlayFunctionParameterTypeHints = true,
+--       includeInlayVariableTypeHints = true,
+--       includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+--       includeInlayPropertyDeclarationTypeHints = true,
+--       includeInlayFunctionLikeReturnTypeHints = true,
+--       includeInlayEnumMemberValueHints = true,
+--       jsxAttributeCompletionStyle = 'auto',
+--     },
+--   },
+--   vim.keymap.set('n', 'fi', '<cmd> TSToolsOrganizeImports<CR>', { desc = 'Organize imports' }),
+-- }
+return M

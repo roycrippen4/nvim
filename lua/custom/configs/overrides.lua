@@ -15,10 +15,6 @@ M.cmp = {
 }
 
 M.treesitter = {
-  -- context_commentstring = {
-  --   enable = true,
-  --   enable_autocmd = false,
-  -- },
   ensure_installed = {
     'bash',
     'vim',
@@ -33,12 +29,6 @@ M.treesitter = {
     'c',
     'markdown',
     'markdown_inline',
-  },
-  autopairs = {
-    enable = true,
-  },
-  autotag = {
-    enable = true,
   },
   indent = {
     enable = true,

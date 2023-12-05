@@ -1,6 +1,5 @@
 local overrides = require 'custom.configs.overrides'
 local colors = require('base46').get_theme_tb 'base_30'
--- local base = require('base46').get_theme_tb 'base_16'
 
 local plugins = {
 
@@ -128,10 +127,6 @@ local plugins = {
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
     event = 'VimEnter',
-    config = function()
-      ---@diagnostic disable-next-line
-      require('ts_context_commentstring').setup {}
-    end,
   },
 
   {
@@ -142,9 +137,10 @@ local plugins = {
     config = function()
       ---@diagnostic disable-next-line
       require('Comment').setup {
-        pre_hook = function()
-          return vim.bo.commentstring
-        end,
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+        -- pre_hook = function()
+        --   return vim.bo.commentstring
+        -- end,
       }
     end,
   },
@@ -170,8 +166,7 @@ local plugins = {
 
   {
     'kylechui/nvim-surround',
-    keys = { 'cs', 'S', 'ysiw' },
-    -- event = 'InsertEnter',
+    event = 'VimEnter',
     config = function()
       require('nvim-surround').setup()
     end,
@@ -242,14 +237,6 @@ local plugins = {
     dependencies = {
       'folke/neodev.nvim',
       { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
-      -- {
-      --   'williamboman/mason.nvim',
-      --   dependencies = {
-      --     'mfussenegger/nvim-dap',
-      --     'jay-babu/mason-nvim-dap.nvim',
-      --     'WhoIsSethDaniel/mason-tool-installer.nvim',
-      --   },
-      -- },
     },
     config = function()
       require 'custom.configs.lspconfig'
@@ -287,9 +274,24 @@ local plugins = {
 
   {
     'windwp/nvim-ts-autotag',
-    lazy = true,
+    ft = {
+      'typescript',
+      'javascript',
+      'typescriptreact',
+      'javascriptreact',
+      'html',
+      'svelte',
+      'jsx',
+      'tsx',
+      'markdown',
+      'mdx',
+    },
     config = function()
-      require('nvim-ts-autotag').setup {}
+      require('nvim-ts-autotag').setup {
+        autotag = {
+          enable_close_on_slash = false,
+        },
+      }
     end,
   },
 
@@ -337,7 +339,6 @@ local plugins = {
     'declancm/cinnamon.nvim',
     event = 'VimEnter',
     opts = {
-      extra_keymaps = true,
       max_length = 100,
     },
   },
@@ -365,9 +366,6 @@ local plugins = {
       dofile(vim.g.base46_cache .. 'syntax')
       require('nvim-treesitter.configs').setup(opts)
     end,
-    dependencies = {
-      { 'windwp/nvim-ts-autotag' },
-    },
   },
 
   {

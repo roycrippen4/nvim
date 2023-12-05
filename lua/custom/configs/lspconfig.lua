@@ -164,7 +164,7 @@ lspconfig['lua_ls'].setup {
 lspconfig['svelte'].setup {
   capabilities = capabilities,
   on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
+    M.on_attach(client, bufnr)
 
     vim.api.nvim_create_autocmd('BufWritePost', {
       pattern = { '*.js', '*.ts' },

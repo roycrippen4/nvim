@@ -127,6 +127,7 @@ M.telescope = {
     ['<leader>fg'] = { '<cmd> Telescope git_status <CR>', 'Find Git status' },
     ['<leader>fs'] = { '<cmd> Telescope themes <CR>', 'Find scheme' },
     ['<leader>fm'] = { '<cmd> Telescope marks <CR>', 'Find bookmarks' },
+    ['<leader>fl'] = { '<cmd> Telescope highlights <CR>', 'Find highlight groups' },
   },
 }
 

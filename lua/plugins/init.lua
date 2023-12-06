@@ -15,7 +15,7 @@ local default_plugins = {
   {
     'NvChad/ui',
     branch = 'v2.0',
-    lazy = false,
+    event = 'VimEnter',
   },
 
   {
@@ -76,21 +76,33 @@ local default_plugins = {
     end,
   },
 
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    version = '2.20.7',
-    init = function()
-      require('core.utils').lazy_load 'indent-blankline.nvim'
-    end,
-    opts = function()
-      return require('plugins.configs.others').blankline
-    end,
-    config = function(_, opts)
-      require('core.utils').load_mappings 'blankline'
-      dofile(vim.g.base46_cache .. 'blankline')
-      require('indent_blankline').setup(opts)
-    end,
-  },
+  -- {
+  --   'lukas-reineke/indent-blankline.nvim',
+  --   version = '3.3.8',
+  --   event = 'BufRead',
+  --   opts = function()
+  --     return require('plugins.configs.others').blankline
+  --   end,
+  --   config = function(_, opts)
+  --     require('core.utils').load_mappings 'blankline'
+  --     dofile(vim.g.base46_cache .. 'blankline')
+  --     require('ibl').setup(opts)
+  --
+  --     local hooks = require 'ibl.hooks'
+  --
+  --     hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+  --       vim.api.nvim_set_hl(0, 'RainbowDelimitersRed', { fg = '#E06C75' })
+  --       vim.api.nvim_set_hl(0, 'RainbowDelimitersYellow', { fg = '#E5C07B' })
+  --       vim.api.nvim_set_hl(0, 'RainbowDelimitersBlue', { fg = '#61AFEF' })
+  --       vim.api.nvim_set_hl(0, 'RainbowDelimitersOrange', { fg = '#D19A66' })
+  --       vim.api.nvim_set_hl(0, 'RainbowDelimitersGreen', { fg = '#98C379' })
+  --       vim.api.nvim_set_hl(0, 'RainbowDelimitersViolet', { fg = '#C678DD' })
+  --       vim.api.nvim_set_hl(0, 'RainbowDelimitersCyan', { fg = '#56B6C2' })
+  --     end)
+  --
+  --     hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+  --   end,
+  -- },
 
   {
     'nvim-treesitter/nvim-treesitter',

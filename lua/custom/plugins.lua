@@ -4,6 +4,58 @@ local colors = require('base46').get_theme_tb 'base_30'
 local plugins = {
 
   {
+    'lukas-reineke/indent-blankline.nvim',
+    version = '3.3.8',
+    event = 'BufRead',
+    config = function()
+      local highlight = {
+        'RainbowDelimiterRed',
+        'RainbowDelimiterYellow',
+        'RainbowDelimiterBlue',
+        'RainbowDelimiterOrange',
+        'RainbowDelimiterGreen',
+        'RainbowDelimiterViolet',
+        'RainbowDelimiterCyan',
+      }
+      local opts = {
+        indent = {
+          char = '▎',
+        },
+        scope = {
+          show_exact_scope = true,
+          highlight = highlight,
+          include = {
+            node_type = {
+              lua = {
+                'return_statement',
+                'table_constructor',
+              },
+            },
+          },
+        },
+        viewport_buffer = { min = 50, max = 1000 },
+        exclude = {
+          filetypes = {
+            'help',
+            'terminal',
+            'lazy',
+            'lspinfo',
+            'TelescopePrompt',
+            'TelescopeResults',
+            'mason',
+            'nvdash',
+            'nvcheatsheet',
+            '',
+          },
+        },
+      }
+      local hooks = require 'ibl.hooks'
+      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+      require('ibl').setup(opts)
+    end,
+  },
+
+  {
     'folke/todo-comments.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
     event = 'BufReadPre',
@@ -90,7 +142,6 @@ local plugins = {
       ---@diagnostic disable-next-line
       require('dapui').setup {}
       local dap, dapui = require 'dap', require 'dapui'
-
       vim.keymap.set('n', '<Leader>dt', function()
         dapui.toggle()
       end, { desc = 'Toggle Debug UI' })
@@ -150,15 +201,13 @@ local plugins = {
     ft = 'rust',
     config = function()
       local rt = require 'rust-tools'
+      local M = require 'custom.configs.lspconfig'
       rt.setup {
         inlay_hints = {
           auto = true,
         },
         server = {
-          on_attach = function(_, bufnr)
-            vim.keymap.set('n', 'K', rt.hover_actions.hover_actions, { buffer = bufnr })
-            vim.keymap.set('n', '<leader>la', rt.code_action_group.code_action_group, { buffer = bufnr })
-          end,
+          on_attach = M.on_attach,
         },
       }
     end,
@@ -339,25 +388,16 @@ local plugins = {
     'declancm/cinnamon.nvim',
     event = 'VimEnter',
     opts = {
-      max_length = 100,
+      max_length = 50,
     },
   },
 
-  -- {
-  --   'karb94/neoscroll.nvim',
-  --   keys = { '<C-d>', '<C-u>' },
-  --   config = function()
-  --     require('neoscroll').setup {
-  --       hide_cursor = false,
-  --     }
-  --     local t = {}
-  --     -- Syntax: t[keys] = {function, {function arguments}}
-  --     t['<C-u>'] = { 'scroll', { '-vim.wo.scroll', 'true', '100' } }
-  --     t['<C-d>'] = { 'scroll', { 'vim.wo.scroll', 'true', '100' } }
-  --
-  --     require('neoscroll.config').set_mappings(t)
-  --   end,
-  -- },
+  {
+    'echasnovski/mini.nvim',
+    version = '*',
+    event = 'VimEnter',
+    config = function() end,
+  },
 
   {
     'nvim-treesitter/nvim-treesitter',
@@ -435,11 +475,9 @@ local plugins = {
       vim.keymap.set('n', '<Leader>dB', function()
         require('dap').set_breakpoint()
       end, { desc = 'Set breakpoint' })
-
-      -- vim.keymap.set('n', '<Leader>lp', function()
-      --   require('dap').set_breakpoint(nil, nil, vim.fn.input 'Log point message: ')
-      -- end)
-
+      vim.keymap.set('n', '<Leader>dp', function()
+        require('dap').set_breakpoint(nil, nil, vim.fn.input 'Log point message: ')
+      end)
       vim.keymap.set('n', '<Leader>dr', function()
         require('dap').repl.open()
       end, { desc = 'Repl open' })
@@ -452,9 +490,9 @@ local plugins = {
         require('dap.ui.widgets').hover()
       end, { desc = 'Hover' })
 
-      vim.keymap.set({ 'n', 'v' }, '<Leader>dp', function()
-        require('dap.ui.widgets').preview()
-      end, { desc = 'Preview' })
+      -- vim.keymap.set({ 'n', 'v' }, '<Leader>dp', function()
+      --   require('dap.ui.widgets').preview()
+      -- end, { desc = 'Preview' })
 
       vim.keymap.set('n', '<Leader>df', function()
         local widgets = require 'dap.ui.widgets'
@@ -465,6 +503,14 @@ local plugins = {
         local widgets = require 'dap.ui.widgets'
         widgets.centered_float(widgets.scopes)
       end, { desc = 'Show scopes' })
+    end,
+  },
+
+  {
+    'HiPhish/rainbow-delimiters.nvim',
+    event = 'VimEnter',
+    config = function()
+      require('rainbow-delimiters.setup').setup {}
     end,
   },
 }

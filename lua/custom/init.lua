@@ -24,7 +24,7 @@ vim.keymap.set('i', '/', function()
   return '/'
 end, { expr = true, buffer = true })
 
-vim.cmd [[autocmd VimEnter * highlight CursorLine guibg=#1e252e]]
+vim.cmd [[autocmd VimEnter * highlight CursorLine guibg=#222222]]
 
 vim.lsp.protocol.CompletionItemKind = {
   '   (Text) ',
@@ -54,30 +54,42 @@ vim.lsp.protocol.CompletionItemKind = {
   '   (TypeParameter)',
 }
 
+-- - `DapBreakpointCondition` for conditional breakpoints (default: `C`)
+-- - `DapLogPoint` for log points (default: `L`)
+-- - `DapStopped` to indicate where the debugee is stopped (default: `→`)
+-- - `DapBreakpointRejected` to indicate breakpoints rejected by the debug
+--   adapter (default: `R`)
+
+vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapBreakpointCondition', { text = '❓', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapLogPoint', { text = '📝', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapStopped', { text = '➡️', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapBreakpointRejected', { text = '❌', texthl = '', linehl = '', numhl = '' })
+
 -- Configuration for diagnostics
-local signs = {
+local diagnostic_signs = {
   { name = 'DiagnosticSignError', text = '💀' },
-  { name = 'DiagnosticSignWarn', text = '' },
-  { name = 'DiagnosticSignHint', text = '' },
-  { name = 'DiagnosticSignInfo', text = '' },
+  { name = 'DiagnosticSignWarn', text = '⚠️' },
+  { name = 'DiagnosticSignHint', text = '💯' },
+  { name = 'DiagnosticSignInfo', text = 'ℹ️' },
 }
 
-for _, sign in ipairs(signs) do
+for _, sign in ipairs(diagnostic_signs) do
   vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
 end
 
 local config = {
   signs = {
-    active = signs, -- show signs
+    active = diagnostic_signs, -- show signs
   },
   update_in_insert = false,
-  underline = true,
+  -- underline = true,
   severity_sort = true,
   float = {
     focusable = true,
     style = 'minimal',
-    border = 'single',
-    source = 'always',
+    border = 'rounded',
+    source = 'true',
     header = 'Diagnostic',
     prefix = '',
   },

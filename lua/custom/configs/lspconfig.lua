@@ -86,6 +86,20 @@ require('which-key').register {
   ['<leader>t'] = { name = 'Trouble', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = 'Lookup Keymaps', _ = 'which_key_ignore' },
   ['<leader>z'] = { name = 'Zen', _ = 'which_key_ignore' },
+  ['<Leader>dc'] = { name = 'Continue', _ = 'which_key_ignore' },
+  ['<Leader>dsv'] = { name = 'Step over', _ = 'which_key_ignore' },
+  ['<Leader>dsi'] = { name = 'Step into', _ = 'which_key_ignore' },
+  ['<Leader>dso'] = { name = 'Step out', _ = 'which_key_ignore' },
+  ['<Leader>db'] = { name = 'Toggle breakpoint', _ = 'which_key_ignore' },
+  ['<Leader>dB'] = { name = 'Set breakpoint', _ = 'which_key_ignore' },
+  ['<Leader>dr'] = { name = 'Repl Open', _ = 'which_key_ignore' },
+  ['<Leader>dl'] = { name = 'Run Last', _ = 'which_key_ignore' },
+  ['<Leader>dh'] = { name = 'Hover', _ = 'which_key_ignore' },
+  -- ['<Leader>dp'] = { name = 'Preview', _ = 'which_key_ignore' },
+  ['<Leader>df'] = { name = 'Show frames', _ = 'which_key_ignore' },
+  ['<Leader>ds'] = { name = 'Show scopes', _ = 'which_key_ignore' },
+  ['<Leader>dt'] = { name = 'Toggle Debug UI', _ = 'which_key_ignore' },
+  ['<Leader>dp'] = { name = 'Toggle Log Point', _ = 'which_key_ignore' },
 }
 
 require('mason').setup()

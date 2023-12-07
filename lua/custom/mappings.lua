@@ -67,6 +67,7 @@ M.general = {
     -- ['L'] = { ':bnext<CR>', 'Next Buffer', opts = { nowait = true } },
     -- ['H'] = { ':bprevious<CR>', 'Previous Buffer', opts = { nowait = true } },
     ['<Leader>z'] = { ':ZenMode<CR>', 'Zen', opts = { nowait = true } },
+    ['<Leader>v'] = { '<C-w>v', 'Vertical split', opts = { nowait = true } },
   },
 }
 

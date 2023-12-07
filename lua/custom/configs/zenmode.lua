@@ -1,7 +1,7 @@
 return {
   window = {
     backdrop = 0.93,
-    width = 140,
+    width = 180,
     height = 1,
   },
   plugins = {

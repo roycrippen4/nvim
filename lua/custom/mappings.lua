@@ -61,11 +61,11 @@ M.trouble = {
 M.general = {
   n = {
     ['<S-CR>'] = { 'o<Esc>k', 'New line above', opts = { silent = true } },
-    ['<M-CR>'] = { 'O<Esc>j', 'New line above', opts = { silent = true } },
+    ['<C-CR>'] = { 'O<Esc>j', 'New line above', opts = { silent = true } },
     [';'] = { ':', 'enter command mode', opts = { nowait = true } },
-    ['.'] = { '<C-]>', 'rebind tree cd', opts = {} },
-    ['L'] = { ':bnext<CR>', 'Next Buffer', opts = { nowait = true } },
-    ['H'] = { ':bprevious<CR>', 'Previous Buffer', opts = { nowait = true } },
+    -- ['.'] = { '<C-]>', 'rebind tree cd', opts = {} },
+    -- ['L'] = { ':bnext<CR>', 'Next Buffer', opts = { nowait = true } },
+    -- ['H'] = { ':bprevious<CR>', 'Previous Buffer', opts = { nowait = true } },
     ['<Leader>z'] = { ':ZenMode<CR>', 'Zen', opts = { nowait = true } },
   },
 }

@@ -64,11 +64,11 @@ M.on_attach = function(client, bufnr)
     vim.lsp.buf.code_action()
   end, 'Code Action')
 
-  if client.server_capabilities['documentSymbolProvider'] then
-    require('nvim-navic').attach(client, bufnr)
-  else
-    return
-  end
+  -- if client.server_capabilities['documentSymbolProvider'] then
+  --   require('nvim-navic').attach(client, bufnr)
+  -- else
+  --   return
+  -- end
 end
 
 require('which-key').register {
@@ -95,7 +95,7 @@ require('which-key').register {
   ['<Leader>dr'] = { name = 'Repl Open', _ = 'which_key_ignore' },
   ['<Leader>dl'] = { name = 'Run Last', _ = 'which_key_ignore' },
   ['<Leader>dh'] = { name = 'Hover', _ = 'which_key_ignore' },
-  -- ['<Leader>dp'] = { name = 'Preview', _ = 'which_key_ignore' },
+  ['<Leader>dv'] = { name = 'Preview', _ = 'which_key_ignore' },
   ['<Leader>df'] = { name = 'Show frames', _ = 'which_key_ignore' },
   ['<Leader>ds'] = { name = 'Show scopes', _ = 'which_key_ignore' },
   ['<Leader>dt'] = { name = 'Toggle Debug UI', _ = 'which_key_ignore' },
@@ -104,7 +104,13 @@ require('which-key').register {
 
 require('mason').setup()
 require('mason-lspconfig').setup()
-require('neodev').setup {}
+
+local cwd = vim.fn.getcwd(-1, -1)
+if cwd ~= nil then
+  if string.sub(cwd, -4) then
+    require('neodev').setup {}
+  end
+end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)

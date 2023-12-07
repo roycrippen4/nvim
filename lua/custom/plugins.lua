@@ -1,5 +1,6 @@
 local overrides = require 'custom.configs.overrides'
-local colors = require('base46').get_theme_tb 'base_30'
+local utils = require 'custom.utils.utils'
+-- local colors = require('base46').get_theme_tb 'base_30'
 
 local plugins = {
 
@@ -22,18 +23,32 @@ local plugins = {
           char = '▎',
         },
         scope = {
-          show_exact_scope = true,
+          -- show_exact_scope = true,
           highlight = highlight,
           include = {
             node_type = {
               lua = {
                 'return_statement',
                 'table_constructor',
+                'identifier',
+              },
+              typescript = {
+                'interface_declaration',
+                'statement_block',
+                'try_statement',
+                'object',
+                'if_statement',
+                'for_in_statement',
+                'return_statement',
+                'type_alias_delcaration',
+                'import_statement',
+                'call_expression',
+                'expression_statement',
+                'arguments',
               },
             },
           },
         },
-        viewport_buffer = { min = 50, max = 1000 },
         exclude = {
           filetypes = {
             'help',
@@ -49,8 +64,6 @@ local plugins = {
           },
         },
       }
-      local hooks = require 'ibl.hooks'
-      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
       require('ibl').setup(opts)
     end,
   },
@@ -60,55 +73,6 @@ local plugins = {
     dependencies = { 'nvim-lua/plenary.nvim' },
     event = 'BufReadPre',
     opts = {},
-  },
-
-  {
-    'utilyre/barbecue.nvim',
-    event = 'BufReadPre',
-    dependencies = {
-      'SmiteshP/nvim-navic',
-      'nvim-tree/nvim-web-devicons', -- optional dependency
-    },
-    config = function()
-      require('barbecue').setup {
-        attach_navic = false,
-        symbols = {
-          separator = '',
-        },
-        context_follow_icon_color = true,
-        theme = {
-          normal = {},
-          dirname = { fg = colors.light_grey },
-          basename = { bold = true },
-
-          separator = { fg = colors.red },
-          ellipses = { fg = colors.red },
-          modified = { fg = colors.red },
-
-          context_constructor = { fg = colors.yellow },
-          context_function = { fg = colors.sun },
-          context_method = { fg = colors.sun },
-
-          context_class = { fg = colors.purple },
-          context_struct = { fg = colors.purple },
-
-          context_interface = { fg = colors.teal },
-          context_type_parameter = { fg = colors.teal },
-          context_enum = { fg = colors.teal },
-          context_enum_member = { fg = colors.nord_blue },
-
-          context_array = { fg = colors.baby_pink },
-          context_object = { fg = colors.pink },
-          context_field = { fg = colors.baby_pink },
-          context_key = { fg = colors.baby_pink },
-
-          --primatives
-          context_string = { fg = colors.green },
-          context_number = { fg = colors.white },
-          context_boolean = { fg = colors.sun },
-        },
-      }
-    end,
   },
 
   {
@@ -345,9 +309,14 @@ local plugins = {
   },
 
   {
-    'ThePrimeagen/harpoon',
-    cmd = 'Harpoon',
+    'roycrippen4/harpoon',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+    },
+    -- branch = 'harpoon2',
     keys = {
+      { 'H', nil, 'n', { desc = 'Open Harpoon UI' } },
+      { 'L', nil, 'n', { desc = 'Add buffer to harpoon' } },
       { '<C-e>', nil, 'n', { desc = 'Open Harpoon UI' } },
       { '<C-a>', nil, 'n', { desc = 'Add buffer to harpoon' } },
       { '<C-1>', nil, 'n', { desc = 'Go to file 1' } },
@@ -357,56 +326,52 @@ local plugins = {
       { '<C-5>', nil, 'n', { desc = 'Go to file 5' } },
     },
     config = function()
-      local ui = require 'harpoon.ui'
-      local mark = require 'harpoon.mark'
-      require('harpoon').setup {}
-      vim.keymap.set('n', '<C-e>', function()
-        ui.toggle_quick_menu()
-      end, { desc = 'Open Harpoon UI' })
+      local harpoon = require 'harpoon'
+      local check_buf = utils.harpoon_check_buf
+      harpoon:setup {
+        settings = {
+          border_chars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+        },
+      }
+      vim.keymap.set('n', 'H', function()
+        harpoon:list():prev()
+      end)
+      vim.keymap.set('n', 'L', function()
+        harpoon:list():next()
+      end)
       vim.keymap.set('n', '<C-a>', function()
-        mark.add_file()
-      end, { desc = 'Add buffer to harpoon' })
+        harpoon:list():append()
+      end)
+      vim.keymap.set('n', '<C-e>', function()
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end)
       vim.keymap.set('n', '<C-1>', function()
-        ui.nav_file(1)
-      end, { desc = 'Go to file 1' })
+        check_buf(1, harpoon)
+      end)
       vim.keymap.set('n', '<C-2>', function()
-        ui.nav_file(2)
-      end, { desc = 'Go to file 2' })
+        check_buf(2, harpoon)
+      end)
       vim.keymap.set('n', '<C-3>', function()
-        ui.nav_file(3)
-      end, { desc = 'Go to file 3' })
+        check_buf(3, harpoon)
+      end)
       vim.keymap.set('n', '<C-4>', function()
-        ui.nav_file(4)
-      end, { desc = 'Go to file 4' })
+        check_buf(4, harpoon)
+      end)
       vim.keymap.set('n', '<C-5>', function()
-        ui.nav_file(5)
-      end, { desc = 'Go to file 5' })
+        check_buf(5, harpoon)
+      end)
+      vim.api.nvim_set_hl(0, 'HarpoonWindow', { link = 'Normal' })
+      vim.api.nvim_set_hl(0, 'HarpoonTitle', { link = 'TelescopePromptTitle' })
+      -- vim.api.nvim_set_hl(0, 'HarpoonBorder', {})
     end,
   },
 
-  {
-    'declancm/cinnamon.nvim',
-    event = 'VimEnter',
-    opts = {
-      max_length = 50,
-    },
-  },
-
-  {
-    'echasnovski/mini.nvim',
-    version = '*',
-    event = 'VimEnter',
-    config = function() end,
-  },
-
-  {
-    'nvim-treesitter/nvim-treesitter',
-    opts = overrides.treesitter,
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. 'syntax')
-      require('nvim-treesitter.configs').setup(opts)
-    end,
-  },
+  -- {
+  --   'echasnovski/mini.nvim',
+  --   version = '*',
+  --   event = 'VimEnter',
+  --   config = function() end,
+  -- },
 
   {
     'nvim-tree/nvim-tree.lua',
@@ -424,6 +389,7 @@ local plugins = {
 
   {
     'folke/zen-mode.nvim',
+    -- event = 'VimEnter',
     cmd = 'ZenMode',
     opts = require 'custom.configs.zenmode',
   },
@@ -490,9 +456,9 @@ local plugins = {
         require('dap.ui.widgets').hover()
       end, { desc = 'Hover' })
 
-      -- vim.keymap.set({ 'n', 'v' }, '<Leader>dp', function()
-      --   require('dap.ui.widgets').preview()
-      -- end, { desc = 'Preview' })
+      vim.keymap.set({ 'n', 'v' }, '<Leader>dv', function()
+        require('dap.ui.widgets').preview()
+      end, { desc = 'Preview' })
 
       vim.keymap.set('n', '<Leader>df', function()
         local widgets = require 'dap.ui.widgets'

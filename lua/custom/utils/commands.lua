@@ -26,11 +26,9 @@ end
 
 create_cmd('AsToggle', function()
   vim.g.autosave = not vim.g.autosave
-
   if vim.g.autosave then
     autosave()
   end
-
   if vim.g.autosave then
     vim.api.nvim_echo({ { '󰆓 ', 'LazyProgressDone' }, { 'autosave enabled!' } }, false, {})
   else

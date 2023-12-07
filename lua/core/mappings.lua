@@ -33,10 +33,10 @@ M.general = {
     -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
     -- empty mode is same as using <cmd> :map
     -- also don't use g[j|k] when in operator pending mode, so it doesn't alter d, y or c behaviour
-    ['j'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
-    ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
-    ['<Up>'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
-    ['<Down>'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
+    -- ['j'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
+    -- ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
+    -- ['<Up>'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
+    -- ['<Down>'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
 
     -- new buffer
     -- ['<leader>b'] = { '<cmd> enew <CR>', 'New buffer' },
@@ -72,28 +72,32 @@ M.general = {
 }
 
 M.tabufline = {
-  plugin = true,
-
+  -- plugin = true,
+  --
   n = {
     -- cycle through buffers
-    ['<tab>'] = {
-      function()
-        require('nvchad.tabufline').tabuflineNext()
-      end,
-      'Goto next buffer',
-    },
-
-    ['<S-tab>'] = {
-      function()
-        require('nvchad.tabufline').tabuflinePrev()
-      end,
-      'Goto prev buffer',
-    },
+    -- ['L'] = {
+    --   function()
+    --     require('nvchad.tabufline').tabuflineNext()
+    --   end,
+    --   'Goto next buffer',
+    -- },
+    --
+    -- ['H'] = {
+    --   function()
+    --     require('nvchad.tabufline').tabuflinePrev()
+    --   end,
+    --   'Goto prev buffer',
+    -- },
 
     -- close buffer + hide terminal buffer
     ['<leader>x'] = {
       function()
-        require('nvchad.tabufline').close_buffer()
+        if #vim.api.nvim_list_wins() == 1 and string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
+          vim.cmd [[ q ]]
+        else
+          require('nvchad.tabufline').close_buffer()
+        end
       end,
       'Close buffer',
     },
@@ -108,6 +112,7 @@ M.nvimtree = {
   n = {
     -- toggle
     ['<C-n>'] = { '<cmd> NvimTreeToggle <CR>', 'Toggle nvimtree' },
+    ['.'] = { '<C-]>', 'rebind tree cd', 'Set CWD' },
   },
 }
 

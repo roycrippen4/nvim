@@ -24,7 +24,7 @@ vim.keymap.set('i', '/', function()
   return '/'
 end, { expr = true, buffer = true })
 
-vim.cmd [[autocmd VimEnter * highlight CursorLine guibg=#222222]]
+-- vim.cmd [[ highlight CursorLine guibg=#111111]]
 
 vim.lsp.protocol.CompletionItemKind = {
   '   (Text) ',
@@ -83,7 +83,7 @@ local config = {
     active = diagnostic_signs, -- show signs
   },
   update_in_insert = false,
-  -- underline = true,
+  underline = true,
   severity_sort = true,
   float = {
     focusable = true,
@@ -96,6 +96,10 @@ local config = {
 }
 
 vim.diagnostic.config(config)
+vim.cmd [[
+  hi DiagnosticUnderlineError guisp='Red' gui=undercurl
+  hi DiagnosticUnderlineWarn guisp='Orange' gui=undercurl
+]]
 
 require 'custom.utils.commands'
 require 'custom.utils.autocommands'

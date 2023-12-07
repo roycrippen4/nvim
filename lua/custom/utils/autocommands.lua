@@ -48,6 +48,13 @@ local function manage_hlsearch(char)
   vim.on_key(nil, hl_ns)
 end
 
+autocmd({ 'InsertLeave', 'WinEnter' }, {
+  callback = function()
+    vim.cmd [[ set cursorline ]]
+    vim.api.nvim_set_hl(0, 'CursorLine', { link = 'NvimTreeCursorLine' })
+  end,
+})
+
 autocmd('CursorMoved', {
   group = hlsearch_group,
   callback = function()
@@ -55,20 +62,4 @@ autocmd('CursorMoved', {
   end,
 })
 
-autocmd({ 'InsertLeave', 'WinEnter' }, { command = 'set cursorline', group = group })
 autocmd({ 'InsertEnter', 'WinLeave' }, { command = 'set nocursorline', group = group })
-
-_G.add_new_line = function()
-  local n_lines = vim.api.nvim_buf_line_count(0)
-  local last_nonblank = vim.fn.prevnonblank(n_lines)
-  if last_nonblank <= n_lines then
-    vim.api.nvim_buf_set_lines(0, last_nonblank, n_lines, true, { '' })
-  end
-end
-
--- vim.cmd [[
---   augroup AddNewlineOnSave
---     autocmd!
---     autocmd BufWritePost * lua _G.add_new_line()
---   augroup END
--- ]]

@@ -106,4 +106,27 @@ function _G.P(...)
   print(unpack(objects))
 end
 
+---@param x number
+---@param harpoon Harpoon
+function M.harpoon_check_buf(x, harpoon)
+  if string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
+    vim.cmd [[ wincmd l ]]
+    if string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
+      vim.cmd [[ 
+            vnew
+            NvimTreeToggle 
+          ]]
+      harpoon:list():select(x)
+      vim.cmd [[ 
+              NvimTreeToggle 
+              wincmd l
+            ]]
+    else
+      harpoon:list():select(x)
+    end
+  else
+    harpoon:list():select(x)
+  end
+end
+
 return M

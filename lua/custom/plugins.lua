@@ -155,9 +155,6 @@ local plugins = {
       ---@diagnostic disable-next-line
       require('Comment').setup {
         pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-        -- pre_hook = function()
-        --   return vim.bo.commentstring
-        -- end,
       }
     end,
   },
@@ -218,10 +215,12 @@ local plugins = {
   },
 
   {
+    -- 80001
     'pmizio/typescript-tools.nvim',
     ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' },
     config = function()
       local M = require 'custom.configs.lspconfig'
+      local api = require 'typescript-tools.api'
       require('typescript-tools').setup {
         on_attach = M.on_attach,
         settings = {
@@ -229,7 +228,6 @@ local plugins = {
             '@styled/typescript-styled-plugin',
           },
           tsserver_file_preferences = {
-            -- Inlay Hints
             includeInlayParameterNameHints = 'all',
             includeInlayParameterNameHintsWhenArgumentMatchesName = true,
             includeInlayFunctionParameterTypeHints = true,
@@ -240,6 +238,9 @@ local plugins = {
             includeInlayEnumMemberValueHints = true,
             jsxAttributeCompletionStyle = 'auto',
           },
+        },
+        handlers = {
+          ['textDocument/publishDiagnostics'] = api.filter_diagnostics { 80001 },
         },
         vim.keymap.set('n', 'fi', '<cmd> TSToolsOrganizeImports<CR>', { desc = 'Organize imports' }),
       }

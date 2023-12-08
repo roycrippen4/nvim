@@ -63,12 +63,6 @@ M.on_attach = function(client, bufnr)
   nmap('<leader>la', function()
     vim.lsp.buf.code_action()
   end, 'Code Action')
-
-  -- if client.server_capabilities['documentSymbolProvider'] then
-  --   require('nvim-navic').attach(client, bufnr)
-  -- else
-  --   return
-  -- end
 end
 
 require('which-key').register {
@@ -202,25 +196,4 @@ lspconfig['svelte'].setup {
   end,
 }
 
--- require('typescript-tools').setup {
---   on_attach = on_attach,
---   settings = {
---     tsserver_plugins = {
---       '@styled/typescript-styled-plugin',
---     },
---     tsserver_file_preferences = {
---       -- Inlay Hints
---       includeInlayParameterNameHints = 'all',
---       includeInlayParameterNameHintsWhenArgumentMatchesName = true,
---       includeInlayFunctionParameterTypeHints = true,
---       includeInlayVariableTypeHints = true,
---       includeInlayVariableTypeHintsWhenTypeMatchesName = true,
---       includeInlayPropertyDeclarationTypeHints = true,
---       includeInlayFunctionLikeReturnTypeHints = true,
---       includeInlayEnumMemberValueHints = true,
---       jsxAttributeCompletionStyle = 'auto',
---     },
---   },
---   vim.keymap.set('n', 'fi', '<cmd> TSToolsOrganizeImports<CR>', { desc = 'Organize imports' }),
--- }
 return M

@@ -36,7 +36,7 @@ local default_plugins = {
             },
             horizontal = {
               location = 'rightbelow',
-              split_ratio = 0.5,
+              split_ratio = 0.33,
             },
           },
         },
@@ -74,8 +74,13 @@ local default_plugins = {
       local devicon = require 'nvim-web-devicons'
       dofile(vim.g.base46_cache .. 'devicons')
       devicon.setup(opts)
-      -- 󰎙󰬝󰴜󰫽󱂌
+      -- 󰎙󰬝󰴜󰫽󱂌󰬉󰯮󰯰󰫯
       devicon.set_icon {
+        ['bun.lockb'] = {
+          icon = '󰯮',
+          color = '#EEEE00',
+          name = 'bun.lockb',
+        },
         ['vite.config.ts'] = {
           icon = '󰹭',
           color = '#7c0e8a',

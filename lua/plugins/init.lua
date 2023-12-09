@@ -262,45 +262,9 @@ local default_plugins = {
     opts = function()
       return require 'plugins.configs.nvimtree'
     end,
-    config = function(_, _)
+    config = function(_, opts)
       dofile(vim.g.base46_cache .. 'nvimtree')
-
-      local function my_on_attach(bufnr)
-        local api = require 'nvim-tree.api'
-
-        api.config.mappings.default_on_attach(bufnr)
-        -- remove default keymaps
-        vim.keymap.del('n', '<C-]>', { buffer = bufnr })
-        vim.keymap.del('n', '<C-t>', { buffer = bufnr })
-        vim.keymap.del('n', '<C-e>', { buffer = bufnr })
-        vim.keymap.del('n', '.', { buffer = bufnr })
-        vim.keymap.del('n', '-', { buffer = bufnr })
-        vim.keymap.del('n', 'g?', { buffer = bufnr })
-
-        -- replace default keymaps
-        vim.keymap.set(
-          'n',
-          '<C-t>',
-          api.tree.change_root_to_parent,
-          { desc = 'Up', buffer = bufnr, noremap = true, silent = true, nowait = true }
-        )
-        vim.keymap.set(
-          'n',
-          '.',
-          api.tree.change_root_to_node,
-          { desc = 'CD', buffer = bufnr, noremap = true, silent = true, nowait = true }
-        )
-        vim.keymap.set(
-          'n',
-          '?',
-          api.tree.toggle_help,
-          { desc = 'Help', buffer = bufnr, noremap = true, silent = true, nowait = true }
-        )
-      end
-
-      require('nvim-tree').setup {
-        on_attach = my_on_attach,
-      }
+      require('nvim-tree').setup(opts)
     end,
   },
 
@@ -321,7 +285,6 @@ local default_plugins = {
       dofile(vim.g.base46_cache .. 'telescope')
       local telescope = require 'telescope'
       telescope.setup(opts)
-
       -- load extensions
       for _, ext in ipairs(opts.extensions_list) do
         telescope.load_extension(ext)

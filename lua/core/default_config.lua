@@ -7,10 +7,7 @@ M.options = {
 M.ui = {
   ------------------------------- base46 -------------------------------------
   -- hl = highlights
-  hl_add = {
-    -- 'HarpoonWindow',
-    -- 'HarpoonTitle',
-  },
+  hl_add = {},
   hl_override = {},
   changed_themes = {},
   theme_toggle = { 'onedark', 'one_light' },
@@ -46,9 +43,9 @@ M.ui = {
   -- lazyload it when there are 1+ buffers
   tabufline = {
     -- show_numbers = false,
-    enabled = false,
-    -- lazyload = true,
-    -- overriden_modules = nil,
+    enabled = true,
+    lazyload = false,
+    overriden_modules = nil,
   },
 
   -- nvdash (dashboard)

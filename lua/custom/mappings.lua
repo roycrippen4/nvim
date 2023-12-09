@@ -60,14 +60,19 @@ M.trouble = {
 
 M.general = {
   n = {
+    ['<leader><leader>'] = {
+      function()
+        print(vim.fn.expand '%:p')
+      end,
+      opts = {},
+    },
     ['<S-CR>'] = { 'o<Esc>k', 'New line above', opts = { silent = true } },
     ['<C-CR>'] = { 'O<Esc>j', 'New line above', opts = { silent = true } },
     [';'] = { ':', 'enter command mode', opts = { nowait = true } },
-    -- ['.'] = { '<C-]>', 'rebind tree cd', opts = {} },
-    -- ['L'] = { ':bnext<CR>', 'Next Buffer', opts = { nowait = true } },
-    -- ['H'] = { ':bprevious<CR>', 'Previous Buffer', opts = { nowait = true } },
+    ['yil'] = { '^y$', 'yank in line', opts = { noremap = true } },
     ['<Leader>z'] = { ':ZenMode<CR>', 'Zen', opts = { nowait = true } },
     ['<Leader>v'] = { '<C-w>v', 'Vertical split', opts = { nowait = true } },
+    ['<Leader>h'] = { '<C-w>s', 'Horizontal split', opts = { nowait = true } },
   },
 }
 

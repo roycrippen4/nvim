@@ -14,46 +14,4 @@ M.cmp = {
   },
 }
 
--- M.treesitter = {
---   ensure_installed = {
---     'bash',
---     'vim',
---     'lua',
---     'html',
---     'css',
---     'json',
---     'toml',
---     'javascript',
---     'typescript',
---     'tsx',
---     'c',
---     'markdown',
---     'markdown_inline',
---   },
---   indent = {
---     enable = true,
---     disable = {
---       'yaml',
---     },
---   },
--- }
-
-M.nvimtree = {
-  git = {
-    enable = true,
-  },
-  view = {
-    adaptive_size = true,
-    preserve_window_proportions = true,
-  },
-  renderer = {
-    highlight_git = true,
-    icons = {
-      show = {
-        git = true,
-      },
-    },
-  },
-}
-
 return M

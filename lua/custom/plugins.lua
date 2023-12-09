@@ -1,8 +1,12 @@
 local overrides = require 'custom.configs.overrides'
-local utils = require 'custom.utils.utils'
--- local colors = require('base46').get_theme_tb 'base_30'
 
 local plugins = {
+
+  -- {
+  --   'roycrippen4/stickybuf.nvim',
+  --   lazy = false,
+  --   opts = {},
+  -- },
 
   {
     'luukvbaal/statuscol.nvim',
@@ -11,7 +15,7 @@ local plugins = {
     config = function()
       local builtin = require 'statuscol.builtin'
       require('statuscol').setup {
-        ft_ignore = { 'NvimTree' },
+        ft_ignore = { 'NvimTree', 'terminal' },
         relculright = true,
         segments = {
           {
@@ -68,18 +72,6 @@ local plugins = {
         'RainbowDelimiterCyan',
       }
       local hooks = require 'ibl.hooks'
-      -- create the highlight groups in the highlight setup hook, so they are reset
-      -- every time the colorscheme changes
-      -- hooks.cb.highlight_setup()
-      -- hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterRed', { fg = '#E06C75' })
-      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterYellow', { fg = '#E5C07B' })
-      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterBlue', { fg = '#61AFEF' })
-      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterOrange', { fg = '#D19A66' })
-      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterGreen', { fg = '#98C379' })
-      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterViolet', { fg = '#C678DD' })
-      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterCyan', { fg = '#56B6C2' })
-      -- end)
       local opts = {
         indent = {
           char = '▎',
@@ -175,6 +167,7 @@ local plugins = {
       'mfussenegger/nvim-dap',
     },
     config = function()
+      dofile()
       ---@diagnostic disable-next-line
       require('dapui').setup {}
       local dap, dapui = require 'dap', require 'dapui'
@@ -382,14 +375,9 @@ local plugins = {
   },
 
   {
-    'roycrippen4/harpoon',
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-    },
-    -- branch = 'harpoon2',
+    'theprimeagen/harpoon',
+    branch = 'harpoon2',
     keys = {
-      { 'H', nil, 'n', { desc = 'Open Harpoon UI' } },
-      { 'L', nil, 'n', { desc = 'Add buffer to harpoon' } },
       { '<C-e>', nil, 'n', { desc = 'Open Harpoon UI' } },
       { '<C-a>', nil, 'n', { desc = 'Add buffer to harpoon' } },
       { '<C-1>', nil, 'n', { desc = 'Go to file 1' } },
@@ -397,21 +385,15 @@ local plugins = {
       { '<C-3>', nil, 'n', { desc = 'Go to file 3' } },
       { '<C-4>', nil, 'n', { desc = 'Go to file 4' } },
       { '<C-5>', nil, 'n', { desc = 'Go to file 5' } },
+      { '<C-6>', nil, 'n', { desc = 'Go to file 6' } },
+      { '<C-7>', nil, 'n', { desc = 'Go to file 7' } },
+      { '<C-8>', nil, 'n', { desc = 'Go to file 8' } },
+      { '<C-9>', nil, 'n', { desc = 'Go to file 9' } },
+      { '<C-0>', nil, 'n', { desc = 'Go to file 0' } },
     },
     config = function()
       local harpoon = require 'harpoon'
-      local check_buf = utils.harpoon_check_buf
-      harpoon:setup {
-        settings = {
-          border_chars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
-        },
-      }
-      vim.keymap.set('n', 'H', function()
-        harpoon:list():prev()
-      end)
-      vim.keymap.set('n', 'L', function()
-        harpoon:list():next()
-      end)
+      harpoon:setup {}
       vim.keymap.set('n', '<C-a>', function()
         harpoon:list():append()
       end)
@@ -419,19 +401,34 @@ local plugins = {
         harpoon.ui:toggle_quick_menu(harpoon:list())
       end)
       vim.keymap.set('n', '<C-1>', function()
-        check_buf(1, harpoon)
+        harpoon:list():select(1)
       end)
       vim.keymap.set('n', '<C-2>', function()
-        check_buf(2, harpoon)
+        harpoon:list():select(2)
       end)
       vim.keymap.set('n', '<C-3>', function()
-        check_buf(3, harpoon)
+        harpoon:list():select(3)
       end)
       vim.keymap.set('n', '<C-4>', function()
-        check_buf(4, harpoon)
+        harpoon:list():select(4)
       end)
       vim.keymap.set('n', '<C-5>', function()
-        check_buf(5, harpoon)
+        harpoon:list():select(5)
+      end)
+      vim.keymap.set('n', '<C-6>', function()
+        harpoon:list():select(6)
+      end)
+      vim.keymap.set('n', '<C-7>', function()
+        harpoon:list():select(7)
+      end)
+      vim.keymap.set('n', '<C-8>', function()
+        harpoon:list():select(8)
+      end)
+      vim.keymap.set('n', '<C-9>', function()
+        harpoon:list():select(9)
+      end)
+      vim.keymap.set('n', '<C-0>', function()
+        harpoon:list():select(0)
       end)
       vim.api.nvim_set_hl(0, 'HarpoonWindow', { link = 'Normal' })
       vim.api.nvim_set_hl(0, 'HarpoonTitle', { link = 'TelescopePromptTitle' })
@@ -446,11 +443,6 @@ local plugins = {
   --   config = function() end,
   -- },
 
-  {
-    'nvim-tree/nvim-tree.lua',
-    opts = overrides.nvimtree,
-  },
-
   -- Install a plugin
   {
     'max397574/better-escape.nvim',
@@ -462,7 +454,6 @@ local plugins = {
 
   {
     'folke/zen-mode.nvim',
-    -- event = 'VimEnter',
     cmd = 'ZenMode',
     opts = require 'custom.configs.zenmode',
   },

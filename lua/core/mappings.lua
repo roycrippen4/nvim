@@ -72,23 +72,23 @@ M.general = {
 }
 
 M.tabufline = {
-  -- plugin = true,
+  plugin = true,
   --
   n = {
     -- cycle through buffers
-    -- ['L'] = {
-    --   function()
-    --     require('nvchad.tabufline').tabuflineNext()
-    --   end,
-    --   'Goto next buffer',
-    -- },
-    --
-    -- ['H'] = {
-    --   function()
-    --     require('nvchad.tabufline').tabuflinePrev()
-    --   end,
-    --   'Goto prev buffer',
-    -- },
+    ['L'] = {
+      function()
+        require('nvchad.tabufline').tabuflineNext()
+      end,
+      'Goto next buffer',
+    },
+
+    ['H'] = {
+      function()
+        require('nvchad.tabufline').tabuflinePrev()
+      end,
+      'Goto prev buffer',
+    },
 
     -- close buffer + hide terminal buffer
     ['<leader>x'] = {

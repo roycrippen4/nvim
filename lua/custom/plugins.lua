@@ -18,7 +18,7 @@ local plugins = {
             sign = {
               name = { 'Diagnostic' },
               maxwidth = 1,
-              auto = true,
+              auto = false,
             },
           },
           {
@@ -28,13 +28,13 @@ local plugins = {
               auto = true,
             },
           },
-          -- {
-          --   text = {
-          --     function(args)
-          --       return (args.relnum == 0) and ' ' or ''
-          --     end,
-          --   },
-          -- },
+          {
+            sign = {
+              name = { 'todo' },
+              maxwidth = 1,
+              auto = true,
+            },
+          },
           {
             text = {
               builtin.lnumfunc,
@@ -43,7 +43,8 @@ local plugins = {
           },
           {
             sign = {
-              name = { 'Gitsign' },
+              name = { 'GitSign' },
+              maxwidth = 1,
               auto = true,
             },
           },
@@ -58,14 +59,27 @@ local plugins = {
     event = 'BufRead',
     config = function()
       local highlight = {
-        'RainbowDelimiterBlue',
-        'RainbowDelimiterCyan',
-        'RainbowDelimiterGreen',
-        'RainbowDelimiterOrange',
         'RainbowDelimiterRed',
-        'RainbowDelimiterViolet',
         'RainbowDelimiterYellow',
+        'RainbowDelimiterViolet',
+        'RainbowDelimiterBlue',
+        'RainbowDelimiterOrange',
+        'RainbowDelimiterGreen',
+        'RainbowDelimiterCyan',
       }
+      local hooks = require 'ibl.hooks'
+      -- create the highlight groups in the highlight setup hook, so they are reset
+      -- every time the colorscheme changes
+      -- hooks.cb.highlight_setup()
+      -- hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterRed', { fg = '#E06C75' })
+      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterYellow', { fg = '#E5C07B' })
+      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterBlue', { fg = '#61AFEF' })
+      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterOrange', { fg = '#D19A66' })
+      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterGreen', { fg = '#98C379' })
+      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterViolet', { fg = '#C678DD' })
+      --   vim.api.nvim_set_hl(0, 'RainbowDelimiterCyan', { fg = '#56B6C2' })
+      -- end)
       local opts = {
         indent = {
           char = '▎',
@@ -100,7 +114,10 @@ local plugins = {
           },
         },
         exclude = {
+          buftypes = { 'terminal' },
           filetypes = {
+            '',
+            'NvimTree',
             'TelescopePrompt',
             'TelescopeResults',
             'help',
@@ -110,18 +127,23 @@ local plugins = {
             'nvcheatsheet',
             'nvdash',
             'terminal',
-            '',
           },
         },
       }
+      dofile(vim.g.base46_cache .. 'blankline')
+      vim.g.rainbow_delimiters = { highlight = highlight }
       require('ibl').setup(opts)
+      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
   },
 
   {
     'folke/todo-comments.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim' },
     event = 'BufReadPre',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    init = function()
+      dofile(vim.g.base46_cache .. 'todo')
+    end,
     opts = {},
   },
 
@@ -525,8 +547,9 @@ local plugins = {
 
   {
     'HiPhish/rainbow-delimiters.nvim',
-    event = 'VimEnter',
+    lazy = false,
     config = function()
+      dofile(vim.g.base46_cache .. 'rainbowdelimiters')
       require('rainbow-delimiters.setup').setup {}
     end,
   },

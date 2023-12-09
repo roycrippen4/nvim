@@ -29,6 +29,7 @@ M.luasnip = function(opts)
 end
 
 M.gitsigns = {
+  _extmark_signs = false,
   signs = {
     add = { text = '│' },
     change = { text = '│' },

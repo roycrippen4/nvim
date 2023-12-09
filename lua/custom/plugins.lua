@@ -5,6 +5,54 @@ local utils = require 'custom.utils.utils'
 local plugins = {
 
   {
+    'luukvbaal/statuscol.nvim',
+    event = 'BufRead',
+    branch = '0.10',
+    config = function()
+      local builtin = require 'statuscol.builtin'
+      require('statuscol').setup {
+        ft_ignore = { 'NvimTree' },
+        relculright = true,
+        segments = {
+          {
+            sign = {
+              name = { 'Diagnostic' },
+              maxwidth = 1,
+              auto = true,
+            },
+          },
+          {
+            sign = {
+              name = { 'Dap' },
+              maxwidth = 1,
+              auto = true,
+            },
+          },
+          -- {
+          --   text = {
+          --     function(args)
+          --       return (args.relnum == 0) and ' ' or ''
+          --     end,
+          --   },
+          -- },
+          {
+            text = {
+              builtin.lnumfunc,
+              ' ',
+            },
+          },
+          {
+            sign = {
+              name = { 'Gitsign' },
+              auto = true,
+            },
+          },
+        },
+      }
+    end,
+  },
+
+  {
     'lukas-reineke/indent-blankline.nvim',
     version = '3.3.8',
     event = 'BufRead',

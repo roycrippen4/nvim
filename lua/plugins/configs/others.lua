@@ -31,7 +31,7 @@ end
 -- local icon = '┃'
 local icon = '▍'
 M.gitsigns = {
-  _extmark_signs = false,
+  _extmark_signs = true,
   signs = {
     add = { text = icon },
     change = { text = icon },

@@ -47,7 +47,7 @@ local plugins = {
           },
           {
             sign = {
-              name = { 'GitSign' },
+              namespace = { 'gitsign' },
               maxwidth = 1,
               auto = true,
             },
@@ -62,22 +62,22 @@ local plugins = {
     version = '3.3.8',
     event = 'BufRead',
     config = function()
-      local highlight = {
-        'RainbowDelimiterRed',
-        'RainbowDelimiterYellow',
-        'RainbowDelimiterViolet',
-        'RainbowDelimiterBlue',
-        'RainbowDelimiterOrange',
-        'RainbowDelimiterGreen',
-        'RainbowDelimiterCyan',
-      }
-      local hooks = require 'ibl.hooks'
+      -- local highlight = {
+      --   'RainbowDelimiterRed',
+      --   'RainbowDelimiterYellow',
+      --   'RainbowDelimiterViolet',
+      --   'RainbowDelimiterBlue',
+      --   'RainbowDelimiterOrange',
+      --   'RainbowDelimiterGreen',
+      --   'RainbowDelimiterCyan',
+      -- }
+      -- local hooks = require 'ibl.hooks'
       local opts = {
         indent = {
           char = '▎',
         },
         scope = {
-          highlight = highlight,
+          -- highlight = highlight,
           include = {
             node_type = {
               lua = {
@@ -122,10 +122,10 @@ local plugins = {
           },
         },
       }
-      dofile(vim.g.base46_cache .. 'blankline')
-      vim.g.rainbow_delimiters = { highlight = highlight }
+      -- vim.g.rainbow_delimiters = { highlight = highlight }
       require('ibl').setup(opts)
-      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+      -- hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+      dofile(vim.g.base46_cache .. 'blankline')
     end,
   },
 

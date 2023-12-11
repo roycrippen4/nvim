@@ -15,16 +15,19 @@ M.set_nvim_tree_overlay_title = function()
   local title = 'File Tree'
   local tree_width = M.getNvimTreeWidth()
   if tree_width == 0 then
-    vim.g.NvimTreeOverlayTitle = ''
+    vim.g.NvimTreeOverlayTitle = 0
   else
     local width = tree_width - #title
-    local padding = string.rep(' ', width)
-    local middle_idx = math.floor(width / 2) + 1
-    local pad_left = string.sub(padding, 1, middle_idx - 1)
-    local pad_right = pad_left
-    local title_with_pad = pad_left .. title .. pad_right
-    -- vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#' .. title_with_pad .. '%#NvimTreeTitleSep#' .. '▕'
-    vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#' .. title_with_pad .. '%#NvimTreeTitleSep#' .. '▏'
+    local padding = string.rep(' ', math.floor(width / 2))
+    local title_with_pad = padding .. title .. padding
+    if tree_width % 2 == 0 then
+      vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#' .. title_with_pad .. '%#NvimTreeTitleSep#' .. '▏'
+    else
+      vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#'
+        .. string.sub(title_with_pad, 0, -2)
+        .. '%#NvimTreeTitleSep#'
+        .. '▏'
+    end
   end
 end
 

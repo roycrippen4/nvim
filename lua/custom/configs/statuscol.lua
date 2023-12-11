@@ -1,0 +1,4 @@
+-- local builtin = require 'statuscol.builtin'
+-- local opts = {}
+--
+-- return opts

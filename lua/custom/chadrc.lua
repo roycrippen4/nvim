@@ -1,96 +1,90 @@
 local M = {}
--- 1b1f27
 
-M.ui = {
-  hl_override = {
-    NvimTreeWinSeparator = {
-      fg = '#31353d',
-      -- bg = 'darker_black',
-    },
-    -- TabLine = {
-    --   fg = 'yellow',
-    --   bg = 'red',
-    -- },
-    -- TabLineFill = {
-    --   fg = 'yellow',
-    --   bg = 'red',
-    -- },
-    -- TabLineBufOnClose = {
-    --   fg = 'yellow',
-    --   bg = 'red',
-    -- },
-    -- TabLineBufOnOpen = {
-    --   fg = 'yellow',
-    --   bg = 'red',
-    -- },
-    -- TabLineSel = {
-    --   fg = 'green',
-    --   bg = 'red',
-    -- },
-    --   TblineFill = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TblineTabNewBtn = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TblineTabOn = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TbLineTabOn = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TbLineTabOff = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TbLineTabCloseBtn = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TbLineBufOnModified = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TbLineThemeToggleBtn = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TbLineBufOffModified = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TblineBufOn = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TbLineBufOn = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TbLineBufClose = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TbLineBufOnClose = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TbLineBufOffClose = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
-    --   TbLineBufOff = {
-    --     fg = 'yellow',
-    --     bg = 'red',
-    --   },
+local sep_color = '#454951'
+
+M.cmp = {
+  sources = {
+    { name = 'nvim_lsp', trigger_characters = { '-' } },
+    { name = 'path' },
+    { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'nvim_lua' },
+  },
+  experimental = {
+    ghost_text = true,
   },
 }
 
-M.overrides = require 'custom.configs.overrides'
+M.ui = {
+  hl_add = {
+    NvimTreeTitleStartup = {
+      bold = true,
+      italic = true,
+      underline = true,
+      fg = { 'yellow', -10 },
+      bg = 'black2',
+      sp = sep_color,
+    },
+    NvimTreeTitle = {
+      underline = true,
+      fg = { 'yellow', -10 },
+      bg = 'darker_black',
+      sp = sep_color,
+    },
+    NvimTreeTitleSep = {
+      underline = true,
+      fg = sep_color,
+      bg = 'darker_black',
+      sp = sep_color,
+    },
+  },
+  hl_override = {
+    TblineFill = {
+      underline = true,
+      bg = 'darker_black',
+      sp = sep_color,
+    },
+    TbLineBufOn = {
+      fg = 'white',
+    },
+    TbLineBufOff = {
+      underline = true,
+      fg = 'grey',
+      bg = 'darker_black',
+      sp = sep_color,
+    },
+    TbLineBufOffModified = {
+      bg = 'darker_black',
+      underline = true,
+      sp = sep_color,
+    },
+    TbLineBufOffClose = {
+      underline = true,
+      bg = 'darker_black',
+      sp = sep_color,
+    },
+    NvimTreeWinSeparator = {
+      fg = sep_color,
+      bg = 'black',
+    },
+    Comment = {
+      italic = true,
+    },
+    WinSeparator = {
+      fg = sep_color,
+      bg = 'black',
+      -- sp = 'yellow',
+      -- underline = true,
+    },
+  },
+  tabufline = {
+    icons = false,
+    underline = true,
+    overriden_modules = function(modules)
+      modules[1] = vim.g.NvimTreeOverlayTitle
+    end,
+  },
+}
 
 M.plugins = 'custom.plugins'
 

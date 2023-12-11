@@ -137,6 +137,15 @@ lspconfig['cssls'].setup {
   on_attach = M.on_attach,
 }
 
+lspconfig['bashls'].setup {
+  filetypes = { 'bash', 'sh', 'zsh', 'zshrc' },
+  capabilities = capabilities,
+  on_attach = M.on_attach,
+  root_dir = function()
+    return vim.loop.cwd()
+  end,
+}
+
 lspconfig['jsonls'].setup {
   capabilities = capabilities,
   on_attach = M.on_attach,

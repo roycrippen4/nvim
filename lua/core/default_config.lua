@@ -1,4 +1,5 @@
 local M = {}
+local utils = require 'core.utils'
 
 M.options = {
   nvchad_branch = 'v2.0',
@@ -44,7 +45,7 @@ M.ui = {
   tabufline = {
     -- show_numbers = false,
     enabled = true,
-    lazyload = false,
+    lazyload = true,
     overriden_modules = nil,
   },
 

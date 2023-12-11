@@ -1,4 +1,4 @@
-local overrides = require 'custom.configs.overrides'
+-- local overrides = require 'custom.configs.overrides'
 
 local plugins = {
 
@@ -10,7 +10,7 @@ local plugins = {
 
   {
     'luukvbaal/statuscol.nvim',
-    event = 'BufRead',
+    lazy = false,
     branch = '0.10',
     config = function()
       local builtin = require 'statuscol.builtin'
@@ -249,7 +249,7 @@ local plugins = {
 
   {
     'hrsh7th/nvim-cmp',
-    opts = overrides.cmp,
+    -- opts = overrides.cmp,
 
     dependencies = {
       {
@@ -324,7 +324,6 @@ local plugins = {
 
   {
     'stevearc/conform.nvim',
-    lazy = true,
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       require('conform').setup {
@@ -339,14 +338,19 @@ local plugins = {
           html = { 'prettier' },
           css = { 'prettier' },
           markdown = { 'prettier' },
-          yaml = { 'prettier' },
           sh = { 'shfmt' },
+          yaml = { 'prettier' },
         },
         format_on_save = {
           timeout_ms = 500,
           async = false,
           lsp_fallback = true,
         },
+        -- formatters = {
+        --   shfmt = {
+        --     prepend_args = { '-i', '2' },
+        --   },
+        -- },
       }
     end,
   },

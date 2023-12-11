@@ -111,7 +111,14 @@ M.nvimtree = {
 
   n = {
     -- toggle
-    ['<C-n>'] = { '<cmd> NvimTreeToggle <CR>', 'Toggle nvimtree' },
+    -- ['<C-n>'] = { '<cmd> NvimTreeToggle <CR>', 'Toggle nvimtree' },
+    ['<C-n>'] = {
+      function()
+        vim.cmd [[NvimTreeToggle]]
+        -- print(vim.g.TreeVisible)
+      end,
+      'Toggle nvimtree',
+    },
     ['.'] = { '<C-]>', 'rebind tree cd', 'Set CWD' },
   },
 }

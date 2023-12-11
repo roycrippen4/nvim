@@ -1,8 +1,52 @@
-local function my_on_attach(bufnr)
-  local api = require 'nvim-tree.api'
+vim.g.NvimTreeOverlayTitle = ''
+local api = require 'nvim-tree.api'
+local M = {}
 
+M.getNvimTreeWidth = function()
+  for _, win in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if vim.bo[vim.api.nvim_win_get_buf(win)].ft == 'NvimTree' then
+      return vim.api.nvim_win_get_width(win) + 1
+    end
+  end
+  return 0
+end
+
+M.set_nvim_tree_overlay_title = function()
+  local title = 'File Tree'
+  local tree_width = M.getNvimTreeWidth()
+  if tree_width == 0 then
+    vim.g.NvimTreeOverlayTitle = ''
+  else
+    local width = tree_width - #title
+    local padding = string.rep(' ', width)
+    local middle_idx = math.floor(width / 2) + 1
+    local pad_left = string.sub(padding, 1, middle_idx - 1)
+    local pad_right = pad_left
+    local title_with_pad = pad_left .. title .. pad_right
+    -- vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#' .. title_with_pad .. '%#NvimTreeTitleSep#' .. '▕'
+    vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#' .. title_with_pad .. '%#NvimTreeTitleSep#' .. '▏'
+  end
+end
+
+local Event = api.events.Event
+api.events.subscribe(Event.TreeOpen, function()
+  if api.tree.is_visible() then
+    M.set_nvim_tree_overlay_title()
+  end
+end)
+
+api.events.subscribe(Event.Resize, function()
+  M.set_nvim_tree_overlay_title()
+end)
+
+api.events.subscribe(Event.TreeClose, function()
+  if not api.tree.is_visible() then
+    M.set_nvim_tree_overlay_title()
+  end
+end)
+
+local function my_on_attach(bufnr)
   api.config.mappings.default_on_attach(bufnr)
-  -- remove default keymaps
   vim.keymap.del('n', '<C-]>', { buffer = bufnr })
   vim.keymap.del('n', '<C-t>', { buffer = bufnr })
   vim.keymap.del('n', '<C-e>', { buffer = bufnr })
@@ -10,7 +54,6 @@ local function my_on_attach(bufnr)
   vim.keymap.del('n', '-', { buffer = bufnr })
   vim.keymap.del('n', 'g?', { buffer = bufnr })
 
-  -- replace default keymaps
   vim.keymap.set(
     'n',
     '<C-t>',

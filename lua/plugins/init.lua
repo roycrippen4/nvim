@@ -13,8 +13,9 @@ local default_plugins = {
   },
 
   {
-    'NvChad/ui',
-    branch = 'v2.0',
+    'roycrippen4/ui',
+    -- dir = '~/.config/nvim/dev/ui/',
+    -- branch = 'v2.0',
     event = 'VimEnter',
   },
 

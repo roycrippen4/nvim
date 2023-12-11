@@ -106,34 +106,8 @@ function _G.P(...)
   print(unpack(objects))
 end
 
--- function M.harpoon_check_buf(x, harpoon)
---   if string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
---     vim.cmd [[ wincmd l ]]
---     if string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
---       vim.cmd [[
---             vnew
---             NvimTreeToggle
---           ]]
---       harpoon:list():select(x)
---       vim.cmd [[
---               NvimTreeToggle
---               wincmd l
---             ]]
---     else
---       harpoon:list():select(x)
---     end
---   else
---     harpoon:list():select(x)
---   end
--- end
-
-function M.getNvimTreeWidth()
-  for _, win in pairs(vim.api.nvim_tabpage_list_wins(0)) do
-    if vim.bo[vim.api.nvim_win_get_buf(win)].ft == 'NvimTree' then
-      return vim.api.nvim_win_get_width(win) + 1
-    end
-  end
-  return 0
+function M.create_highlight_via_syntax(default_hl, new_hl)
+  vim.api.nvim_command('hi def link Custom' .. default_hl .. ' ' .. new_hl)
 end
 
 return M

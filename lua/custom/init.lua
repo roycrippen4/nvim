@@ -8,14 +8,6 @@ vim.g.markdown_fenced_languages = {
   'ts=typescript',
 }
 vim.treesitter.language.register('markdown', 'mdx')
---
--- local test = '▕'
--- vim.cmd [[ set fillchars+=vert:\▕ ]]
--- vim.cmd [[ set fillchars+=vertright:▕ ]]
--- vim.cmd [[ set fillchars+=horizup:▕ ]]
--- vim.cmd [[ set fillchars+=horizdown:▕ ]]
--- vim.cmd [[ set fillchars+=verthoriz:▕ ]]
--- vim.cmd [[ set fillchars+=horiz:\▁ ]]
 
 vim.cmd [[ set fillchars+=vert:\▏]]
 vim.cmd [[ set fillchars+=vertright:\▏]]

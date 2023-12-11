@@ -84,6 +84,11 @@ M.ui = {
       modules[1] = vim.g.NvimTreeOverlayTitle
     end,
   },
+  extended_integrations = {
+    'rainbowdelimiters',
+    'trouble',
+    'todo',
+  },
 }
 
 M.plugins = 'custom.plugins'

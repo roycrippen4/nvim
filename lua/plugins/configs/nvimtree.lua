@@ -1,50 +1,20 @@
-vim.g.NvimTreeOverlayTitle = ''
+local utils = require 'custom.utils.utils'
 local api = require 'nvim-tree.api'
-local M = {}
-
-M.getNvimTreeWidth = function()
-  for _, win in pairs(vim.api.nvim_tabpage_list_wins(0)) do
-    if vim.bo[vim.api.nvim_win_get_buf(win)].ft == 'NvimTree' then
-      return vim.api.nvim_win_get_width(win) + 1
-    end
-  end
-  return 0
-end
-
-M.set_nvim_tree_overlay_title = function()
-  local title = 'File Tree'
-  local tree_width = M.getNvimTreeWidth()
-  if tree_width == 0 then
-    vim.g.NvimTreeOverlayTitle = ''
-  else
-    local width = tree_width - #title
-    local padding = string.rep(' ', math.floor(width / 2))
-    local title_with_pad = padding .. title .. padding
-    if tree_width % 2 == 0 then
-      vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#' .. title_with_pad .. '%#NvimTreeTitleSep#' .. '▏'
-    else
-      vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#'
-        .. string.sub(title_with_pad, 0, -2)
-        .. '%#NvimTreeTitleSep#'
-        .. '▏'
-    end
-  end
-end
 
 local Event = api.events.Event
 api.events.subscribe(Event.TreeOpen, function()
   if api.tree.is_visible() then
-    M.set_nvim_tree_overlay_title()
+    utils.set_nvim_tree_overlay_title()
   end
 end)
 
 api.events.subscribe(Event.Resize, function()
-  M.set_nvim_tree_overlay_title()
+  utils.set_nvim_tree_overlay_title()
 end)
 
 api.events.subscribe(Event.TreeClose, function()
   if not api.tree.is_visible() then
-    M.set_nvim_tree_overlay_title()
+    utils.set_nvim_tree_overlay_title()
   end
 end)
 

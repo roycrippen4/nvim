@@ -14,7 +14,7 @@ local default_plugins = {
 
   {
     'roycrippen4/ui',
-    dir = '~/.config/nvim/dev/ui/',
+    -- dir = '~/.config/nvim/dev/ui/',
     -- branch = 'v2.0',
     event = 'VimEnter',
   },

@@ -80,6 +80,7 @@ M.ui = {
     underline = true,
     overriden_modules = function(modules)
       modules[1] = vim.g.NvimTreeOverlayTitle
+      modules[4] = ''
     end,
   },
   extended_integrations = {

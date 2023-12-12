@@ -1,4 +1,6 @@
 local autocmd = vim.api.nvim_create_autocmd
+local api = require 'nvim-tree.api'
+
 autocmd('QuitPre', {
   callback = function()
     local tree_wins = {}
@@ -59,6 +61,24 @@ autocmd('CursorMoved', {
   group = hlsearch_group,
   callback = function()
     vim.on_key(manage_hlsearch, hl_ns)
+  end,
+})
+
+autocmd({ 'BufAdd', 'BufDelete', 'BufEnter', 'TabNew' }, {
+  callback = function()
+    local current_buf = vim.api.nvim_get_current_buf()
+    if #vim.t.bufs == 0 then
+      return
+    else
+      local first_buf = vim.t.bufs[1]
+      if first_buf == current_buf then
+        vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOn' })
+        -- vim.cmd [[ hi NvimTreeTitleSep guifg='#454951' guibg=colors.darker_black gui=NONE ]]
+      else
+        vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOff' })
+        -- vim.cmd [[ hi NvimTreeTitleSep guifg='#454951' guibg=colors.yellow gui=underline ]]
+      end
+    end
   end,
 })
 

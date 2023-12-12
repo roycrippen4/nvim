@@ -1,4 +1,5 @@
 -- local builtin = require 'statuscol.builtin'
 -- local opts = {}
 --
+--%#TbLineBufOff#
 -- return opts

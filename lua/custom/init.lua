@@ -18,7 +18,7 @@ vim.cmd [[ set fillchars+=verthoriz:\▏]]
 vim.cmd [[ set fillchars+=horiz:\▁]]
 -- vim.cmd [[ set fillchars+=verthoriz:\]]
 
-require 'custom.utils.utils'
-require 'custom.utils.commands'
-require 'custom.utils.autocommands'
-require 'custom.utils.diagnostic'
+-- require 'custom.utils.utils'
+-- require 'custom.utils.commands'
+-- require 'custom.utils.autocommands'
+-- require 'custom.utils.diagnostic'

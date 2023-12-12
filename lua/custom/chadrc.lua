@@ -17,21 +17,19 @@ M.cmp = {
 
 M.ui = {
   hl_add = {
-    NvimTreeTitleStartup = {
-      bold = true,
-      italic = true,
-      underline = true,
-      fg = { 'yellow', -10 },
-      bg = 'black2',
-      sp = sep_color,
-    },
     NvimTreeTitle = {
       underline = true,
       fg = { 'yellow', -10 },
       bg = 'darker_black',
       sp = sep_color,
     },
-    NvimTreeTitleSep = {
+    NvimTreeTitleSepOn = {
+      underline = false,
+      fg = sep_color,
+      bg = 'black',
+      sp = sep_color,
+    },
+    NvimTreeTitleSepOff = {
       underline = true,
       fg = sep_color,
       bg = 'darker_black',

@@ -15,7 +15,7 @@ M.set_nvim_tree_overlay_title = function()
   local title = 'File Tree'
   local tree_width = M.getNvimTreeWidth()
   if tree_width == 0 then
-    vim.g.NvimTreeOverlayTitle = 0
+    vim.g.NvimTreeOverlayTitle = ''
   else
     local width = tree_width - #title
     local padding = string.rep(' ', math.floor(width / 2))

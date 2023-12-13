@@ -215,6 +215,15 @@ local default_plugins = {
     end,
   },
 
+  -- {
+  --   'zbirenbaum/copilot.lua',
+  --   cmd = 'Copilot',
+  --   event = 'InsertEnter',
+  --   config = function()
+  --     require('copilot').setup {}
+  --   end,
+  -- },
+
   {
     'folke/which-key.nvim',
     keys = { '<leader>', '<c-r>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },

@@ -1,12 +1,14 @@
 local lspconfig = require 'lspconfig'
 local M = require 'plugins.configs.lsp.lspconfig'
 
-local cwd = vim.fn.getcwd(-1, -1)
-if cwd ~= nil then
-  if string.sub(cwd, -4) then
-    require('neodev').setup {}
-  end
-end
+-- local cwd = vim.fn.getcwd(-1, -1)
+-- if cwd ~= nil then
+--   if string.sub(cwd, -4) then
+--     require('neodev').setup {}
+--   end
+-- end
+
+require('neodev').setup {}
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)

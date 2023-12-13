@@ -5,6 +5,8 @@ require 'core.autocommands'
 require 'core.commands'
 require 'core.diagnostic'
 
+-- dofile(vim.g.base46_cache .. 'dap')
+
 -------------------------------------- globals -----------------------------------------
 g.nvchad_theme = config.ui.theme
 g.base46_cache = vim.fn.stdpath 'data' .. '/nvchad/base46/'

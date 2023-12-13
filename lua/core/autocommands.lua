@@ -49,7 +49,11 @@ local function manage_hlsearch(char)
   vim.on_key(nil, hl_ns)
 end
 
-autocmd({ 'InsertLeave', 'WinEnter' }, {
+autocmd({ --[[ 'VimEnter', ]]
+  'InsertLeave',
+  'WinEnter',
+  'BufEnter',
+}, {
   callback = function()
     vim.cmd [[ set cursorline ]]
     vim.api.nvim_set_hl(0, 'CursorLine', { link = 'NvimTreeCursorLine' })

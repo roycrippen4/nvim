@@ -67,6 +67,15 @@ local default_plugins = {
   },
 
   {
+    'williamboman/mason.nvim',
+    cmd = 'Mason',
+  },
+
+  {
+    'williamboman/mason-lspconfig.nvim',
+  },
+
+  {
     'nvim-tree/nvim-web-devicons',
     opts = function()
       return { override = require 'nvchad.icons.devicons' }
@@ -333,6 +342,45 @@ local default_plugins = {
     'mrcjkb/rustaceanvim',
     version = '^3', -- Recommended
     ft = { 'rust' },
+  },
+
+  {
+    'numToStr/Comment.nvim',
+    keys = {
+      { 'gc', mode = { 'n', 'v' }, 'gcc' },
+    },
+    config = function()
+      ---@diagnostic disable-next-line
+      require('Comment').setup {
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      }
+    end,
+  },
+
+  {
+    'folke/trouble.nvim',
+    keys = {
+      { '<leader>tf', mode = { 'n' } },
+      { '<leader>tt', mode = { 'n' } },
+    },
+    init = function()
+      require('core.utils').load_mappings 'trouble'
+    end,
+    opts = {},
+  },
+
+  {
+    'HiPhish/rainbow-delimiters.nvim',
+    lazy = false,
+    config = function()
+      dofile(vim.g.base46_cache .. 'rainbowdelimiters')
+      require('rainbow-delimiters.setup').setup {}
+    end,
+  },
+
+  {
+    'mbbill/undotree',
+    cmd = 'UndotreeToggle',
   },
 }
 

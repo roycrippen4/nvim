@@ -17,9 +17,7 @@ M.cmp = {
 
 M.ui = {
   hl_add = {
-    NvimTreeBookmark = {
-      fg = { 'red', -10 },
-    },
+    NvimTreeBookmark = { fg = { 'red', -10 } },
     NvimTreeBookmarkHL = {
       fg = { 'red', -10 },
     },
@@ -84,23 +82,8 @@ M.ui = {
       -- underline = true,
     },
   },
-  tabufline = {
-    icons = false,
-    underline = true,
-    overriden_modules = function(modules)
-      modules[1] = vim.g.NvimTreeOverlayTitle
-      modules[4] = ''
-    end,
-  },
-  extended_integrations = {
-    'rainbowdelimiters',
-    'trouble',
-    'todo',
-  },
 }
 
 M.plugins = 'custom.plugins'
-
-M.mappings = require 'custom.mappings'
 
 return M

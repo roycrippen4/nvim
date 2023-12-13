@@ -2,6 +2,18 @@
 
 local M = {}
 
+M.disabled = {
+  n = {
+    ['<leader>/'] = '',
+    ['<leader>b'] = '',
+    ['<leader>D'] = '',
+    ['<leader>h'] = '',
+    ['<leader>n'] = '',
+    ['<leader>q'] = '',
+    ['<leader>v'] = '',
+  },
+}
+
 M.general = {
   i = {
     -- go to  beginning and end
@@ -16,6 +28,19 @@ M.general = {
   },
 
   n = {
+    ['<leader><leader>'] = {
+      function()
+        print(vim.fn.expand '%:p')
+      end,
+      opts = {},
+    },
+    ['<S-CR>'] = { 'o<Esc>k', 'New line above', opts = { silent = true } },
+    ['<C-CR>'] = { 'O<Esc>j', 'New line above', opts = { silent = true } },
+    [';'] = { ':', 'enter command mode', opts = { nowait = true } },
+    ['yil'] = { '^y$', 'yank in line', opts = { noremap = true } },
+    ['<Leader>z'] = { ':ZenMode<CR>', 'Zen', opts = { nowait = true } },
+    ['<Leader>v'] = { '<C-w>v', 'Vertical split', opts = { nowait = true } },
+    ['<Leader>h'] = { '<C-w>s', 'Horizontal split', opts = { nowait = true } },
     ['<Esc>'] = { '<cmd> noh <CR>', 'Clear highlights' },
     -- switch between windows
     ['<C-h>'] = { '<C-w>h', 'Window left' },
@@ -201,6 +226,152 @@ M.whichkey = {
         vim.cmd('WhichKey ' .. input)
       end,
       'Which-key query lookup',
+    },
+  },
+}
+
+M.dap = {
+  plugin = true,
+  n = {
+    ['<Leader>dc'] = {
+      function()
+        require('dap').continue()
+      end,
+      'Continue',
+    },
+    ['<Leader>dsv'] = {
+      function()
+        require('dap').step_over()
+      end,
+      'Step into',
+    },
+    ['<Leader>dsi'] = {
+      function()
+        require('dap').step_into()
+      end,
+      'Step into',
+    },
+    ['<Leader>dso'] = {
+      function()
+        require('dap').step_out()
+      end,
+      'Step out',
+    },
+    ['<Leader>db'] = {
+      function()
+        require('dap').toggle_breakpoint()
+      end,
+      'Toggle breakpoint',
+    },
+    ['<Leader>dB'] = {
+      function()
+        require('dap').set_breakpoint()
+      end,
+      'Set breakpoint',
+    },
+    ['<Leader>dp'] = {
+      function()
+        require('dap').set_breakpoint(nil, nil, vim.fn.input 'Log point message: ')
+      end,
+    },
+    ['<Leader>dr'] = {
+      function()
+        require('dap').repl.open()
+      end,
+      'Repl open',
+    },
+    ['<Leader>dl'] = {
+      function()
+        require('dap').run_last()
+      end,
+      'Run Last',
+    },
+    ['<Leader>df'] = {
+      function()
+        local widgets = require 'dap.ui.widgets'
+        widgets.centered_float(widgets.frames)
+      end,
+      'Show frames',
+    },
+    ['<Leader>ds'] = {
+      function()
+        local widgets = require 'dap.ui.widgets'
+        widgets.centered_float(widgets.scopes)
+      end,
+      'Show scopes',
+    },
+  },
+  v = {
+    ['<Leader>dh'] = {
+      function()
+        require('dap.ui.widgets').hover()
+      end,
+      'Hover',
+    },
+    ['<Leader>dv'] = {
+      function()
+        require('dap.ui.widgets').preview()
+      end,
+      'Preview',
+    },
+  },
+}
+
+M.dap_ui = {
+  plugin = true,
+  n = {
+    ['<Leader>dt'] = {
+      function()
+        require('dapui').toggle()
+      end,
+      'Toggle dap ui',
+    },
+  },
+}
+
+M.trouble = {
+  plugin = true,
+  n = {
+    ['<leader>tt'] = {
+      function()
+        require('trouble').toggle()
+      end,
+      'Trouble toggle',
+    },
+
+    ['<leader>td'] = {
+      function()
+        require('trouble').toggle 'workspace_diagnostics'
+      end,
+      'Trouble toggle workspace diagnostics',
+    },
+
+    ['<leader>tD'] = {
+      function()
+        require('trouble').toggle 'document_diagnostics'
+      end,
+      'Trouble toggle document diagnostics',
+    },
+
+    ['<leader>tf'] = {
+      function()
+        require('trouble').toggle 'quickfix'
+      end,
+      'Trouble toggle quickfix',
+    },
+
+    ['<leader>tl'] = {
+      function()
+        require('trouble').toggle 'loclist'
+      end,
+      'Trouble toggle local-list',
+    },
+
+    ['gR'] = {
+      function()
+        require('trouble').toggle 'lsp_references'
+      end,
+      'Goto Reference',
     },
   },
 }

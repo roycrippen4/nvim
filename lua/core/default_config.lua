@@ -2,7 +2,7 @@ local M = {}
 -- local utils = require 'core.utils'
 
 M.options = {
-  nvchad_branch = 'v2.0',
+  -- nvchad_branch = 'v2.0',
 }
 
 M.ui = {
@@ -18,9 +18,10 @@ M.ui = {
 
   -- https://github.com/NvChad/base46/tree/v2.0/lua/base46/extended_integrations
   extended_integrations = {
-    -- 'rainbowdelimiters',
-    -- 'trouble',
-    -- 'todo',
+    'dap',
+    'rainbowdelimiters',
+    'trouble',
+    'todo',
   },
   --cmp themeing
   cmp = {
@@ -43,10 +44,15 @@ M.ui = {
 
   -- lazyload it when there are 1+ buffers
   tabufline = {
+    icons = false,
+    underline = true,
+    overriden_modules = function(modules)
+      modules[1] = vim.g.NvimTreeOverlayTitle
+      modules[4] = ''
+    end,
     -- show_numbers = false,
     enabled = true,
     lazyload = false,
-    overriden_modules = nil,
   },
 
   -- nvdash (dashboard)

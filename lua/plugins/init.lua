@@ -312,6 +312,18 @@ local default_plugins = {
     cmd = 'ZenMode',
     opts = require 'plugins.configs.zenmode',
   },
+
+  {
+    'neovim/nvim-lspconfig',
+    event = 'VimEnter',
+    dependencies = {
+      'folke/neodev.nvim',
+      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+    },
+    config = function()
+      require 'plugins.configs.lsp.servers'
+    end,
+  },
 }
 
 local config = require('core.utils').load_config()

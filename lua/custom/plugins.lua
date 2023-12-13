@@ -310,17 +310,17 @@ local plugins = {
     end,
   },
 
-  {
-    'neovim/nvim-lspconfig',
-    event = 'VimEnter',
-    dependencies = {
-      'folke/neodev.nvim',
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
-    },
-    config = function()
-      require 'custom.configs.lspconfig'
-    end,
-  },
+  -- {
+  --   'neovim/nvim-lspconfig',
+  --   event = 'VimEnter',
+  --   dependencies = {
+  --     'folke/neodev.nvim',
+  --     { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+  --   },
+  --   config = function()
+  --     require 'custom.configs.lspconfig'
+  --   end,
+  -- },
 
   {
     'stevearc/conform.nvim',

@@ -53,11 +53,6 @@ M.on_attach = function(_, bufnr)
     vim.diagnostic.open_float()
   end, 'Open floating diagnostic message')
 
-  nmap('<Leader>lh', function()
-    print('inlay hints: ' .. tostring(vim.lsp.inlay_hint.is_enabled()))
-    vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))
-  end, 'Toggle Inlay Hints')
-
   nmap('<leader>lr', function()
     vim.lsp.buf.rename()
   end, 'Rename')

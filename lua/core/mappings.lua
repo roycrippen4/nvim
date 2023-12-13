@@ -29,6 +29,15 @@ M.general = {
     -- Copy all
     ['<C-c>'] = { '<cmd> %y+ <CR>', 'Copy whole file' },
 
+    -- toggle lsp inlay hints
+    ['<Leader>lh'] = {
+      function()
+        vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))
+        print('inlay hints: ' .. tostring(vim.lsp.inlay_hint.is_enabled()))
+      end,
+      'Toggle lsp inlay hints',
+    },
+
     -- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
     -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
     -- empty mode is same as using <cmd> :map

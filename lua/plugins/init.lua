@@ -75,7 +75,6 @@ local default_plugins = {
       local devicon = require 'nvim-web-devicons'
       dofile(vim.g.base46_cache .. 'devicons')
       devicon.setup(opts)
-      -- 󰎙󰬝󰴜󰫽󱂌󰬉󰯮󰯰󰫯
       devicon.set_icon {
         ['bun.lockb'] = {
           icon = '󰯮',
@@ -344,8 +343,3 @@ if #config.plugins > 0 then
 end
 
 require('lazy').setup(default_plugins, config.lazy_nvim)
-
--- require 'custom.utils.utils'
--- require 'custom.utils.commands'
--- require 'custom.utils.autocommands'
--- require 'custom.utils.diagnostic'

@@ -84,9 +84,15 @@ autocmd({ 'BufAdd', 'BufDelete', 'BufEnter', 'TabNew' }, {
 autocmd({ 'VimEnter', 'DirChanged' }, {
   callback = function()
     local title = vim.fn.getcwd()
-    local match = string.match(title, os.getenv 'HOME')
+    local env = os.getenv 'HOME'
+
+    if title == env then
+      vim.o.titlestring = '~/' .. '  '
+      return
+    end
+    local match = string.match(title, env)
     if match then
-      vim.o.titlestring = title:gsub(match, '~')
+      vim.o.titlestring = title:gsub(match, '~') .. '  '
       return
     end
     vim.o.titlestring = vim.fn.getcwd()

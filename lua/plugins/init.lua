@@ -306,6 +306,12 @@ local default_plugins = {
       require('which-key').setup(opts)
     end,
   },
+
+  {
+    'folke/zen-mode.nvim',
+    cmd = 'ZenMode',
+    opts = require 'plugins.configs.zenmode',
+  },
 }
 
 local config = require('core.utils').load_config()
@@ -319,4 +325,4 @@ require('lazy').setup(default_plugins, config.lazy_nvim)
 -- require 'custom.utils.utils'
 -- require 'custom.utils.commands'
 -- require 'custom.utils.autocommands'
-require 'custom.utils.diagnostic'
+-- require 'custom.utils.diagnostic'

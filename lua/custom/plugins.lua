@@ -456,11 +456,11 @@ local plugins = {
     end,
   },
 
-  {
-    'folke/zen-mode.nvim',
-    cmd = 'ZenMode',
-    opts = require 'custom.configs.zenmode',
-  },
+  -- {
+  --   'folke/zen-mode.nvim',
+  --   cmd = 'ZenMode',
+  --   opts = require 'custom.configs.zenmode',
+  -- },
 
   {
     'mbbill/undotree',

@@ -126,14 +126,14 @@ M.set_nvim_tree_overlay_title = function()
 
   -- early return if tree is not shown
   if tree_width == 0 then
+    vim.g.NvimTreeOverlayTitle = ''
     return
   end
 
   -- Set the title if the tree is shown, but no buffers are open
   if #vim.t.bufs == 0 then
     local start_title = vim.loop.cwd()
-    -- local start_width = vim.api.nvim_win_get_width(0) - #start_title
-    vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#' .. start_title --[[ .. ]] --[[ string.rep(' ', start_width) ]]
+    vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#' .. start_title
     return
   end
 

@@ -1,5 +1,4 @@
 local autocmd = vim.api.nvim_create_autocmd
-local api = require 'nvim-tree.api'
 
 autocmd('QuitPre', {
   callback = function()
@@ -68,7 +67,6 @@ autocmd({ 'BufAdd', 'BufDelete', 'BufEnter', 'TabNew' }, {
   callback = function()
     local current_buf = vim.api.nvim_get_current_buf()
     if #vim.t.bufs == 0 then
-      -- vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepStart' })
       return
     else
       local first_buf = vim.t.bufs[1]
@@ -82,3 +80,15 @@ autocmd({ 'BufAdd', 'BufDelete', 'BufEnter', 'TabNew' }, {
 })
 
 autocmd({ 'InsertEnter', 'WinLeave' }, { command = 'set nocursorline', group = group })
+
+autocmd({ 'VimEnter', 'DirChanged' }, {
+  callback = function()
+    local title = vim.fn.getcwd()
+    local match = string.match(title, os.getenv 'HOME')
+    if match then
+      vim.o.titlestring = title:gsub(match, '~')
+      return
+    end
+    vim.o.titlestring = vim.fn.getcwd()
+  end,
+})

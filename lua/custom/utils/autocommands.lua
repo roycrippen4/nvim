@@ -56,6 +56,8 @@ autocmd({ 'InsertLeave', 'WinEnter' }, {
   end,
 })
 
+autocmd({ 'InsertEnter', 'WinLeave' }, { command = 'set nocursorline', group = group })
+
 autocmd('CursorMoved', {
   group = hlsearch_group,
   callback = function()
@@ -78,8 +80,6 @@ autocmd({ 'BufAdd', 'BufDelete', 'BufEnter', 'TabNew' }, {
     end
   end,
 })
-
-autocmd({ 'InsertEnter', 'WinLeave' }, { command = 'set nocursorline', group = group })
 
 autocmd({ 'VimEnter', 'DirChanged' }, {
   callback = function()

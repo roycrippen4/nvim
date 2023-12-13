@@ -10,6 +10,21 @@ g.nvchad_theme = config.ui.theme
 g.base46_cache = vim.fn.stdpath 'data' .. '/nvchad/base46/'
 g.toggle_theme_icon = '   '
 g.transparency = config.ui.transparency
+g.NvimTreeOverlayTitle = ''
+g.skip_ts_context_commentstring_module = true
+g.markdown_fenced_languages = {
+  'ts=typescript',
+}
+
+vim.treesitter.language.register('markdown', 'mdx')
+
+-- vim.cmd [[ set fillchars+=vert:\▏]]
+-- vim.cmd [[ set fillchars+=vertright:\▏]]
+-- vim.cmd [[ set fillchars+=vertleft:\▏]]
+-- vim.cmd [[ set fillchars+=horizup:\▏]]
+-- vim.cmd [[ set fillchars+=horizdown:\▁]]
+-- vim.cmd [[ set fillchars+=verthoriz:\▏]]
+-- vim.cmd [[ set fillchars+=horiz:\▁]]
 
 -------------------------------------- options ------------------------------------------
 opt.laststatus = 3 -- global statusline
@@ -26,13 +41,23 @@ opt.smartindent = true
 opt.tabstop = 2
 opt.softtabstop = 2
 
-opt.fillchars = { eob = ' ' }
+opt.fillchars = {
+  eob = ' ',
+  vert = '▏',
+  vertright = '▏',
+  vertleft = '▏',
+  horizup = '▏',
+  verthoriz = '▏',
+  horizdown = '▁',
+  horiz = '▁',
+}
 opt.ignorecase = true
 opt.smartcase = true
 opt.mouse = 'a'
 
 -- Numbers
 opt.number = true
+opt.relativenumber = true
 opt.numberwidth = 2
 opt.ruler = false
 
@@ -45,6 +70,7 @@ opt.splitright = true
 opt.termguicolors = true
 opt.timeoutlen = 200
 opt.undofile = true
+opt.scrolloff = 10
 
 -- interval for writing swap file to disk, also used by gitsigns
 opt.updatetime = 250

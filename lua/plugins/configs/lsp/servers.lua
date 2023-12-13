@@ -104,3 +104,28 @@ lspconfig['svelte'].setup {
     })
   end,
 }
+
+local api = require 'typescript-tools.api'
+require('typescript-tools').setup {
+  on_attach = M.on_attach,
+  settings = {
+    tsserver_plugins = {
+      '@styled/typescript-styled-plugin',
+    },
+    tsserver_file_preferences = {
+      includeInlayParameterNameHints = 'all',
+      includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+      includeInlayFunctionParameterTypeHints = true,
+      includeInlayVariableTypeHints = true,
+      includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+      includeInlayPropertyDeclarationTypeHints = true,
+      includeInlayFunctionLikeReturnTypeHints = true,
+      includeInlayEnumMemberValueHints = true,
+      jsxAttributeCompletionStyle = 'auto',
+    },
+  },
+  handlers = {
+    ['textDocument/publishDiagnostics'] = api.filter_diagnostics { 80001 },
+  },
+  vim.keymap.set('n', 'fi', '<cmd> TSToolsOrganizeImports<CR>', { desc = 'Organize imports' }),
+}

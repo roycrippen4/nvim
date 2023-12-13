@@ -222,22 +222,22 @@ local plugins = {
     end,
   },
 
-  {
-    'simrat39/rust-tools.nvim',
-    ft = 'rust',
-    config = function()
-      local rt = require 'rust-tools'
-      local M = require 'custom.configs.lspconfig'
-      rt.setup {
-        inlay_hints = {
-          auto = true,
-        },
-        server = {
-          on_attach = M.on_attach,
-        },
-      }
-    end,
-  },
+  -- {
+  --   'simrat39/rust-tools.nvim',
+  --   ft = 'rust',
+  --   config = function()
+  --     local rt = require 'rust-tools'
+  --     local M = require 'custom.configs.lspconfig'
+  --     rt.setup {
+  --       inlay_hints = {
+  --         auto = true,
+  --       },
+  --       server = {
+  --         on_attach = M.on_attach,
+  --       },
+  --     }
+  --   end,
+  -- },
 
   {
     'kylechui/nvim-surround',
@@ -277,38 +277,38 @@ local plugins = {
     'williamboman/mason-lspconfig.nvim',
   },
 
-  {
-    -- 80001
-    'pmizio/typescript-tools.nvim',
-    ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' },
-    config = function()
-      local M = require 'custom.configs.lspconfig'
-      local api = require 'typescript-tools.api'
-      require('typescript-tools').setup {
-        on_attach = M.on_attach,
-        settings = {
-          tsserver_plugins = {
-            '@styled/typescript-styled-plugin',
-          },
-          tsserver_file_preferences = {
-            includeInlayParameterNameHints = 'all',
-            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-            includeInlayFunctionParameterTypeHints = true,
-            includeInlayVariableTypeHints = true,
-            includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-            includeInlayEnumMemberValueHints = true,
-            jsxAttributeCompletionStyle = 'auto',
-          },
-        },
-        handlers = {
-          ['textDocument/publishDiagnostics'] = api.filter_diagnostics { 80001 },
-        },
-        vim.keymap.set('n', 'fi', '<cmd> TSToolsOrganizeImports<CR>', { desc = 'Organize imports' }),
-      }
-    end,
-  },
+  -- {
+  --   -- 80001
+  --   'pmizio/typescript-tools.nvim',
+  --   ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' },
+  --   config = function()
+  --     local M = require 'custom.configs.lspconfig'
+  --     local api = require 'typescript-tools.api'
+  --     require('typescript-tools').setup {
+  --       on_attach = M.on_attach,
+  --       settings = {
+  --         tsserver_plugins = {
+  --           '@styled/typescript-styled-plugin',
+  --         },
+  --         tsserver_file_preferences = {
+  --           includeInlayParameterNameHints = 'all',
+  --           includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+  --           includeInlayFunctionParameterTypeHints = true,
+  --           includeInlayVariableTypeHints = true,
+  --           includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+  --           includeInlayPropertyDeclarationTypeHints = true,
+  --           includeInlayFunctionLikeReturnTypeHints = true,
+  --           includeInlayEnumMemberValueHints = true,
+  --           jsxAttributeCompletionStyle = 'auto',
+  --         },
+  --       },
+  --       handlers = {
+  --         ['textDocument/publishDiagnostics'] = api.filter_diagnostics { 80001 },
+  --       },
+  --       vim.keymap.set('n', 'fi', '<cmd> TSToolsOrganizeImports<CR>', { desc = 'Organize imports' }),
+  --     }
+  --   end,
+  -- },
 
   -- {
   --   'neovim/nvim-lspconfig',

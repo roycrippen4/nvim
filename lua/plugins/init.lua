@@ -324,6 +324,17 @@ local default_plugins = {
       require 'plugins.configs.lsp.servers'
     end,
   },
+
+  {
+    'pmizio/typescript-tools.nvim',
+    ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' },
+  },
+
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^3', -- Recommended
+    ft = { 'rust' },
+  },
 }
 
 local config = require('core.utils').load_config()

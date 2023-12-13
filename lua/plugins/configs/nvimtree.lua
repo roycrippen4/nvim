@@ -1,4 +1,4 @@
-local utils = require 'custom.utils.utils'
+local utils = require 'core.utils'
 local api = require 'nvim-tree.api'
 
 local Event = api.events.Event

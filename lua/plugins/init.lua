@@ -316,7 +316,7 @@ end
 
 require('lazy').setup(default_plugins, config.lazy_nvim)
 
-require 'custom.utils.utils'
-require 'custom.utils.commands'
-require 'custom.utils.autocommands'
+-- require 'custom.utils.utils'
+-- require 'custom.utils.commands'
+-- require 'custom.utils.autocommands'
 require 'custom.utils.diagnostic'

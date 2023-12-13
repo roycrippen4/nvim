@@ -132,6 +132,27 @@ local default_plugins = {
     end,
   },
 
+  -- {
+  --   'hrsh7th/nvim-cmp',
+  --   -- opts = overrides.cmp,
+  --
+  --   dependencies = {
+  --     {
+  --       -- snippet plugin
+  --       'L3MON4D3/LuaSnip',
+  --       config = function(_, opts)
+  --         -- load default luasnip config
+  --         require('plugins.configs.others').luasnip(opts)
+  --
+  --         local luasnip = require 'luasnip'
+  --         luasnip.filetype_extend('javascriptreact', { 'html' })
+  --         luasnip.filetype_extend('typescriptreact', { 'html' })
+  --         require('luasnip/loaders/from_vscode').lazy_load()
+  --       end,
+  --     },
+  --   },
+  -- },
+
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
@@ -143,10 +164,13 @@ local default_plugins = {
         opts = { history = true, updateevents = 'TextChanged,TextChangedI' },
         config = function(_, opts)
           require('plugins.configs.others').luasnip(opts)
+          local luasnip = require 'luasnip'
+          luasnip.filetype_extend('javascriptreact', { 'html' })
+          luasnip.filetype_extend('typescriptreact', { 'html' })
+          require('luasnip/loaders/from_vscode').lazy_load()
         end,
       },
-      --
-      --     -- autopairing of (){}[] etc
+
       {
         'windwp/nvim-autopairs',
         opts = {
@@ -264,6 +288,19 @@ local default_plugins = {
   },
 
   {
+    'Aasim-A/scrollEOF.nvim',
+    event = 'BufRead',
+    config = function()
+      require('scrollEOF').setup {}
+    end,
+  },
+
+  {
+    'JoosepAlviste/nvim-ts-context-commentstring',
+    event = 'VimEnter',
+  },
+
+  {
     'numToStr/Comment.nvim',
     keys = {
       { 'gc', mode = { 'n', 'v' }, 'gcc' },
@@ -300,6 +337,185 @@ local default_plugins = {
   {
     'mbbill/undotree',
     cmd = 'UndotreeToggle',
+  },
+
+  {
+    'max397574/better-escape.nvim',
+    event = 'InsertEnter',
+    config = function()
+      require('better_escape').setup()
+    end,
+  },
+
+  {
+    'theprimeagen/harpoon',
+    branch = 'harpoon2',
+    init = function()
+      require('core.utils').load_mappings 'harpoon'
+    end,
+    config = function()
+      local harpoon = require 'harpoon'
+      harpoon:setup {}
+    end,
+  },
+
+  {
+    'windwp/nvim-ts-autotag',
+    ft = {
+      'typescript',
+      'javascript',
+      'typescriptreact',
+      'javascriptreact',
+      'html',
+      'svelte',
+      'jsx',
+      'tsx',
+      'markdown',
+      'mdx',
+    },
+    config = function()
+      require('nvim-ts-autotag').setup {
+        autotag = {
+          enable_close_on_slash = false,
+        },
+      }
+    end,
+  },
+
+  {
+    'stevearc/conform.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      require('conform').setup {
+        quiet = true,
+        formatters_by_ft = {
+          lua = { 'stylua' },
+          typescript = { 'prettier' },
+          typescriptreact = { 'prettier' },
+          javascript = { 'prettier' },
+          javascriptreact = { 'prettier' },
+          json = { 'pretter' },
+          html = { 'prettier' },
+          css = { 'prettier' },
+          markdown = { 'prettier' },
+          sh = { 'shfmt' },
+          yaml = { 'prettier' },
+        },
+        format_on_save = {
+          timeout_ms = 500,
+          async = false,
+          lsp_fallback = true,
+        },
+        formatters = {
+          shfmt = {
+            prepend_args = { '-i', '2' },
+          },
+        },
+      }
+    end,
+  },
+
+  {
+    'kylechui/nvim-surround',
+    event = 'VimEnter',
+    config = function()
+      require('nvim-surround').setup()
+    end,
+  },
+
+  {
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    keys = {
+      { '<leader>mt', mode = { 'n' } },
+      { '<leader>mp', mode = { 'n' } },
+      { '<leader>ms', mode = { 'n' } },
+    },
+    ft = { 'markdown' },
+    build = function()
+      vim.fn['mkdp#util#install']()
+    end,
+    config = function()
+      vim.keymap.set('n', '<leader>mt', '<cmd> MarkdownPreviewToggle <CR>', { desc = 'Toggle Markdown Preview' })
+      vim.keymap.set('n', '<leader>mp', '<cmd> MarkdownPreview <CR>', { desc = 'Preview Markdown' })
+      vim.keymap.set('n', '<leader>ms', '<cmd> MarkdownPreviewStop <CR>', { desc = 'Stop Markdown Preview' })
+    end,
+  },
+
+  {
+    'folke/todo-comments.nvim',
+    event = 'BufReadPre',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    init = function()
+      dofile(vim.g.base46_cache .. 'todo')
+    end,
+    opts = {},
+  },
+
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    init = function()
+      require('core.utils').lazy_load 'indent-blankline.nvim'
+    end,
+    version = '3.3.8',
+    opts = function()
+      require 'plugins.configs.blankline'
+    end,
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. 'blankline')
+      require('ibl').setup(opts)
+    end,
+  },
+
+  {
+    'luukvbaal/statuscol.nvim',
+    init = function()
+      require('core.utils').lazy_load 'statuscol.nvim'
+    end,
+    branch = '0.10',
+    config = function()
+      local builtin = require 'statuscol.builtin'
+      require('statuscol').setup {
+        ft_ignore = { 'NvimTree', 'terminal' },
+        relculright = true,
+        segments = {
+          {
+            sign = {
+              name = { 'Diagnostic' },
+              maxwidth = 1,
+              auto = false,
+            },
+          },
+          {
+            sign = {
+              name = { 'Dap' },
+              maxwidth = 1,
+              auto = true,
+            },
+          },
+          {
+            sign = {
+              name = { 'todo' },
+              maxwidth = 1,
+              auto = true,
+            },
+          },
+          {
+            text = {
+              builtin.lnumfunc,
+              ' ',
+            },
+          },
+          {
+            sign = {
+              namespace = { 'gitsign' },
+              maxwidth = 1,
+              auto = true,
+            },
+          },
+        },
+      }
+    end,
   },
 }
 

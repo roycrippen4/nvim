@@ -75,8 +75,7 @@ autocmd({ 'BufAdd', 'BufDelete', 'BufEnter', 'TabNew' }, {
     if #vim.t.bufs == 0 then
       return
     else
-      local first_buf = vim.t.bufs[1]
-      if first_buf == current_buf then
+      if vim.t.bufs[1] == current_buf then
         vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOn' })
       else
         vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOff' })

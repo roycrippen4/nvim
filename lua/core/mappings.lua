@@ -2,6 +2,72 @@
 
 local M = {}
 
+M.harpoon = {
+  plugin = true,
+  n = {
+    ['<C-a>'] = {
+      function()
+        require('harpoon'):list():append()
+      end,
+    },
+    ['<C-e>'] = {
+      function()
+        require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
+      end,
+    },
+    ['<C-1>'] = {
+      function()
+        require('harpoon'):list():select(1)
+      end,
+    },
+    ['<C-2>'] = {
+      function()
+        require('harpoon'):list():select(2)
+      end,
+    },
+    ['<C-3>'] = {
+      function()
+        require('harpoon'):list():select(3)
+      end,
+    },
+    ['<C-4>'] = {
+      function()
+        require('harpoon'):list():select(4)
+      end,
+    },
+    ['<C-5>'] = {
+      function()
+        require('harpoon'):list():select(5)
+      end,
+    },
+    ['<C-6>'] = {
+      function()
+        require('harpoon'):list():select(6)
+      end,
+    },
+    ['<C-7>'] = {
+      function()
+        require('harpoon'):list():select(7)
+      end,
+    },
+    ['<C-8>'] = {
+      function()
+        require('harpoon'):list():select(8)
+      end,
+    },
+    ['<C-9>'] = {
+      function()
+        require('harpoon'):list():select(9)
+      end,
+    },
+    ['<C-0>'] = {
+      function()
+        require('harpoon'):list():select(0)
+      end,
+    },
+  },
+}
+
 M.disabled = {
   n = {
     ['<leader>/'] = '',
@@ -67,14 +133,10 @@ M.general = {
     -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
     -- empty mode is same as using <cmd> :map
     -- also don't use g[j|k] when in operator pending mode, so it doesn't alter d, y or c behaviour
-    -- ['j'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
-    -- ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
-    -- ['<Up>'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
-    -- ['<Down>'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
-
-    -- new buffer
-    -- ['<leader>b'] = { '<cmd> enew <CR>', 'New buffer' },
-    -- ['<leader>ch'] = { '<cmd> NvCheatsheet <CR>', 'Mapping cheatsheet' },
+    ['j'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
+    ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
+    ['<Up>'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
+    ['<Down>'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
 
     ['<leader>fm'] = {
       function()
@@ -230,104 +292,104 @@ M.whichkey = {
   },
 }
 
-M.dap = {
-  plugin = true,
-  n = {
-    ['<Leader>dc'] = {
-      function()
-        require('dap').continue()
-      end,
-      'Continue',
-    },
-    ['<Leader>dsv'] = {
-      function()
-        require('dap').step_over()
-      end,
-      'Step into',
-    },
-    ['<Leader>dsi'] = {
-      function()
-        require('dap').step_into()
-      end,
-      'Step into',
-    },
-    ['<Leader>dso'] = {
-      function()
-        require('dap').step_out()
-      end,
-      'Step out',
-    },
-    ['<Leader>db'] = {
-      function()
-        require('dap').toggle_breakpoint()
-      end,
-      'Toggle breakpoint',
-    },
-    ['<Leader>dB'] = {
-      function()
-        require('dap').set_breakpoint()
-      end,
-      'Set breakpoint',
-    },
-    ['<Leader>dp'] = {
-      function()
-        require('dap').set_breakpoint(nil, nil, vim.fn.input 'Log point message: ')
-      end,
-    },
-    ['<Leader>dr'] = {
-      function()
-        require('dap').repl.open()
-      end,
-      'Repl open',
-    },
-    ['<Leader>dl'] = {
-      function()
-        require('dap').run_last()
-      end,
-      'Run Last',
-    },
-    ['<Leader>df'] = {
-      function()
-        local widgets = require 'dap.ui.widgets'
-        widgets.centered_float(widgets.frames)
-      end,
-      'Show frames',
-    },
-    ['<Leader>ds'] = {
-      function()
-        local widgets = require 'dap.ui.widgets'
-        widgets.centered_float(widgets.scopes)
-      end,
-      'Show scopes',
-    },
-  },
-  v = {
-    ['<Leader>dh'] = {
-      function()
-        require('dap.ui.widgets').hover()
-      end,
-      'Hover',
-    },
-    ['<Leader>dv'] = {
-      function()
-        require('dap.ui.widgets').preview()
-      end,
-      'Preview',
-    },
-  },
-}
+-- M.dap = {
+--   plugin = true,
+--   n = {
+--     ['<Leader>dc'] = {
+--       function()
+--         require('dap').continue()
+--       end,
+--       'Continue',
+--     },
+--     ['<Leader>dsv'] = {
+--       function()
+--         require('dap').step_over()
+--       end,
+--       'Step into',
+--     },
+--     ['<Leader>dsi'] = {
+--       function()
+--         require('dap').step_into()
+--       end,
+--       'Step into',
+--     },
+--     ['<Leader>dso'] = {
+--       function()
+--         require('dap').step_out()
+--       end,
+--       'Step out',
+--     },
+--     ['<Leader>db'] = {
+--       function()
+--         require('dap').toggle_breakpoint()
+--       end,
+--       'Toggle breakpoint',
+--     },
+--     ['<Leader>dB'] = {
+--       function()
+--         require('dap').set_breakpoint()
+--       end,
+--       'Set breakpoint',
+--     },
+--     ['<Leader>dp'] = {
+--       function()
+--         require('dap').set_breakpoint(nil, nil, vim.fn.input 'Log point message: ')
+--       end,
+--     },
+--     ['<Leader>dr'] = {
+--       function()
+--         require('dap').repl.open()
+--       end,
+--       'Repl open',
+--     },
+--     ['<Leader>dl'] = {
+--       function()
+--         require('dap').run_last()
+--       end,
+--       'Run Last',
+--     },
+--     ['<Leader>df'] = {
+--       function()
+--         local widgets = require 'dap.ui.widgets'
+--         widgets.centered_float(widgets.frames)
+--       end,
+--       'Show frames',
+--     },
+--     ['<Leader>ds'] = {
+--       function()
+--         local widgets = require 'dap.ui.widgets'
+--         widgets.centered_float(widgets.scopes)
+--       end,
+--       'Show scopes',
+--     },
+--   },
+--   v = {
+--     ['<Leader>dh'] = {
+--       function()
+--         require('dap.ui.widgets').hover()
+--       end,
+--       'Hover',
+--     },
+--     ['<Leader>dv'] = {
+--       function()
+--         require('dap.ui.widgets').preview()
+--       end,
+--       'Preview',
+--     },
+--   },
+-- }
 
-M.dap_ui = {
-  plugin = true,
-  n = {
-    ['<Leader>dt'] = {
-      function()
-        require('dapui').toggle()
-      end,
-      'Toggle dap ui',
-    },
-  },
-}
+-- M.dap_ui = {
+--   plugin = true,
+--   n = {
+--     ['<Leader>dt'] = {
+--       function()
+--         require('dapui').toggle()
+--       end,
+--       'Toggle dap ui',
+--     },
+--   },
+-- }
 
 M.trouble = {
   plugin = true,

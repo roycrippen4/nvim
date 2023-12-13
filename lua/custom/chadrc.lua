@@ -2,18 +2,18 @@ local M = {}
 
 local sep_color = '#454951'
 
-M.cmp = {
-  sources = {
-    { name = 'nvim_lsp', trigger_characters = { '-' } },
-    { name = 'path' },
-    { name = 'luasnip' },
-    { name = 'buffer' },
-    { name = 'nvim_lua' },
-  },
-  experimental = {
-    ghost_text = true,
-  },
-}
+-- M.cmp = {
+--   sources = {
+--     { name = 'nvim_lsp', trigger_characters = { '-' } },
+--     { name = 'path' },
+--     { name = 'luasnip' },
+--     { name = 'buffer' },
+--     { name = 'nvim_lua' },
+--   },
+--   experimental = {
+--     ghost_text = true,
+--   },
+-- }
 
 M.ui = {
   hl_add = {
@@ -78,12 +78,10 @@ M.ui = {
     WinSeparator = {
       fg = sep_color,
       bg = 'black',
-      -- sp = 'yellow',
-      -- underline = true,
     },
   },
 }
 
-M.plugins = 'custom.plugins'
+-- M.plugins = 'custom.plugins'
 
 return M

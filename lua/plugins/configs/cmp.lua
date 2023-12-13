@@ -45,6 +45,16 @@ local function border(hl_name)
 end
 
 local options = {
+  sources = {
+    { name = 'nvim_lsp', trigger_characters = { '-' } },
+    { name = 'path' },
+    { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'nvim_lua' },
+  },
+  experimental = {
+    ghost_text = true,
+  },
   completion = {
     completeopt = 'menu,menuone',
   },
@@ -103,13 +113,6 @@ local options = {
       'i',
       's',
     }),
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'buffer' },
-    { name = 'nvim_lua' },
-    { name = 'path' },
   },
 }
 

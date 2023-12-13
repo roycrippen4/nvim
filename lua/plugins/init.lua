@@ -1,5 +1,3 @@
--- All plugins have lazy=true by default,to load a plugin on startup just lazy=false
--- List of all default plugins & their definitions
 local default_plugins = {
 
   'nvim-lua/plenary.nvim',
@@ -104,12 +102,10 @@ local default_plugins = {
     end,
   },
 
-  -- git stuff
   {
     'lewis6991/gitsigns.nvim',
     ft = { 'gitcommit', 'diff' },
     init = function()
-      -- load gitsigns only when a git file is opened
       vim.api.nvim_create_autocmd({ 'BufRead' }, {
         group = vim.api.nvim_create_augroup('GitSignsLazyLoad', { clear = true }),
         callback = function()
@@ -131,27 +127,6 @@ local default_plugins = {
       require('gitsigns').setup(opts)
     end,
   },
-
-  -- {
-  --   'hrsh7th/nvim-cmp',
-  --   -- opts = overrides.cmp,
-  --
-  --   dependencies = {
-  --     {
-  --       -- snippet plugin
-  --       'L3MON4D3/LuaSnip',
-  --       config = function(_, opts)
-  --         -- load default luasnip config
-  --         require('plugins.configs.others').luasnip(opts)
-  --
-  --         local luasnip = require 'luasnip'
-  --         luasnip.filetype_extend('javascriptreact', { 'html' })
-  --         luasnip.filetype_extend('typescriptreact', { 'html' })
-  --         require('luasnip/loaders/from_vscode').lazy_load()
-  --       end,
-  --     },
-  --   },
-  -- },
 
   {
     'hrsh7th/nvim-cmp',
@@ -179,14 +154,10 @@ local default_plugins = {
         },
         config = function(_, opts)
           require('nvim-autopairs').setup(opts)
-
-          -- setup cmp for autopairs
           local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
           require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
         end,
       },
-
-      -- cmp sources plugins
       {
         'saadparwaiz1/cmp_luasnip',
         'hrsh7th/cmp-nvim-lua',
@@ -244,7 +215,6 @@ local default_plugins = {
     end,
   },
 
-  -- Only load whichkey after all the gui
   {
     'folke/which-key.nvim',
     keys = { '<leader>', '<c-r>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },

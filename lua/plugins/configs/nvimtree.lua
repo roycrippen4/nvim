@@ -67,7 +67,7 @@ local options = {
     update_root = false,
   },
   view = {
-    signcolumn = 'no',
+    signcolumn = 'auto',
     adaptive_size = true,
     side = 'left',
     width = 10,
@@ -86,17 +86,19 @@ local options = {
     },
   },
   renderer = {
-    -- root_folder_modifier = ':t',
     root_folder_label = my_root_folder_label,
     highlight_git = true,
     highlight_opened_files = 'name',
+    highlight_bookmarks = 'all',
 
     indent_markers = {
       enable = true,
     },
 
     icons = {
+      bookmarks_placement = 'signcolumn',
       show = {
+        bookmarks = true,
         file = true,
         folder = true,
         folder_arrow = true,

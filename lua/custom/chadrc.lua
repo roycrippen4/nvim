@@ -17,6 +17,15 @@ M.cmp = {
 
 M.ui = {
   hl_add = {
+    NvimTreeBookmark = {
+      fg = { 'red', -10 },
+    },
+    NvimTreeBookmarkHL = {
+      fg = { 'red', -10 },
+    },
+    NvimTreeOpenedFile = {
+      fg = { 'yellow', -10 },
+    },
     NvimTreeTitle = {
       underline = true,
       fg = { 'yellow', -10 },
@@ -43,7 +52,7 @@ M.ui = {
       sp = sep_color,
     },
     TbLineBufOn = {
-      fg = 'white',
+      fg = { 'yellow', -20 },
     },
     TbLineBufOff = {
       underline = true,

@@ -239,7 +239,7 @@ local default_plugins = {
     dependencies = {
       'folke/neodev.nvim',
       {
-        'j-hui/fidget.nvim', --[[ tag = 'legacy', ]]
+        'j-hui/fidget.nvim',
         opts = {},
       },
     },

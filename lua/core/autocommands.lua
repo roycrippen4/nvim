@@ -7,7 +7,7 @@ autocmd('QuitPre', {
     local wins = vim.api.nvim_list_wins()
     for _, w in ipairs(wins) do
       local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(w))
-      if bufname:match 'NvimTree_' ~= nil then
+      if bufname:match('NvimTree_') ~= nil then
         table.insert(tree_wins, w)
       end
       if vim.api.nvim_win_get_config(w).relative ~= '' then
@@ -31,7 +31,7 @@ autocmd('TextYankPost', {
   pattern = '*',
 })
 
-local hl_ns = vim.api.nvim_create_namespace 'search'
+local hl_ns = vim.api.nvim_create_namespace('search')
 local hlsearch_group = vim.api.nvim_create_augroup('hlsearch_group', { clear = true })
 
 local function manage_hlsearch(char)
@@ -40,9 +40,9 @@ local function manage_hlsearch(char)
 
   if vim.fn.mode() == 'n' then
     if not vim.tbl_contains(keys, key) then
-      vim.cmd [[ :set nohlsearch ]]
+      vim.cmd([[ :set nohlsearch ]])
     elseif vim.tbl_contains(keys, key) then
-      vim.cmd [[ :set hlsearch ]]
+      vim.cmd([[ :set hlsearch ]])
     end
   end
   ---@diagnostic disable next-line
@@ -55,7 +55,7 @@ autocmd({ --[[ 'VimEnter', ]]
   'BufEnter',
 }, {
   callback = function()
-    vim.cmd [[ set cursorline ]]
+    vim.cmd([[ set cursorline ]])
     vim.api.nvim_set_hl(0, 'CursorLine', { link = 'NvimTreeCursorLine' })
   end,
 })
@@ -87,7 +87,7 @@ autocmd({ 'BufAdd', 'BufDelete', 'BufEnter', 'TabNew' }, {
 autocmd({ 'VimEnter', 'DirChanged' }, {
   callback = function()
     local title = vim.fn.getcwd()
-    local env = os.getenv 'HOME'
+    local env = os.getenv('HOME')
 
     if title == env then
       vim.o.titlestring = '~/' .. '  '

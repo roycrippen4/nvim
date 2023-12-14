@@ -2,19 +2,6 @@ local M = {}
 
 local sep_color = '#454951'
 
--- M.cmp = {
---   sources = {
---     { name = 'nvim_lsp', trigger_characters = { '-' } },
---     { name = 'path' },
---     { name = 'luasnip' },
---     { name = 'buffer' },
---     { name = 'nvim_lua' },
---   },
---   experimental = {
---     ghost_text = true,
---   },
--- }
-
 M.ui = {
   hl_add = {
     NvimTreeBookmark = { fg = { 'red', -10 } },
@@ -44,6 +31,9 @@ M.ui = {
     },
   },
   hl_override = {
+    FloatBorder = {
+      bg = 'black',
+    },
     TblineFill = {
       underline = true,
       bg = 'darker_black',

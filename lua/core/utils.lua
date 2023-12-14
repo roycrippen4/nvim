@@ -2,7 +2,7 @@ local M = {}
 local merge_tb = vim.tbl_deep_extend
 
 M.load_config = function()
-  local config = require 'core.default_config'
+  local config = require('core.default_config')
   local chadrc_path = vim.api.nvim_get_runtime_file('lua/custom/chadrc.lua', false)[1]
 
   if chadrc_path then
@@ -91,7 +91,7 @@ M.lazy_load = function(plugin)
   vim.api.nvim_create_autocmd({ 'BufRead', 'BufWinEnter', 'BufNewFile' }, {
     group = vim.api.nvim_create_augroup('BeLazyOnFileOpen' .. plugin, {}),
     callback = function()
-      local file = vim.fn.expand '%'
+      local file = vim.fn.expand('%')
       local condition = --[[ file ~= 'NvimTree_1' and ]]
         file ~= '[lazy]' and file ~= ''
 
@@ -102,23 +102,19 @@ M.lazy_load = function(plugin)
         -- This deferring only happens only when we do "nvim filename"
         if plugin ~= 'nvim-treesitter' then
           vim.schedule(function()
-            require('lazy').load { plugins = plugin }
+            require('lazy').load({ plugins = plugin })
 
             if plugin == 'nvim-lspconfig' then
-              vim.cmd 'silent! do FileType'
+              vim.cmd('silent! do FileType')
             end
           end, 0)
         else
-          require('lazy').load { plugins = plugin }
+          require('lazy').load({ plugins = plugin })
         end
       end
     end,
   })
 end
-
--- M.is_buffer_in_split = function(bufnr)
---   local total_wins = vim.fn.winnr '$'
--- end
 
 function M.map(modes, lhs, rhs, opts)
   opts = opts or {}
@@ -163,13 +159,13 @@ function M.reload()
   vim.cmd.LspStop()
 
   -- Stop eslint_d
-  vim.fn.execute 'silent !pkill -9 eslint_d'
+  vim.fn.execute('silent !pkill -9 eslint_d')
 
   -- Unload all already loaded modules
   unload_all_modules()
 
   -- Source init.lua
-  vim.cmd.luafile '$MYVIMRC'
+  vim.cmd.luafile('$MYVIMRC')
 end
 
 -- Restart Vim without having to close and run again
@@ -178,11 +174,11 @@ function M.restart()
   M.reload()
 
   -- Manually run VimEnter autocmd to emulate a new run of Vim
-  vim.cmd.doautocmd 'VimEnter'
+  vim.cmd.doautocmd('VimEnter')
 end
 
 function M.read_json_file(filename)
-  local Path = require 'plenary.path'
+  local Path = require('plenary.path')
 
   local path = Path:new(filename)
   if not path:exists() then
@@ -196,7 +192,7 @@ function M.read_json_file(filename)
 end
 
 function M.read_package_json()
-  return M.read_json_file 'package.json'
+  return M.read_json_file('package.json')
 end
 
 ---Check if the given NPM package is installed in the current project.

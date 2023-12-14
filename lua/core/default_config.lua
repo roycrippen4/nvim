@@ -1,8 +1,7 @@
 local M = {}
--- local utils = require 'core.utils'
 
 M.options = {
-  -- nvchad_branch = 'v2.0',
+  -- nvchad_branch = 'v3.0',
 }
 
 M.ui = {
@@ -28,7 +27,7 @@ M.ui = {
     icons = true,
     lspkind_text = true,
     style = 'default', -- default/flat_light/flat_dark/atom/atom_colored
-    border_color = 'grey_fg', -- only applicable for "default" style, use color names from base30 variables
+    border_color = 'blue', -- only applicable for "default" style, use color names from base30 variables
     selected_item_bg = 'colored', -- colored / simple
   },
 
@@ -84,18 +83,37 @@ M.ui = {
   cheatsheet = { theme = 'grid' }, -- simple/grid
 
   lsp = {
-    -- show function signatures i.e args as you type
-    signature = {
-      disabled = false,
-      silent = true, -- silences 'no signature help available' message from appearing
-    },
+    signature = true,
+    semantic_tokens = false,
   },
 }
 
 M.plugins = '' -- path i.e "custom.plugins", so make custom/plugins.lua file
 
-M.lazy_nvim = require 'plugins.configs.lazy_nvim' -- config for lazy.nvim startup options
+M.lazy_nvim = require('plugins.configs.lazy_nvim') -- config for lazy.nvim startup options
 
-M.mappings = require 'core.mappings'
+M.mappings = require('core.mappings')
+
+-- M.base46 = {
+--   integrations = {
+--     'blankline',
+--     'cmp',
+--     'defaults',
+--     'devicons',
+--     'git',
+--     'lsp',
+--     'mason',
+--     'nvchad_updater',
+--     'nvcheatsheet',
+--     'nvdash',
+--     'nvimtree',
+--     'statusline',
+--     'syntax',
+--     'treesitter',
+--     'tbline',
+--     'telescope',
+--     'whichkey',
+--   },
+-- }
 
 return M

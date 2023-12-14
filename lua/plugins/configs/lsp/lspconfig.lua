@@ -26,7 +26,9 @@ M.on_attach = function(_, bufnr)
 
   nmap('K', function()
     vim.lsp.buf.hover()
-  end, 'Signature Documentation')
+  end, 'Hover')
+
+  -- nmap('K', '<cmd>LspUI hover<CR>', 'LSP Hover')
 
   nmap('<C-S-K>', function()
     vim.lsp.buf.signature_help()
@@ -70,7 +72,7 @@ M.on_attach = function(_, bufnr)
   end, 'Code Action')
 end
 
-require('which-key').register {
+require('which-key').register({
   ['<leader>a'] = { name = 'Autosave', _ = 'which_key_ignore' },
   ['<leader>d'] = { name = 'Debug', _ = 'which_key_ignore' },
   ['<leader>ds'] = { name = 'Step', _ = 'which_key_ignore' },
@@ -99,7 +101,7 @@ require('which-key').register {
   ['<Leader>ds'] = { name = 'Show scopes', _ = 'which_key_ignore' },
   ['<Leader>dt'] = { name = 'Toggle Debug UI', _ = 'which_key_ignore' },
   ['<Leader>dp'] = { name = 'Toggle Log Point', _ = 'which_key_ignore' },
-}
+})
 
 require('mason').setup()
 require('mason-lspconfig').setup()
@@ -107,7 +109,7 @@ require('mason-lspconfig').setup()
 local cwd = vim.fn.getcwd(-1, -1)
 if cwd ~= nil then
   if string.sub(cwd, -4) then
-    require('neodev').setup {}
+    require('neodev').setup({})
   end
 end
 

@@ -1,59 +1,71 @@
-local lspconfig = require 'lspconfig'
-local M = require 'plugins.configs.lsp.lspconfig'
+local lspconfig = require('lspconfig')
+local M = require('plugins.configs.lsp.lspconfig')
 
--- local cwd = vim.fn.getcwd(-1, -1)
--- if cwd ~= nil then
---   if string.sub(cwd, -4) then
---     require('neodev').setup {}
---   end
+require('neodev').setup({})
+
+-- local function border(hl_name)
+--   return {
+--     { '╭', hl_name },
+--     { '─', hl_name },
+--     { '╮', hl_name },
+--     { '│', hl_name },
+--     { '╯', hl_name },
+--     { '─', hl_name },
+--     { '╰', hl_name },
+--     { '│', hl_name },
+--   }
 -- end
 
-require('neodev').setup {}
+-- local handlers = {
+--   ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { max_width = 80, border = border('CmpDocBorder') }),
+--   ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border('CmpDocBorder') }),
+-- }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-lspconfig['html'].setup {
+lspconfig['html'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
-}
+  -- handlers = handlers,
+})
 
-lspconfig['yamlls'].setup {
+lspconfig['yamlls'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
-}
+})
 
-lspconfig['htmx'].setup {
+lspconfig['htmx'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
-}
+})
 
-lspconfig['emmet_language_server'].setup {
+lspconfig['emmet_language_server'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
   filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'svelte' },
-}
+})
 
-lspconfig['cssls'].setup {
+lspconfig['cssls'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
-}
+})
 
-lspconfig['bashls'].setup {
+lspconfig['bashls'].setup({
   filetypes = { 'bash', 'sh', 'zsh', 'zshrc' },
   capabilities = capabilities,
   on_attach = M.on_attach,
   root_dir = function()
     return vim.loop.cwd()
   end,
-}
+})
 
-lspconfig['jsonls'].setup {
+lspconfig['jsonls'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
-}
+})
 
-lspconfig['eslint'].setup {
+lspconfig['eslint'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
   settings = {
@@ -71,9 +83,9 @@ lspconfig['eslint'].setup {
       },
     },
   },
-}
+})
 
-lspconfig['lua_ls'].setup {
+lspconfig['lua_ls'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
   settings = {
@@ -89,9 +101,9 @@ lspconfig['lua_ls'].setup {
       },
     },
   },
-}
+})
 
-lspconfig['svelte'].setup {
+lspconfig['svelte'].setup({
   capabilities = capabilities,
   on_attach = function(client, bufnr)
     M.on_attach(client, bufnr)
@@ -105,10 +117,10 @@ lspconfig['svelte'].setup {
       end,
     })
   end,
-}
+})
 
-local api = require 'typescript-tools.api'
-require('typescript-tools').setup {
+local api = require('typescript-tools.api')
+require('typescript-tools').setup({
   on_attach = M.on_attach,
   settings = {
     tsserver_plugins = {
@@ -127,7 +139,7 @@ require('typescript-tools').setup {
     },
   },
   handlers = {
-    ['textDocument/publishDiagnostics'] = api.filter_diagnostics { 80001 },
+    ['textDocument/publishDiagnostics'] = api.filter_diagnostics({ 80001 }),
   },
   vim.keymap.set('n', 'fi', '<cmd> TSToolsOrganizeImports<CR>', { desc = 'Organize imports' }),
-}
+})

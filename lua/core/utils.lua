@@ -223,7 +223,8 @@ function M.create_highlight_via_syntax(default_hl, new_hl)
   vim.api.nvim_command('hi def link Custom' .. default_hl .. ' ' .. new_hl)
 end
 
-M.get_nvim_tree_width = function()
+---@return integer width returns the width of the nvimtree buffer
+function M.get_nvim_tree_width()
   for _, win in pairs(vim.api.nvim_tabpage_list_wins(0)) do
     if vim.bo[vim.api.nvim_win_get_buf(win)].ft == 'NvimTree' then
       return vim.api.nvim_win_get_width(win) + 1
@@ -233,7 +234,7 @@ M.get_nvim_tree_width = function()
 end
 
 --- Sets the title in the overlay section above nvimtree
-M.set_nvim_tree_overlay_title = function()
+function M.set_nvim_tree_overlay_title()
   local title = 'File Tree'
   local tree_width = M.get_nvim_tree_width()
 

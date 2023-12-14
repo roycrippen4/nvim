@@ -20,6 +20,14 @@ M.on_attach = function(_, bufnr)
     require('telescope.builtin').lsp_definitions()
   end, 'Goto Definition')
 
+  nmap('T', function()
+    require('telescope.builtin').lsp_type_definitions()
+  end, 'Goto Type Definition')
+
+  nmap('K', function()
+    vim.lsp.buf.hover()
+  end, 'Signature Documentation')
+
   nmap('<C-S-K>', function()
     vim.lsp.buf.signature_help()
   end, 'Signature Documentation')
@@ -47,13 +55,13 @@ M.on_attach = function(_, bufnr)
       vim.diagnostic.disable()
     end
   end
-  nmap('<leader>lD', toggle_diagnostics, 'Open diagnostic message')
+  nmap('<leader>lD', toggle_diagnostics, 'Toggle Diagnostics')
 
   nmap('<leader>lf', function()
     vim.diagnostic.open_float()
   end, 'Open floating diagnostic message')
 
-  nmap('<leader>lr', function()
+  nmap('<leader>rn', function()
     vim.lsp.buf.rename()
   end, 'Rename')
 

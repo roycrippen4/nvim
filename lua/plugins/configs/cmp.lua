@@ -31,6 +31,10 @@ local formatting_style = {
   end,
 }
 
+-- ┌─┐
+-- │ │
+-- └─┘
+
 local function border(hl_name)
   return {
     { '╭', hl_name },
@@ -42,11 +46,22 @@ local function border(hl_name)
     { '╰', hl_name },
     { '│', hl_name },
   }
+  -- return {
+  --   { '┌', hl_name },
+  --   { '─', hl_name },
+  --   { '┐', hl_name },
+  --   { '│', hl_name },
+  --   { '┘', hl_name },
+  --   { '─', hl_name },
+  --   { '└', hl_name },
+  --   { '│', hl_name },
+  -- }
 end
 
 local options = {
   sources = {
-    { name = 'nvim_lsp', trigger_characters = { '-' } },
+    { name = 'nvim_lsp', trigger_characters = { '.' } },
+    { name = 'nvim_lsp_signature_help' },
     { name = 'path' },
     { name = 'luasnip' },
     { name = 'buffer' },
@@ -83,7 +98,7 @@ local options = {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-t>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Insert,

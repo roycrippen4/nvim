@@ -6,24 +6,11 @@ vim.keymap.set('i', '/', function()
   end
 
   if node:type() == 'jsx_opening_element' then
-    local char_at_cursor = vim.fn.strcharpart(vim.fn.strpart(vim.fn.getline '.', vim.fn.col '.' - 2), 0, 1)
+    local char_at_cursor = vim.fn.strcharpart(vim.fn.strpart(vim.fn.getline('.'), vim.fn.col('.') - 2), 0, 1)
     local already_have_space = char_at_cursor == ' '
 
-    return already_have_space and '/>' or '       />'
+    return already_have_space and '/>' or ' />'
   end
 
   return '/'
 end, { expr = true, buffer = true })
-
--- vim.keymap.set('i', '=', function()
---   local node = vim.treesitter.get_node()
---   if not node then
---     return '='
---   end
---
---   print(node)
---
---   -- local char_before_cursor = vim.fn.strcharpart(vim.fn.strpart(vim.fn.getline '.', vim.fn.col '.' - 2), 0, 1)
---
---   -- print(char_before_cursor)
--- end)

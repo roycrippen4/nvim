@@ -8,6 +8,10 @@ local options = {
 
   indent = { enable = true },
 
+  autotag = {
+    enable = true,
+  },
+
   rainbow = {
     enable = true,
     extended_mode = false,

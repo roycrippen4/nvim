@@ -498,6 +498,4 @@ if #config.plugins > 0 then
   table.insert(default_plugins, { import = config.plugins })
 end
 
-vim.highlight.priorities.semantic_tokens = 95
-
 require('lazy').setup(default_plugins, config.lazy_nvim)

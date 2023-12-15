@@ -3,56 +3,33 @@ local M = require('plugins.configs.lsp.lspconfig')
 
 require('neodev').setup({})
 
-local function border(hl_name)
-  return {
-    { '╭', hl_name },
-    { '─', hl_name },
-    { '╮', hl_name },
-    { '│', hl_name },
-    { '╯', hl_name },
-    { '─', hl_name },
-    { '╰', hl_name },
-    { '│', hl_name },
-  }
-end
-
-local handlers = {
-  ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { max_width = 80, border = border('CmpDocBorder') }),
-  ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border('CmpDocBorder') }),
-}
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 lspconfig['html'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
-  handlers = handlers,
 })
 
 lspconfig['yamlls'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
-  handlers = handlers,
 })
 
 lspconfig['htmx'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
-  handlers = handlers,
 })
 
 lspconfig['emmet_language_server'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
   filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'svelte' },
-  handlers = handlers,
 })
 
 lspconfig['cssls'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
-  handlers = handlers,
 })
 
 lspconfig['bashls'].setup({
@@ -62,13 +39,11 @@ lspconfig['bashls'].setup({
   root_dir = function()
     return vim.loop.cwd()
   end,
-  handlers = handlers,
 })
 
 lspconfig['jsonls'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
-  handlers = handlers,
 })
 
 lspconfig['eslint'].setup({
@@ -89,7 +64,6 @@ lspconfig['eslint'].setup({
       },
     },
   },
-  handlers = handlers,
 })
 
 lspconfig['lua_ls'].setup({
@@ -108,7 +82,6 @@ lspconfig['lua_ls'].setup({
       },
     },
   },
-  handlers = handlers,
 })
 
 lspconfig['svelte'].setup({
@@ -125,7 +98,6 @@ lspconfig['svelte'].setup({
       end,
     })
   end,
-  handlers = handlers,
 })
 
 local api = require('typescript-tools.api')
@@ -149,8 +121,6 @@ require('typescript-tools').setup({
   },
   handlers = {
     ['textDocument/publishDiagnostics'] = api.filter_diagnostics({ 80001 }),
-    ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { max_width = 80, border = border('CmpDocBorder') }),
-    ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border('CmpDocBorder') }),
   },
   vim.keymap.set('n', 'fi', '<cmd> TSToolsOrganizeImports<CR>', { desc = 'Organize imports' }),
 })

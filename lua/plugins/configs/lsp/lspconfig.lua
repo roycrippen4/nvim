@@ -24,11 +24,11 @@ M.on_attach = function(_, bufnr)
     require('telescope.builtin').lsp_type_definitions()
   end, 'Goto Type Definition')
 
-  nmap('K', function()
-    vim.lsp.buf.hover()
-  end, 'Hover')
+  -- nmap('K', function()
+  --   vim.lsp.buf.hover()
+  -- end, 'Hover')
 
-  -- nmap('K', '<cmd>LspUI hover<CR>', 'LSP Hover')
+  nmap('K', '<cmd>Lspsaga hover_doc<CR>', 'LSP Hover')
 
   nmap('<C-S-K>', function()
     vim.lsp.buf.signature_help()

@@ -16,6 +16,14 @@ local default_plugins = {
   },
 
   {
+    'nvimdev/lspsaga.nvim',
+    event = 'LspAttach',
+    config = function()
+      require('plugins.configs.lsp.lspsaga')
+    end,
+  },
+
+  {
     'NvChad/nvterm',
     init = function()
       require('core.utils').load_mappings('nvterm')
@@ -157,7 +165,6 @@ local default_plugins = {
         end,
       },
       {
-        'hrsh7th/cmp-nvim-lsp-signature-help',
         'saadparwaiz1/cmp_luasnip',
         'hrsh7th/cmp-nvim-lua',
         'hrsh7th/cmp-nvim-lsp',
@@ -185,8 +192,8 @@ local default_plugins = {
       return require('plugins.configs.nvimtree')
     end,
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. 'nvimtree')
       require('nvim-tree').setup(opts)
+      dofile(vim.g.base46_cache .. 'nvimtree')
     end,
   },
 
@@ -298,12 +305,8 @@ local default_plugins = {
   },
 
   {
-    'HiPhish/rainbow-delimiters.nvim',
-    lazy = false,
-    config = function()
-      dofile(vim.g.base46_cache .. 'rainbowdelimiters')
-      require('rainbow-delimiters.setup').setup({})
-    end,
+    'hiphish/rainbow-delimiters.nvim',
+    event = 'BufReadPost',
   },
 
   {
@@ -429,12 +432,8 @@ local default_plugins = {
     init = function()
       require('core.utils').lazy_load('indent-blankline.nvim')
     end,
-    opts = function()
-      return require('plugins.configs.others').blankline
-    end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. 'blankline')
-
       local hooks = require('ibl.hooks')
       hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
       require('ibl').setup(opts)
@@ -498,5 +497,7 @@ local config = require('core.utils').load_config()
 if #config.plugins > 0 then
   table.insert(default_plugins, { import = config.plugins })
 end
+
+vim.highlight.priorities.semantic_tokens = 95
 
 require('lazy').setup(default_plugins, config.lazy_nvim)

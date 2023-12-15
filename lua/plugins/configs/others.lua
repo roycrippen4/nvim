@@ -29,6 +29,11 @@ M.luasnip = function(opts)
   })
 end
 
+M.blankline = {
+  indent = { char = '│', highlight = 'IblChar' },
+  scope = { char = '│', highlight = 'IblScopeChar' },
+}
+
 -- local icon = '┃'
 local icon = '▍'
 M.gitsigns = {

@@ -13,15 +13,10 @@ M.ui = {
   theme_toggle = { 'onedark', 'one_light' },
   theme = 'onedark', -- default theme
   transparency = false,
-  lsp_semantic_tokens = true, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
+  -- lsp_semantic_tokens = true, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
 
   -- https://github.com/NvChad/base46/tree/v2.0/lua/base46/extended_integrations
-  extended_integrations = {
-    'dap',
-    'rainbowdelimiters',
-    'trouble',
-    'todo',
-  },
+  extended_integrations = {},
   --cmp themeing
   cmp = {
     icons = true,
@@ -39,6 +34,7 @@ M.ui = {
     -- default/round/block/arrow separators work only for default statusline theme
     -- round and block will work for minimal theme only
     separator_style = 'default',
+    overriden_modules = nil,
   },
 
   -- lazyload it when there are 1+ buffers
@@ -93,27 +89,5 @@ M.plugins = '' -- path i.e "custom.plugins", so make custom/plugins.lua file
 M.lazy_nvim = require('plugins.configs.lazy_nvim') -- config for lazy.nvim startup options
 
 M.mappings = require('core.mappings')
-
--- M.base46 = {
---   integrations = {
---     'blankline',
---     'cmp',
---     'defaults',
---     'devicons',
---     'git',
---     'lsp',
---     'mason',
---     'nvchad_updater',
---     'nvcheatsheet',
---     'nvdash',
---     'nvimtree',
---     'statusline',
---     'syntax',
---     'treesitter',
---     'tbline',
---     'telescope',
---     'whichkey',
---   },
--- }
 
 return M

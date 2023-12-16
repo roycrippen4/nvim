@@ -1,4 +1,5 @@
 local autocmd = vim.api.nvim_create_autocmd
+local utils = require('core.utils')
 
 autocmd('QuitPre', {
   callback = function()
@@ -86,18 +87,19 @@ autocmd({ 'BufAdd', 'BufDelete', 'BufEnter', 'TabNew' }, {
 
 autocmd({ 'VimEnter', 'DirChanged' }, {
   callback = function()
-    local title = vim.fn.getcwd()
+    local cwd = vim.fn.getcwd()
     local env = os.getenv('HOME')
+    utils.set_node_version(cwd)
 
-    if title == env then
+    if cwd == env then
       vim.o.titlestring = '~/' .. '  '
       return
     end
-    local match = string.match(title, env)
+    local match = string.match(cwd, env)
     if match then
-      vim.o.titlestring = title:gsub(match, '~') .. '  '
+      vim.o.titlestring = cwd:gsub(match, '~') .. '  '
       return
     end
-    vim.o.titlestring = vim.fn.getcwd()
+    vim.o.titlestring = cwd
   end,
 })

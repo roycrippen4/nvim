@@ -264,7 +264,7 @@ end
 --- Function that sets Node's version if both a package.json and a .nvmrc file exist in the cwd.
 ---@param cwd string The current working directory
 function M.set_node_version(cwd)
-  if vim.fn.filereadable(cwd .. '/package.json') and vim.fn.filereadable(cwd .. '/.nvmrc') then
+  if vim.fn.filereadable(cwd .. '/.nvmrc') == 1 then
     require('nvterm.terminal').send('nvm use', 'horizontal')
   end
 end

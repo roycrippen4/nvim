@@ -1,5 +1,5 @@
 local autocmd = vim.api.nvim_create_autocmd
-local utils = require('core.utils')
+-- local utils = require('core.utils')
 
 -- Switch to insert mode when terminal is open
 local term_augroup = vim.api.nvim_create_augroup('Terminal', { clear = true })
@@ -21,16 +21,14 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
   command = 'lua vim.diagnostic.disable(0)',
 })
 
--- Terminal
+-- Remove columns from the terminal buffer
 vim.api.nvim_create_autocmd({ 'TermOpen', 'TermEnter', 'BufEnter' }, {
   pattern = { 'term://*' },
   callback = function()
-    vim.g.terminal_jobpid = vim.fn.jobpid(vim.o.channel)
     vim.wo.relativenumber = false
     vim.wo.number = false
     vim.wo.signcolumn = 'no'
     vim.wo.statuscolumn = ''
-
     vim.cmd([[ startinsert ]])
   end,
 })

@@ -3,6 +3,18 @@ local default_plugins = {
   'nvim-lua/plenary.nvim',
 
   {
+    'akinsho/toggleterm.nvim',
+    lazy = false,
+    opts = function()
+      return require('plugins.configs.toggleterm').options
+    end,
+    config = function(opts)
+      require('plugins.configs.toggleterm').config()
+      require('toggleterm').setup(opts)
+    end,
+  },
+
+  {
     'NvChad/base46',
     branch = 'v3.0',
     build = function()

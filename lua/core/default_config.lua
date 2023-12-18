@@ -79,10 +79,7 @@ M.ui = {
     semantic_tokens = false,
   },
   term = {
-    sizes = { sp = 0.3, vsp = 0.2 },
-    behavior = {
-      auto_insert = true,
-    },
+    enabled = false,
   },
 }
 

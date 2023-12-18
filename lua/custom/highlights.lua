@@ -61,8 +61,8 @@ M.override = {
   FloatBorder = { bg = "black" },
   CmpDocBorder = { fg = { "blue", -25 }, bg = "black" },
   Comment = { italic = true },
-  NvimTreeWinSeparator = { fg = sep_color, bg = "black" },
-  WinSeparator = { fg = sep_color, bg = "black" },
+  WinSeparator = { fg = "yellow", bg = "black" },
+  NvimTreeWinSeparator = { fg = black, bg = "black" },
 }
 
 return M

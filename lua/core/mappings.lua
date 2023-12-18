@@ -71,7 +71,6 @@ M.harpoon = {
 M.disabled = {
   n = {
     ['<leader>/'] = '',
-    ['<leader>b'] = '',
     ['<leader>D'] = '',
     ['<leader>h'] = '',
     ['<leader>n'] = '',
@@ -297,18 +296,18 @@ M.lspconfig = {
 M.nvimtree = {
   plugin = true,
 
-  n = {
-    -- toggle
-    -- ['<C-n>'] = { '<cmd> NvimTreeToggle <CR>', 'Toggle nvimtree' },
-    ['<C-n>'] = {
-      function()
-        vim.cmd([[NvimTreeToggle]])
-        -- print(vim.g.TreeVisible)
-      end,
-      'Toggle nvimtree',
-    },
-    ['.'] = { '<C-]>', 'rebind tree cd', 'Set CWD' },
-  },
+  -- n = {
+  -- toggle
+  -- ['<C-n>'] = { '<cmd> NvimTreeToggle <CR>', 'Toggle nvimtree' },
+  --   ['<C-n>'] = {
+  --     function()
+  --       vim.cmd([[NvimTreeToggle]])
+  --       -- print(vim.g.TreeVisible)
+  --     end,
+  --     'Toggle nvimtree',
+  --   },
+  --   ['.'] = { '<C-]>', 'rebind tree cd', 'Set CWD' },
+  -- },
 }
 
 M.telescope = {
@@ -332,75 +331,84 @@ M.telescope = {
 }
 
 M.terminal = {
-  n = {
-    -- spawn new terms
-    ['<leader>h'] = {
-      function()
-        require('nvchad.term').new({ pos = 'sp', size = 0.3 })
-      end,
-      'New horizontal term',
-    },
+  -- n = {
+  -- spawn new terms
+  -- ['<leader>h'] = {
+  --   function()
+  --     require('plugins.configs.terminal.terminal').new({ pos = 'sp', size = 0.3 })
+  --   end,
+  --   'New horizontal term',
+  -- },
+  --
+  -- ['<leader>v'] = {
+  --   function()
+  --     require('plugins.configs.terminal.terminal').new({ pos = 'vsp', size = 0.3 })
+  --   end,
+  --   'New vertical term',
+  -- },
 
-    ['<leader>v'] = {
-      function()
-        require('nvchad.term').new({ pos = 'vsp', size = 0.3 })
-      end,
-      'New vertical term',
-    },
-
-    -- toggle terms
-    ['<A-v>'] = {
-      function()
-        require('nvchad.term').toggle({ pos = 'vsp', id = 'vtoggleTerm', size = 0.3 })
-      end,
-      'New vertical term',
-    },
-
-    ['<A-h>'] = {
-      function()
-        require('nvchad.term').toggle({ pos = 'sp', id = 'htoggleTerm', size = 0.2 })
-      end,
-      'New vertical term',
-    },
-
-    ['<A-i>'] = {
-      function()
-        require('nvchad.term').toggle({ pos = 'float', id = 'floatTerm' })
-      end,
-      'Toggleable Floating term',
-    },
-  },
-
-  t = {
-    ['<ESC>'] = {
-      function()
-        local win = vim.api.nvim_get_current_win()
-        vim.api.nvim_win_close(win, true)
-      end,
-      'close term in terminal mode',
-    },
-
-    ['<A-v>'] = {
-      function()
-        require('nvchad.term').toggle({ pos = 'vsp', id = 'vtoggleTerm' })
-      end,
-      'New vertical term',
-    },
-
-    ['<A-h>'] = {
-      function()
-        require('nvchad.term').toggle({ pos = 'sp', id = 'htoggleTerm' })
-      end,
-      'New vertical term',
-    },
-
-    ['<A-i>'] = {
-      function()
-        require('nvchad.term').toggle({ pos = 'float', id = 'floatTerm' })
-      end,
-      'Toggleable Floating term',
-    },
-  },
+  -- toggle terms
+  --   ['<A-v>'] = {
+  --     function()
+  --       require('plugins.configs.terminal.terminal').toggle({ pos = 'vsp', id = 'vtoggleTerm', size = 0.3 })
+  --     end,
+  --     'New vertical term',
+  --   },
+  --
+  --   ['<A-h>'] = {
+  --     function()
+  --       require('plugins.configs.terminal.terminal').toggle({ pos = 'sp', id = 'htoggleTerm', size = 0.2 })
+  --     end,
+  --     'New vertical term',
+  --   },
+  --
+  --   ['<A-f>'] = {
+  --     function()
+  --       require('plugins.configs.terminal.terminal').toggle({ pos = 'float', id = 'floatTerm' })
+  --     end,
+  --     'Toggleable Floating term',
+  --   },
+  --   ['<leader>st'] = {
+  --     function()
+  --       require('plugins.configs.terminal.terminal').refresh_cmd({
+  --         cmd = 'echo hello world',
+  --         pos = 'sp',
+  --         id = 'testTerm',
+  --       })
+  --     end,
+  --   },
+  -- },
+  --
+  -- t = {
+  --   ['<ESC>'] = {
+  --     function()
+  --       local win = vim.api.nvim_get_current_win()
+  --       vim.api.nvim_win_close(win, true)
+  --     end,
+  --     'close term in terminal mode',
+  --   },
+  --
+  --   ['<A-v>'] = {
+  --     function()
+  --       require('plugins.configs.terminal.terminal').toggle({ pos = 'vsp', id = 'vtoggleTerm' })
+  --     end,
+  --     'New vertical term',
+  --   },
+  --
+  --   ['<A-h>'] = {
+  --     function()
+  --       require('plugins.configs.terminal.terminal').toggle({ pos = 'sp', id = 'htoggleTerm' })
+  --     end,
+  --     'New vertical term',
+  --   },
+  --
+  --   ['<A-i>'] = {
+  --     function()
+  --       require('plugins.configs.terminal.terminal').toggle({ pos = 'float', id = 'floatTerm' })
+  --     end,
+  --     'Toggleable Floating term',
+  --   },
+  -- },
 }
 
 M.whichkey = {
@@ -423,92 +431,101 @@ M.whichkey = {
   },
 }
 
--- M.dap = {
---   plugin = true,
---   n = {
---     ['<Leader>dc'] = {
---       function()
---         require('dap').continue()
---       end,
---       'Continue',
---     },
---     ['<Leader>dsv'] = {
---       function()
---         require('dap').step_over()
---       end,
---       'Step into',
---     },
---     ['<Leader>dsi'] = {
---       function()
---         require('dap').step_into()
---       end,
---       'Step into',
---     },
---     ['<Leader>dso'] = {
---       function()
---         require('dap').step_out()
---       end,
---       'Step out',
---     },
---     ['<Leader>db'] = {
---       function()
---         require('dap').toggle_breakpoint()
---       end,
---       'Toggle breakpoint',
---     },
---     ['<Leader>dB'] = {
---       function()
---         require('dap').set_breakpoint()
---       end,
---       'Set breakpoint',
---     },
---     ['<Leader>dp'] = {
---       function()
---         require('dap').set_breakpoint(nil, nil, vim.fn.input 'Log point message: ')
---       end,
---     },
---     ['<Leader>dr'] = {
---       function()
---         require('dap').repl.open()
---       end,
---       'Repl open',
---     },
---     ['<Leader>dl'] = {
---       function()
---         require('dap').run_last()
---       end,
---       'Run Last',
---     },
---     ['<Leader>df'] = {
---       function()
---         local widgets = require 'dap.ui.widgets'
---         widgets.centered_float(widgets.frames)
---       end,
---       'Show frames',
---     },
---     ['<Leader>ds'] = {
---       function()
---         local widgets = require 'dap.ui.widgets'
---         widgets.centered_float(widgets.scopes)
---       end,
---       'Show scopes',
---     },
---   },
---   v = {
---     ['<Leader>dh'] = {
---       function()
---         require('dap.ui.widgets').hover()
---       end,
---       'Hover',
---     },
---     ['<Leader>dv'] = {
---       function()
---         require('dap.ui.widgets').preview()
---       end,
---       'Preview',
---     },
---   },
--- }
+M.dap = {
+  plugin = true,
+  n = {
+    -- ['<Leader>c'] = { '<cmd>DapContinue<CR>', 'Continue' },
+    -- ['<Leader>o'] = { '<cmd>DapStepOver<CR>', 'Step Over' },
+    -- ['<Leader>O'] = { '<cmd>DapStepOut<CR>', 'Step out' },
+    -- ['<Leader>i'] = { '<cmd>DapStepInto<CR>', 'Step into' },
+    -- ['<leader>b'] = { '<CMD>DapToggleBreakpoint<CR>', ' Toggle breakpoint' },
+    -- ['<Leader>db'] = {
+    --   require('dap').toggle_breakpoint(),
+    --   'Toggle breakpoint',
+    -- },
+    -- ['<Leader>dc'] = {
+    --   function()
+    --     require('dap').continue()
+    --   end,
+    --   'Continue',
+    -- },
+    -- ['<Leader>dsv'] = {
+    --   function()
+    --     require('dap').step_over()
+    --   end,
+    --   'Step into',
+    -- },
+    -- ['<Leader>dsi'] = {
+    --   function()
+    --     require('dap').step_into()
+    --   end,
+    --   'Step into',
+    -- },
+    -- ['<Leader>dso'] = {
+    --   function()
+    --     require('dap').step_out()
+    --   end,
+    --   'Step out',
+    -- },
+    -- ['<Leader>db'] = {
+    --   function()
+    --     require('dap').toggle_breakpoint()
+    --   end,
+    --   'Toggle breakpoint',
+    -- },
+    -- ['<Leader>dB'] = {
+    --   function()
+    --     require('dap').set_breakpoint()
+    --   end,
+    --   'Set breakpoint',
+    -- },
+    -- ['<Leader>dp'] = {
+    --   function()
+    --     require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))
+    --   end,
+    -- },
+    --   ['<Leader>dr'] = {
+    --     function()
+    --       require('dap').repl.open()
+    --     end,
+    --     'Repl open',
+    --   },
+    --   ['<Leader>dl'] = {
+    --     function()
+    --       require('dap').run_last()
+    --     end,
+    --     'Run Last',
+    --   },
+    --   ['<Leader>df'] = {
+    --     function()
+    --       local widgets = require('dap.ui.widgets')
+    --       widgets.centered_float(widgets.frames)
+    --     end,
+    --     'Show frames',
+    --   },
+    --   ['<Leader>ds'] = {
+    --     function()
+    --       local widgets = require('dap.ui.widgets')
+    --       widgets.centered_float(widgets.scopes)
+    --     end,
+    --     'Show scopes',
+    --   },
+    -- },
+    -- v = {
+    --   ['<Leader>dh'] = {
+    --     function()
+    --       require('dap.ui.widgets').hover()
+    --     end,
+    --     'Hover',
+    --   },
+    --   ['<Leader>dv'] = {
+    --     function()
+    --       require('dap.ui.widgets').preview()
+    --     end,
+    --     'Preview',
+    --   },
+  },
+}
 
 -- M.dap_ui = {
 --   plugin = true,

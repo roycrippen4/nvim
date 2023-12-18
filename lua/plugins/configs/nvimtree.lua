@@ -1,5 +1,5 @@
-local utils = require 'core.utils'
-local api = require 'nvim-tree.api'
+local utils = require('core.utils')
+local api = require('nvim-tree.api')
 
 local Event = api.events.Event
 api.events.subscribe(Event.TreeOpen, function()
@@ -55,7 +55,7 @@ local options = {
   on_attach = my_on_attach,
   filters = {
     dotfiles = false,
-    exclude = { vim.fn.stdpath 'config' .. '/lua/custom' },
+    exclude = { vim.fn.stdpath('config') .. '/lua/custom' },
   },
   disable_netrw = true,
   hijack_netrw = true,
@@ -83,6 +83,7 @@ local options = {
   actions = {
     open_file = {
       resize_window = true,
+      eject = true,
     },
   },
   renderer = {

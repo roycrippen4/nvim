@@ -218,12 +218,9 @@ function M.set_nvim_tree_overlay_title()
   end
 end
 
---- Function that sets Node's version if both a package.json and a .nvmrc file exist in the cwd.
----@param cwd string The current working directory
-function M.set_node_version(cwd)
-  if vim.fn.filereadable(cwd .. '/.nvmrc') == 1 then
-    require('nvterm.terminal').send('nvm use', 'horizontal')
-  end
-end
+-- Function to prevent harpoon from crashing the nvimtree buffer
+-- function M.check_buf()
+--   if api.tree.
+-- end
 
 return M

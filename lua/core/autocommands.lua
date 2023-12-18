@@ -25,6 +25,7 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
 vim.api.nvim_create_autocmd({ 'TermOpen', 'TermEnter', 'BufEnter' }, {
   pattern = { 'term://*' },
   callback = function()
+    vim.g.terminal_jobpid = vim.fn.jobpid(vim.o.channel)
     vim.wo.relativenumber = false
     vim.wo.number = false
     vim.wo.signcolumn = 'no'
@@ -83,11 +84,7 @@ local function manage_hlsearch(char)
   vim.on_key(nil, hl_ns)
 end
 
-autocmd({ --[[ 'VimEnter', ]]
-  'InsertLeave',
-  'WinEnter',
-  'BufEnter',
-}, {
+autocmd({ 'InsertLeave', 'WinEnter', 'BufEnter' }, {
   callback = function()
     vim.cmd([[ set cursorline ]])
     vim.api.nvim_set_hl(0, 'CursorLine', { link = 'NvimTreeCursorLine' })
@@ -122,7 +119,10 @@ autocmd({ 'VimEnter', 'DirChanged' }, {
   callback = function()
     local cwd = vim.fn.getcwd()
     local env = os.getenv('HOME')
-    utils.set_node_version(cwd)
+
+    if vim.fn.filereadable(cwd .. '/.nvmrc') == 1 then
+      vim.system({ 'echo', 'nvmrc detected' })
+    end
 
     if cwd == env then
       vim.o.titlestring = '~/' .. '  '

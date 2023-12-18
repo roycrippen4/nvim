@@ -1,20 +1,6 @@
 local autocmd = vim.api.nvim_create_autocmd
 -- local utils = require('core.utils')
 
--- Switch to insert mode when terminal is open
-local term_augroup = vim.api.nvim_create_augroup('Terminal', { clear = true })
-autocmd('TermClose', {
-  group = term_augroup,
-  callback = function()
-    if vim.v.event.status == 0 then
-      vim.api.nvim_buf_delete(0, {})
-      vim.notify_once('Previous terminal job was successful!')
-    else
-      vim.notify_once('Error code detected in the current terminal job!')
-    end
-  end,
-})
-
 -- Disable diagnostics in node_modules (0 is current buffer only)
 autocmd({ 'BufRead', 'BufNewFile' }, {
   pattern = '*/node_modules/*',
@@ -117,10 +103,6 @@ autocmd({ 'VimEnter', 'DirChanged' }, {
   callback = function()
     local cwd = vim.fn.getcwd()
     local env = os.getenv('HOME')
-
-    if vim.fn.filereadable(cwd .. '/.nvmrc') == 1 then
-      vim.system({ 'echo', 'nvmrc detected' })
-    end
 
     if cwd == env then
       vim.o.titlestring = '~/' .. '  '

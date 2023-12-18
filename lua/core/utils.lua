@@ -74,7 +74,7 @@ M.load_mappings = function(section, mapping_opt)
       end
     end
 
-    local mappings = require('core.utils').load_config().mappings
+    local mappings = require('nvconfig').mappings
 
     if type(section) == 'string' then
       mappings[section]['plugin'] = nil
@@ -92,8 +92,7 @@ M.lazy_load = function(plugin)
     group = vim.api.nvim_create_augroup('BeLazyOnFileOpen' .. plugin, {}),
     callback = function()
       local file = vim.fn.expand('%')
-      local condition = --[[ file ~= 'NvimTree_1' and ]]
-        file ~= '[lazy]' and file ~= ''
+      local condition = file ~= '[lazy]' and file ~= ''
 
       if condition then
         vim.api.nvim_del_augroup_by_name('BeLazyOnFileOpen' .. plugin)
@@ -175,48 +174,6 @@ function M.restart()
 
   -- Manually run VimEnter autocmd to emulate a new run of Vim
   vim.cmd.doautocmd('VimEnter')
-end
-
-function M.read_json_file(filename)
-  local Path = require('plenary.path')
-
-  local path = Path:new(filename)
-  if not path:exists() then
-    return nil
-  end
-
-  local json_contents = path:read()
-  local json = vim.fn.json_decode(json_contents)
-
-  return json
-end
-
-function M.read_package_json()
-  return M.read_json_file('package.json')
-end
-
----Check if the given NPM package is installed in the current project.
----@param package string
----@return boolean
-function M.is_npm_package_installed(package)
-  local package_json = M.read_package_json()
-  if not package_json then
-    return false
-  end
-
-  if package_json.dependencies and package_json.dependencies[package] then
-    return true
-  end
-
-  if package_json.devDependencies and package_json.devDependencies[package] then
-    return true
-  end
-
-  return false
-end
-
-function M.create_highlight_via_syntax(default_hl, new_hl)
-  vim.api.nvim_command('hi def link Custom' .. default_hl .. ' ' .. new_hl)
 end
 
 ---@return integer width returns the width of the nvimtree buffer

@@ -115,10 +115,10 @@ autocmd('BufWritePost', {
     vim.g.transparency = config.ui.transparency
 
     -- statusline
-    -- if config.ui.statusline.theme ~= 'custom' then
-    require('plenary.reload').reload_module('nvchad.statusline.' .. config.ui.statusline.theme)
-    vim.opt.statusline = "%!v:lua.require('nvchad.statusline." .. config.ui.statusline.theme .. "').run()"
-    -- end
+    if config.ui.statusline.theme ~= 'custom' then
+      require('plenary.reload').reload_module('nvchad.statusline.' .. config.ui.statusline.theme)
+      vim.opt.statusline = "%!v:lua.require('nvchad.statusline." .. config.ui.statusline.theme .. "').run()"
+    end
 
     -- tabufline
     if config.ui.tabufline.enabled then

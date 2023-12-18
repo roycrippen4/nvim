@@ -9,9 +9,9 @@ vim.fn.sign_define('DapBreakpointRejected', { text = '❌', texthl = '', linehl 
 -- Configuration for diagnostics
 M.diagnostic_signs = {
   { name = 'DiagnosticSignError', text = '💀' },
-  { name = 'DiagnosticSignWarn', text = '⚠️' },
-  { name = 'DiagnosticSignHint', text = '💯' },
-  { name = 'DiagnosticSignInfo', text = 'ℹ️' },
+  { name = 'DiagnosticSignWarn', text = ' ' },
+  { name = 'DiagnosticSignHint', text = '󱧣 ' },
+  { name = 'DiagnosticSignInfo', text = ' ' },
 }
 
 for _, sign in ipairs(M.diagnostic_signs) do
@@ -35,9 +35,9 @@ local config = {
   },
 }
 
-vim.cmd [[
+vim.cmd([[
   hi DiagnosticUnderlineError guisp='Red' gui=undercurl
   hi DiagnosticUnderlineWarn guisp='Orange' gui=undercurl
-]]
+]])
 
 vim.diagnostic.config(config)

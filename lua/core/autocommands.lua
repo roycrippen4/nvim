@@ -1,6 +1,39 @@
 local autocmd = vim.api.nvim_create_autocmd
 local utils = require('core.utils')
 
+-- Switch to insert mode when terminal is open
+local term_augroup = vim.api.nvim_create_augroup('Terminal', { clear = true })
+autocmd('TermClose', {
+  group = term_augroup,
+  callback = function()
+    if vim.v.event.status == 0 then
+      vim.api.nvim_buf_delete(0, {})
+      vim.notify_once('Previous terminal job was successful!')
+    else
+      vim.notify_once('Error code detected in the current terminal job!')
+    end
+  end,
+})
+
+-- Disable diagnostics in node_modules (0 is current buffer only)
+autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '*/node_modules/*',
+  command = 'lua vim.diagnostic.disable(0)',
+})
+
+-- Terminal
+vim.api.nvim_create_autocmd({ 'TermOpen', 'TermEnter', 'BufEnter' }, {
+  pattern = { 'term://*' },
+  callback = function()
+    vim.wo.relativenumber = false
+    vim.wo.number = false
+    vim.wo.signcolumn = 'no'
+    vim.wo.statuscolumn = ''
+
+    vim.cmd([[ startinsert ]])
+  end,
+})
+
 autocmd('QuitPre', {
   callback = function()
     local tree_wins = {}
@@ -92,12 +125,12 @@ autocmd({ 'VimEnter', 'DirChanged' }, {
     utils.set_node_version(cwd)
 
     if cwd == env then
-      vim.o.titlestring = '~/' .. '  '
+      vim.o.titlestring = '~/' .. '  '
       return
     end
     local match = string.match(cwd, env)
     if match then
-      vim.o.titlestring = cwd:gsub(match, '~') .. '  '
+      vim.o.titlestring = cwd:gsub(match, '~') .. '  '
       return
     end
     vim.o.titlestring = cwd

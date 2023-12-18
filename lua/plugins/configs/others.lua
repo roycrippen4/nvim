@@ -35,7 +35,7 @@ M.blankline = {
 }
 
 -- local icon = '┃'
-local icon = '▍'
+local icon = '│'
 M.gitsigns = {
   _extmark_signs = true,
   signs = {

@@ -1,4 +1,3 @@
-local builtin = require 'statuscol.builtin'
 local options = {
   ft_ignore = { 'NvimTree', 'terminal' },
   relculright = true,

@@ -96,7 +96,7 @@ M.general = {
   n = {
     ['<leader><leader>'] = {
       function()
-        print(vim.fn.expand '%:p')
+        print(vim.fn.expand('%:p'))
       end,
       opts = {},
     },
@@ -136,7 +136,7 @@ M.general = {
 
     ['<leader>fm'] = {
       function()
-        vim.lsp.buf.format { async = true }
+        vim.lsp.buf.format({ async = true })
       end,
       'LSP formatting',
     },
@@ -186,7 +186,7 @@ M.tabufline = {
     ['<leader>x'] = {
       function()
         if #vim.api.nvim_list_wins() == 1 and string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
-          vim.cmd [[ q ]]
+          vim.cmd([[ q ]])
         else
           require('nvchad.tabufline').close_buffer()
         end
@@ -196,7 +196,103 @@ M.tabufline = {
   },
 }
 
-M.lspconfig = {}
+local diagnostic_status = true
+local toggle_diagnostics = function()
+  diagnostic_status = not diagnostic_status
+  if diagnostic_status then
+    vim.api.nvim_echo({ { 'Show diagnostics' } }, false, {})
+    vim.diagnostic.enable()
+  else
+    vim.api.nvim_echo({ { 'Hide diagnostics' } }, false, {})
+    vim.diagnostic.disable()
+  end
+end
+
+M.lspconfig = {
+  plugin = true,
+  n = {
+    ['gr'] = {
+      function()
+        require('telescope.builtin').lsp_references()
+      end,
+      'Goto References',
+    },
+
+    ['gi'] = {
+      function()
+        require('telescope.builtin').lsp_implementations()
+      end,
+      'Goto Implementation',
+    },
+
+    ['gd'] = {
+      function()
+        require('telescope.builtin').lsp_definitions()
+      end,
+      'Goto Definition',
+    },
+
+    ['T'] = {
+      function()
+        require('telescope.builtin').lsp_type_definitions()
+      end,
+      'Goto Type Definition',
+    },
+
+    ['K'] = { '<cmd>Lspsaga hover_doc<CR>', 'LSP Hover' },
+
+    ['<C-S-K>'] = {
+      function()
+        vim.lsp.buf.signature_help()
+      end,
+      'Signature Documentation',
+    },
+
+    ['[d'] = {
+      function()
+        vim.diagnostic.goto_prev()
+      end,
+      'Go to previous diagnostic message',
+    },
+
+    [']d'] = {
+      function()
+        vim.diagnostic.goto_next()
+      end,
+      'Go to next diagnostic message',
+    },
+
+    ['<leader>ld'] = {
+      function()
+        vim.diagnostic.setloclist()
+      end,
+      'Open diagnostic message',
+    },
+
+    ['<leader>lD'] = { toggle_diagnostics, 'Toggle Diagnostics' },
+
+    ['<leader>lf'] = {
+      function()
+        vim.diagnostic.open_float()
+      end,
+      'Open floating diagnostic message',
+    },
+
+    ['<leader>rn'] = {
+      function()
+        require('nvchad.renamer').open()
+      end,
+      'LSP Rename',
+    },
+
+    ['<leader>la'] = {
+      function()
+        vim.lsp.buf.code_action()
+      end,
+      'Code Action',
+    },
+  },
+}
 
 M.nvimtree = {
   plugin = true,
@@ -206,7 +302,7 @@ M.nvimtree = {
     -- ['<C-n>'] = { '<cmd> NvimTreeToggle <CR>', 'Toggle nvimtree' },
     ['<C-n>'] = {
       function()
-        vim.cmd [[NvimTreeToggle]]
+        vim.cmd([[NvimTreeToggle]])
         -- print(vim.g.TreeVisible)
       end,
       'Toggle nvimtree',
@@ -235,35 +331,74 @@ M.telescope = {
   },
 }
 
-M.nvterm = {
-  plugin = true,
+M.terminal = {
+  n = {
+    -- spawn new terms
+    ['<leader>h'] = {
+      function()
+        require('nvchad.term').new({ pos = 'sp', size = 0.3 })
+      end,
+      'New horizontal term',
+    },
 
-  t = {
+    ['<leader>v'] = {
+      function()
+        require('nvchad.term').new({ pos = 'vsp', size = 0.3 })
+      end,
+      'New vertical term',
+    },
+
+    -- toggle terms
+    ['<A-v>'] = {
+      function()
+        require('nvchad.term').toggle({ pos = 'vsp', id = 'vtoggleTerm', size = 0.3 })
+      end,
+      'New vertical term',
+    },
+
     ['<A-h>'] = {
       function()
-        require('nvterm.terminal').toggle 'horizontal'
+        require('nvchad.term').toggle({ pos = 'sp', id = 'htoggleTerm', size = 0.2 })
       end,
-      'Toggle horizontal term',
+      'New vertical term',
     },
-    ['<A-f>'] = {
+
+    ['<A-i>'] = {
       function()
-        require('nvterm.terminal').toggle 'float'
+        require('nvchad.term').toggle({ pos = 'float', id = 'floatTerm' })
       end,
-      'Toggle floating term',
+      'Toggleable Floating term',
     },
   },
-  n = {
+
+  t = {
+    ['<ESC>'] = {
+      function()
+        local win = vim.api.nvim_get_current_win()
+        vim.api.nvim_win_close(win, true)
+      end,
+      'close term in terminal mode',
+    },
+
+    ['<A-v>'] = {
+      function()
+        require('nvchad.term').toggle({ pos = 'vsp', id = 'vtoggleTerm' })
+      end,
+      'New vertical term',
+    },
+
     ['<A-h>'] = {
       function()
-        require('nvterm.terminal').toggle 'horizontal'
+        require('nvchad.term').toggle({ pos = 'sp', id = 'htoggleTerm' })
       end,
-      'Toggle horizontal term',
+      'New vertical term',
     },
-    ['<A-f>'] = {
+
+    ['<A-i>'] = {
       function()
-        require('nvterm.terminal').toggle 'float'
+        require('nvchad.term').toggle({ pos = 'float', id = 'floatTerm' })
       end,
-      'Toggle floating term',
+      'Toggleable Floating term',
     },
   },
 }
@@ -274,13 +409,13 @@ M.whichkey = {
   n = {
     ['<leader>wK'] = {
       function()
-        vim.cmd 'WhichKey'
+        vim.cmd('WhichKey')
       end,
       'Which-key all keymaps',
     },
     ['<leader>wk'] = {
       function()
-        local input = vim.fn.input 'WhichKey: '
+        local input = vim.fn.input('WhichKey: ')
         vim.cmd('WhichKey ' .. input)
       end,
       'Which-key query lookup',
@@ -399,35 +534,35 @@ M.trouble = {
 
     ['<leader>td'] = {
       function()
-        require('trouble').toggle 'workspace_diagnostics'
+        require('trouble').toggle('workspace_diagnostics')
       end,
       'Trouble toggle workspace diagnostics',
     },
 
     ['<leader>tD'] = {
       function()
-        require('trouble').toggle 'document_diagnostics'
+        require('trouble').toggle('document_diagnostics')
       end,
       'Trouble toggle document diagnostics',
     },
 
     ['<leader>tf'] = {
       function()
-        require('trouble').toggle 'quickfix'
+        require('trouble').toggle('quickfix')
       end,
       'Trouble toggle quickfix',
     },
 
     ['<leader>tl'] = {
       function()
-        require('trouble').toggle 'loclist'
+        require('trouble').toggle('loclist')
       end,
       'Trouble toggle local-list',
     },
 
     ['gR'] = {
       function()
-        require('trouble').toggle 'lsp_references'
+        require('trouble').toggle('lsp_references')
       end,
       'Goto Reference',
     },

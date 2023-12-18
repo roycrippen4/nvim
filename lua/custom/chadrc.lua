@@ -5,12 +5,6 @@ local highlights = require('custom.highlights')
 M.ui = {
   hl_add = highlights.add,
   hl_override = highlights.override,
-  extended_integrations = {
-    'dap',
-    'rainbowdelimiters',
-    'trouble',
-    'todo',
-  },
 }
 
 M.base46 = {

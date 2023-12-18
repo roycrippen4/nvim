@@ -1,12 +1,13 @@
 local M = {}
+local status_module = require('plugins.configs.statusline')
+local tab_modules = require('plugins.configs.tabufline')
 
 M.options = {
-  -- nvchad_branch = 'v3.0',
+  nvchad_branch = 'v3.0',
 }
 
 M.ui = {
   ------------------------------- base46 -------------------------------------
-  -- hl = highlights
   hl_add = {},
   hl_override = {},
   changed_themes = {},
@@ -15,9 +16,7 @@ M.ui = {
   transparency = false,
   lsp_semantic_tokens = false, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
 
-  -- https://github.com/NvChad/base46/tree/v2.0/lua/base46/extended_integrations
   extended_integrations = {},
-  --cmp themeing
   cmp = {
     icons = true,
     lspkind_text = true,
@@ -31,21 +30,18 @@ M.ui = {
   ------------------------------- nvchad_ui modules -----------------------------
   statusline = {
     theme = 'default', -- default/vscode/vscode_colored/minimal
-    -- default/round/block/arrow separators work only for default statusline theme
-    -- round and block will work for minimal theme only
     separator_style = 'default',
-    overriden_modules = nil,
+    overriden_modules = function(modules)
+      modules[1] = status_module.module()
+    end,
   },
 
-  -- lazyload it when there are 1+ buffers
   tabufline = {
-    icons = false,
-    underline = true,
     overriden_modules = function(modules)
       modules[1] = vim.g.NvimTreeOverlayTitle
+      modules[2] = tab_modules.bufferlist()
       modules[4] = ''
     end,
-    -- show_numbers = false,
     enabled = true,
     lazyload = false,
   },
@@ -81,6 +77,34 @@ M.ui = {
   lsp = {
     signature = true,
     semantic_tokens = false,
+  },
+  term = {
+    sizes = { sp = 0.3, vsp = 0.2 },
+    behavior = {
+      auto_insert = true,
+    },
+  },
+}
+
+M.base46 = {
+  integrations = {
+    'blankline',
+    'cmp',
+    'defaults',
+    'devicons',
+    'git',
+    'lsp',
+    'mason',
+    'nvchad_updater',
+    'nvcheatsheet',
+    'nvdash',
+    'nvimtree',
+    'statusline',
+    'syntax',
+    'treesitter',
+    'tbline',
+    'telescope',
+    'whichkey',
   },
 }
 

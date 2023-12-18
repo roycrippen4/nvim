@@ -4,15 +4,19 @@ local default_plugins = {
 
   {
     'NvChad/base46',
-    branch = 'v2.0',
+    branch = 'v3.0',
     build = function()
       require('base46').load_all_highlights()
     end,
   },
 
   {
-    'roycrippen4/ui',
+    'NvChad/ui',
+    branch = 'v3.0',
     lazy = false,
+    config = function()
+      require('nvchad')
+    end,
   },
 
   {
@@ -24,34 +28,15 @@ local default_plugins = {
   },
 
   {
-    'NvChad/nvterm',
-    init = function()
-      require('core.utils').load_mappings('nvterm')
-    end,
+    'ziontee113/icon-picker.nvim',
+    cmd = { 'IconPickerNormal' },
+    keys = { '<C-i>' },
+    dependencies = { 'stevearc/dressing.nvim' },
     config = function()
-      require('base46.term')
-      require('nvterm').setup({
-        terminals = {
-          type_opts = {
-            float = {
-              relative = 'editor',
-              width = 0.8,
-              height = 0.7,
-              border = 'double',
-            },
-            horizontal = {
-              location = 'rightbelow',
-              split_ratio = 0.33,
-            },
-          },
-        },
-        behavior = {
-          autoclose_on_quit = {
-            enabled = false,
-            confirm = true,
-          },
-        },
+      require('icon-picker').setup({
+        disable_legacy_commands = true,
       })
+      vim.keymap.set('n', '<C-i>', '<cmd>IconPickerNormal<cr>', { desc = 'Pick icons', noremap = true, silent = true })
     end,
   },
 
@@ -72,11 +57,9 @@ local default_plugins = {
 
   {
     'williamboman/mason.nvim',
-    cmd = 'Mason',
-  },
-
-  {
-    'williamboman/mason-lspconfig.nvim',
+    dependencies = {
+      'williamboman/mason-lspconfig.nvim',
+    },
   },
 
   {
@@ -228,9 +211,9 @@ local default_plugins = {
       require('core.utils').load_mappings('whichkey')
     end,
     cmd = 'WhichKey',
-    config = function(_, opts)
+    config = function()
       dofile(vim.g.base46_cache .. 'whichkey')
-      require('which-key').setup(opts)
+      require('plugins.configs.whichkey')
     end,
   },
 
@@ -245,10 +228,6 @@ local default_plugins = {
     event = 'VimEnter',
     dependencies = {
       'folke/neodev.nvim',
-      {
-        'j-hui/fidget.nvim',
-        opts = {},
-      },
     },
     config = function()
       require('plugins.configs.lsp.servers')
@@ -330,7 +309,12 @@ local default_plugins = {
     end,
     config = function()
       local harpoon = require('harpoon')
-      harpoon:setup({})
+      harpoon:setup({
+        settings = {
+          save_on_toggle = true,
+          sync_on_ui_close = true,
+        },
+      })
     end,
   },
 

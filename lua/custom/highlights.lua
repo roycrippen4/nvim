@@ -1,7 +1,16 @@
 local M = {}
 
 local sep_color = '#454951'
+local bg_link = 'grey'
+local black = { 'black', 0 }
+local d_yellow = { 'yellow', -20 }
+local d_red = { 'red', -10 }
+local green = { 'green', -10 }
+local l_blue = '#00C5FF'
+local orange = { 'orange', -10 }
+local pink = { 'pink', -10 }
 
+-- stylua: ignore
 M.add = {
   RainbowDelimiterRed = { fg = 'red' },
   RainbowDelimiterYellow = { fg = 'yellow' },
@@ -11,83 +20,49 @@ M.add = {
   RainbowDelimiterViolet = { fg = 'purple' },
   RainbowDelimiterCyan = { fg = 'cyan' },
 
-  NvimTreeBookmark = { fg = { 'red', -10 } },
-  NvimTreeBookmarkHL = {
-    fg = { 'red', -10 },
-  },
-  NvimTreeOpenedFile = {
-    fg = { 'yellow', -10 },
-  },
-  NvimTreeTitle = {
-    underline = true,
-    fg = { 'yellow', -10 },
-    bg = 'darker_black',
-    sp = sep_color,
-  },
-  NvimTreeTitleSepOn = {
-    underline = false,
-    fg = sep_color,
-    bg = 'black',
-    sp = sep_color,
-  },
-  NvimTreeTitleSepOff = {
-    underline = true,
-    fg = sep_color,
-    bg = 'darker_black',
-    sp = sep_color,
-  },
-  WinBar = {
-    fg = 'red',
-    bg = 'black',
-  },
-  WinBarNC = {
-    bg = 'black',
-  },
+  NvimTreeBookmark    = { fg = { "red", -10 } },
+  NvimTreeBookmarkHL  = { fg = { "red", -10 } },
+  NvimTreeOpenedFile  = { fg = { "yellow", -10 } },
+  NvimTreeTitle       = { fg = { "yellow", -10 }, bg = "darker_black", sp = sep_color, underline = true },
+  NvimTreeTitleSepOn  = { fg = sep_color,         bg = "black",        sp = sep_color, underline = false },
+  NvimTreeTitleSepOff = { fg = sep_color,         bg = "darker_black", sp = sep_color, underline = true,  },
+  WinBar = { fg = "red", bg = "black" },
+  WinBarNC = { bg = "black" },
 }
 
+-- stylua: ignore
 M.override = {
-  FloatBorder = {
-    bg = 'black',
-  },
-  CmpDocBorder = {
-    fg = { 'blue', -25 },
-    bg = 'black',
-  },
-  TblineFill = {
-    underline = true,
-    bg = 'darker_black',
-    sp = sep_color,
-  },
-  TbLineBufOn = {
-    fg = { 'yellow', -20 },
-  },
-  TbLineBufOff = {
-    underline = true,
-    fg = 'grey',
-    bg = 'darker_black',
-    sp = sep_color,
-  },
-  TbLineBufOffModified = {
-    bg = 'darker_black',
-    underline = true,
-    sp = sep_color,
-  },
-  TbLineBufOffClose = {
-    underline = true,
-    bg = 'darker_black',
-    sp = sep_color,
-  },
-  NvimTreeWinSeparator = {
-    fg = sep_color,
-    bg = 'black',
-  },
-  Comment = {
-    italic = true,
-  },
-  WinSeparator = {
-    fg = sep_color,
-    bg = 'black',
-  },
+  -- Tabufline
+  TbLineBufOn          = { fg = d_yellow },
+  TbLineBufOff         = { fg = "grey", bg = "darker_black", sp = sep_color, underline = true },
+  TbLineBufOffModified = { bg = "darker_black", sp = sep_color, underline = true },
+  TbLineBufOffClose    = { bg = "darker_black", sp = sep_color, underline = true },
+  TblineFill           = { bg = "darker_black", sp = sep_color, underline = true },
+
+  -- Statusline
+  St_NormalMode      = { fg = l_blue,   bg = black },
+  St_NormalModeSep   = { fg = black,    bg = bg_link },
+  St_InsertMode      = { fg = d_yellow, bg = black },
+  St_InsertModeSep   = { fg = black,    bg = bg_link },
+  St_TerminalMode    = { fg = green,    bg = black, bold = true },
+  St_TerminalModeSep = { fg = black,    bg = bg_link },
+  St_CommandMode     = { fg = d_red,    bg = black, bold = true },
+  St_CommandModeSep  = { fg = black,    bg = bg_link },
+  St_ReplaceMode     = { fg = orange,   bg = black, bold = true },
+  St_ReplaceModeSep  = { fg = black,    bg = bg_link },
+  St_VisualMode      = { fg = pink,     bg = black, bold = true },
+  St_VisualModeSep   = { fg = black,    bg = bg_link },
+  St_SelectMode      = { fg = pink,     bg = black, bold = true },
+  St_SelectModeSep   = { fg = black,    bg = bg_link },
+  St_ConfirmMode     = { fg = d_red,    bg = black, bold = true },
+  St_ConfirmModeSep  = { fg = black,    bg = bg_link },
+
+  -- Misc
+  FloatBorder = { bg = "black" },
+  CmpDocBorder = { fg = { "blue", -25 }, bg = "black" },
+  Comment = { italic = true },
+  NvimTreeWinSeparator = { fg = sep_color, bg = "black" },
+  WinSeparator = { fg = sep_color, bg = "black" },
 }
 
 return M
